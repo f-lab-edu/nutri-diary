@@ -1,0 +1,94 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: koo995
+      changes:
+        - createTable:
+            tableName: nutrition_facts
+            columns:
+              - column:
+                  name: nutrition_facts_id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: calories
+                  type: DECIMAL(10, 2)
+              - column:
+                  name: carbohydrate
+                  type: DECIMAL(10, 2)
+              - column:
+                  name: protein
+                  type: DECIMAL(10, 2)
+              - column:
+                  name: fat
+                  type: DECIMAL(10, 2)
+              - column:
+                  name: serving_unit
+                  type: VARCHAR(255)
+              - column:
+                  name: serving_weight_gram
+                  type: INT
+
+  - changeSet:
+      id: 2
+      author: koo995
+      changes:
+        - createTable:
+            tableName: nutrition_facts_per_gram
+            columns:
+              - column:
+                  name: nutrition_facts_per_gram_id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: calories
+                  type: DECIMAL(10, 2)
+              - column:
+                  name: carbohydrate
+                  type: DECIMAL(10, 2)
+              - column:
+                  name: protein
+                  type: DECIMAL(10, 2)
+              - column:
+                  name: fat
+                  type: DECIMAL(10, 2)
+  - changeSet:
+      id: 3
+      author: koo995
+      changes:
+        - createTable:
+            tableName: product
+            columns:
+              - column:
+                  name: product_id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: product_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: product_corp
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: nutrition_facts_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_nutrition_facts
+                    referencedTableName: nutrition_facts
+                    referencedColumnNames: nutrition_facts_id
+
+              - column:
+                  name: nutrition_facts_per_gram_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_nutrition_facts_per_gram
+                    referencedTableName: nutrition_facts_per_gram
+                    referencedColumnNames: nutrition_facts_per_gram_id
