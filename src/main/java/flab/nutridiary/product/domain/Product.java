@@ -25,7 +25,7 @@ public class Product {
     private NutritionFactsPerGram nutritionFactsPerGram;
 
     @Builder
-    public Product(String productName, String productCorp, NutritionFacts nutritionFacts, NutritionFactsPerGram nutritionFactsPerGram) {
+    private Product(String productName, String productCorp, NutritionFacts nutritionFacts, NutritionFactsPerGram nutritionFactsPerGram) {
         this.productName = productName;
         this.ProductCorp = productCorp;
         this.nutritionFacts = nutritionFacts;

@@ -24,7 +24,7 @@ public class NutritionFacts {
     private int servingWeightGram;
 
     @Builder
-    public NutritionFacts(BigDecimal calories, BigDecimal carbohydrate, BigDecimal protein, BigDecimal fat, String servingUnit, int servingWeightGram) {
+    private NutritionFacts(BigDecimal calories, BigDecimal carbohydrate, BigDecimal protein, BigDecimal fat, String servingUnit, int servingWeightGram) {
         this.calories = calories;
         this.carbohydrate = carbohydrate;
         this.protein = protein;

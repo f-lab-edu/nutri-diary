@@ -20,7 +20,7 @@ public class NutritionFactsPerGram {
     private BigDecimal fat;
 
     @Builder
-    public NutritionFactsPerGram(BigDecimal calories, BigDecimal carbohydrate, BigDecimal protein, BigDecimal fat) {
+    private NutritionFactsPerGram(BigDecimal calories, BigDecimal carbohydrate, BigDecimal protein, BigDecimal fat) {
         this.calories = calories;
         this.carbohydrate = carbohydrate;
         this.protein = protein;

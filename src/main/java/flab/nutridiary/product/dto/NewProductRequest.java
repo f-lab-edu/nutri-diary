@@ -3,6 +3,7 @@ package flab.nutridiary.product.dto;
 import flab.nutridiary.product.domain.NutritionFacts;
 import flab.nutridiary.product.domain.NutritionFactsPerGram;
 import flab.nutridiary.product.domain.Product;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -33,6 +34,19 @@ public class NewProductRequest {
                 .nutritionFacts(getNutritionFacts())
                 .nutritionFactsPerGram(getNutritionFactsPerGram())
                 .build();
+    }
+
+    @Builder
+    private NewProductRequest(String productName, String corpName, int servingSize, String servingUnit, int servingWeightGram, BigDecimal calories, BigDecimal carbohydrate, BigDecimal protein, BigDecimal fat) {
+        this.productName = productName;
+        this.corpName = corpName;
+        this.servingSize = servingSize;
+        this.servingUnit = servingUnit;
+        this.servingWeightGram = servingWeightGram;
+        this.calories = calories;
+        this.carbohydrate = carbohydrate;
+        this.protein = protein;
+        this.fat = fat;
     }
 
     private NutritionFacts getNutritionFacts() {
