@@ -1,11 +1,13 @@
 package flab.nutridiary.product.domain;
 
 import lombok.Builder;
+import lombok.Getter;
 import lombok.ToString;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.math.BigDecimal;
 
+@Getter
 @ToString
 @Table
 public class NutritionFactsPerGram {
