@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import static flab.nutridiary.product.constant.DecimalConstant.ROUNDING_MODE;
 import static flab.nutridiary.product.constant.DecimalConstant.SCALE;
 
+@ToString
 @Getter
 @NoArgsConstructor
 public class NutritionFacts {
@@ -41,6 +42,15 @@ public class NutritionFacts {
                 .productCarbohydratePerGram(productTotalCarbohydrate.divide(productTotalWeightGram, SCALE, ROUNDING_MODE))
                 .productProteinPerGram(productTotalProtein.divide(productTotalWeightGram, SCALE, ROUNDING_MODE))
                 .productFatPerGram(productTotalFat.divide(productTotalWeightGram, SCALE, ROUNDING_MODE))
+                .build();
+    }
+
+    public NutritionFactsPerOneServing calculateNutritionFactsPerOneServingUnit() {
+        return NutritionFactsPerOneServing.builder()
+                .productCaloriesPerOneServing(productTotalCalories.divide(productServingSize, SCALE, ROUNDING_MODE))
+                .productCarbohydratePerOneServing(productTotalCarbohydrate.divide(productServingSize, SCALE, ROUNDING_MODE))
+                .productProteinPerOneServing(productTotalProtein.divide(productServingSize, SCALE, ROUNDING_MODE))
+                .productFatPerOneServing(productTotalFat.divide(productServingSize, SCALE, ROUNDING_MODE))
                 .build();
     }
 }
