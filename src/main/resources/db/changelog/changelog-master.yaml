@@ -1,0 +1,109 @@
+databaseChangeLog:
+- changeSet:
+    id: '1721591219367'
+    author: Spring Data Relational
+    objectQuotingStrategy: LEGACY
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: true
+              primaryKey: true
+            name: id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: true
+            name: product_name
+            type: VARCHAR(255 BYTE)
+        - column:
+            constraints:
+              nullable: true
+            name: product_corp
+            type: VARCHAR(255 BYTE)
+        tableName: product
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: true
+            name: calories
+            type: DECIMAL(10, 2)
+        - column:
+            constraints:
+              nullable: true
+            name: carbohydrate
+            type: DECIMAL(10, 2)
+        - column:
+            constraints:
+              nullable: true
+            name: protein
+            type: DECIMAL(10, 2)
+        - column:
+            constraints:
+              nullable: true
+            name: fat
+            type: DECIMAL(10, 2)
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: PRODUCT_ID
+            type: BIGINT
+        tableName: nutrition_facts_per_gram
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: true
+            name: calories
+            type: DECIMAL(10, 2)
+        - column:
+            constraints:
+              nullable: true
+            name: carbohydrate
+            type: DECIMAL(10, 2)
+        - column:
+            constraints:
+              nullable: true
+            name: protein
+            type: DECIMAL(10, 2)
+        - column:
+            constraints:
+              nullable: true
+            name: fat
+            type: DECIMAL(10, 2)
+        - column:
+            constraints:
+              nullable: true
+            name: serving_unit
+            type: VARCHAR(255 BYTE)
+        - column:
+            constraints:
+              nullable: false
+            name: serving_weight_gram
+            type: INT
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: PRODUCT_ID
+            type: BIGINT
+        tableName: nutrition_facts
+    - addForeignKeyConstraint:
+        baseColumnNames: PRODUCT_ID
+        baseTableName: nutrition_facts_per_gram
+        constraintName: product_id_fk
+        referencedColumnNames: id
+        referencedTableName: product
+    - addForeignKeyConstraint:
+        baseColumnNames: PRODUCT_ID
+        baseTableName: nutrition_facts
+        constraintName: product_id_fk
+        referencedColumnNames: id
+        referencedTableName: product
+
