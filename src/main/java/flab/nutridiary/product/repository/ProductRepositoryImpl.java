@@ -14,4 +14,9 @@ public class ProductRepositoryImpl implements ProductRepository{
     public Product save(Product product) {
         return productCrudRepository.save(product);
     }
+
+    @Override
+    public Boolean productDuplicatedCheckByNormalizedName(String normalizedName) {
+        return productCrudRepository.countByNormalizedName(normalizedName) > 0;
+    }
 }

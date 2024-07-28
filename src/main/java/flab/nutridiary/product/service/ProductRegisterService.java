@@ -16,10 +16,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ProductRegisterService {
     private final ProductRepository productRepository;
+    private final ProductValidator productValidator;
     private final ProductMapper productMapper;
 
     public NewProductResponse process(NewProductRequest productRequest) {
         Product product = productMapper.from(productRequest);
+        productValidator.validate(product);
         return NewProductResponse.of(productRepository.save(product).getId());
     }
 }

@@ -1,6 +1,9 @@
 package flab.nutridiary.product.domain;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
 
 import java.time.LocalDateTime;
@@ -15,6 +18,8 @@ public class Product {
 
     private String productCorp;
 
+    private String productNormalizedName;
+
     private NutritionFacts nutritionFacts;
 
     @Setter
@@ -28,6 +33,12 @@ public class Product {
         this.productName = productName;
         this.productCorp = productCorp;
         this.nutritionFacts = nutritionFacts;
+        this.productNormalizedName = initiateNormalizedName(productName, productCorp);
+    }
+
+    private String initiateNormalizedName(String productName, String productCorp) {
+        String EMPTY_REGEX = "\\s+";
+        return productCorp.replaceAll(EMPTY_REGEX, "") + productName.replaceAll(EMPTY_REGEX, "");
     }
 }
 
