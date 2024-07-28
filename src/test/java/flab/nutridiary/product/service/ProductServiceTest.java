@@ -1,8 +1,7 @@
 package flab.nutridiary.product.service;
 
-import flab.nutridiary.product.domain.NutritionFacts;
-import flab.nutridiary.product.domain.NutritionFactsPerGram;
-import flab.nutridiary.product.domain.Product;
+import flab.nutridiary.product.dto.NewProductRequest;
+import flab.nutridiary.product.dto.NewProductResponse;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,40 +16,29 @@ import java.math.BigDecimal;
 class ProductServiceTest {
 
     @Autowired
-    private ProductService productService;
+    private ProductRegisterService productRegisterService;
 
 
     @DisplayName("상품 등록 서비스 테스트.")
     @Test
     void saveTest() throws Exception {
         // given
-        NutritionFacts nutritionFacts = NutritionFacts.builder()
-                .calories(BigDecimal.valueOf(100))
-                .carbohydrate(BigDecimal.valueOf(10))
-                .protein(BigDecimal.valueOf(20)).
-                fat(BigDecimal.valueOf(30))
+        NewProductRequest newProductRequest = NewProductRequest.builder()
+                .productName("상품명")
+                .corpName("업체명")
+                .servingSize(1)
                 .servingUnit("컵")
-                .servingWeightGram(100)
-                .build();
-
-        NutritionFactsPerGram nutritionFactsPerGram = NutritionFactsPerGram.builder()
-                .calories(BigDecimal.valueOf(15.2))
-                .carbohydrate(BigDecimal.valueOf(10.9))
-                .protein(BigDecimal.valueOf(20.21)).
-                fat(BigDecimal.valueOf(30))
-                .build();
-
-        Product product = Product.builder()
-                .productName("사과")
-                .productCorp("사과회사")
-                .nutritionFacts(nutritionFacts)
-                .nutritionFactsPerGram(nutritionFactsPerGram)
+                .servingWeightGram(90)
+                .calories(BigDecimal.valueOf(120))
+                .carbohydrate(BigDecimal.valueOf(15.5))
+                .protein(BigDecimal.valueOf(3.5))
+                .fat(BigDecimal.valueOf(5.5))
                 .build();
 
         // when
-        Long savedId = productService.addProduct(product);
+        NewProductResponse response = productRegisterService.process(newProductRequest);
 
         // then
-        Assertions.assertThat(savedId).isNotNull();
+        Assertions.assertThat(response.getProductId()).isNotNull();
     }
 }

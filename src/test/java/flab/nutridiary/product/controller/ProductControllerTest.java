@@ -51,8 +51,9 @@ class ProductControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.productId").exists());
-
+                .andExpect(jsonPath("$.success").value(true))
+                .andExpect(jsonPath("$.statusCode").value(200))
+                .andExpect(jsonPath("$.data.productId").exists());
     }
 
 }
