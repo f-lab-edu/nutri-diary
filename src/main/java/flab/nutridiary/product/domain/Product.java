@@ -11,6 +11,10 @@ import java.time.LocalDateTime;
 @Getter
 @ToString
 public class Product {
+
+    private static final String WHITESPACE_REGEX = "\\s+";
+    private static final String EMPTY = "";
+
     @Id
     private Long id;
 
@@ -37,8 +41,7 @@ public class Product {
     }
 
     private String initiateNormalizedName(String productName, String productCorp) {
-        String EMPTY_REGEX = "\\s+";
-        return productCorp.replaceAll(EMPTY_REGEX, "") + productName.replaceAll(EMPTY_REGEX, "");
+        return productCorp.replaceAll(WHITESPACE_REGEX, EMPTY) + productName.replaceAll(WHITESPACE_REGEX, EMPTY);
     }
 }
 

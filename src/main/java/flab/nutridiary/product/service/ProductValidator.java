@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProductValidator {
 
+    private static final String WHITESPACE_REGEX = "\\s+";
+    private static final String EMPTY = "";
     private final ProductRepository productRepository;
 
     public void validate(Product product) {
@@ -22,7 +24,6 @@ public class ProductValidator {
     }
 
     private String getNormalizedName(String productName, String productCorp) {
-        String EMPTY_REGEX = "\\s+";
-        return productCorp.replaceAll(EMPTY_REGEX, "") + productName.replaceAll(EMPTY_REGEX, "");
+        return productCorp.replaceAll(WHITESPACE_REGEX, EMPTY) + productName.replaceAll(WHITESPACE_REGEX, EMPTY);
     }
 }
