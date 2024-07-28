@@ -1,8 +1,10 @@
 package flab.nutridiary.product.controller;
 
+import flab.nutridiary.commom.dto.ApiDataResponse;
+import flab.nutridiary.commom.dto.ApiResponse;
 import flab.nutridiary.product.dto.NewProductRequest;
-import flab.nutridiary.product.dto.NewProductResponse;
-import flab.nutridiary.product.service.ProductService;
+import flab.nutridiary.product.service.ProductRegisterService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,10 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ProductController {
 
-    private final ProductService productService;
+    private final ProductRegisterService productRegisterService;
 
     @PostMapping("/product/new")
-    public NewProductResponse addProduct(@RequestBody NewProductRequest productRequest) {
-        return NewProductResponse.of(productService.addProduct(productRequest.toProduct()));
+    public ApiResponse addProduct(@RequestBody @Valid NewProductRequest productRequest) {
+        return ApiDataResponse.OK(productRegisterService.process(productRequest));
     }
 }

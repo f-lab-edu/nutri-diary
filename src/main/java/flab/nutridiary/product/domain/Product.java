@@ -1,34 +1,33 @@
 package flab.nutridiary.product.domain;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.MappedCollection;
-import org.springframework.data.relational.core.mapping.Table;
+
+import java.time.LocalDateTime;
 
 @Getter
 @ToString
-@Table
 public class Product {
     @Id
     private Long id;
 
     private String productName;
 
-    private String ProductCorp;
+    private String productCorp;
 
-    @MappedCollection(idColumn = "PRODUCT_ID")
     private NutritionFacts nutritionFacts;
 
-    @MappedCollection(idColumn = "PRODUCT_ID")
-    private NutritionFactsPerGram nutritionFactsPerGram;
+    @Setter
+    private LocalDateTime createdAt;
+
+    @Setter
+    private LocalDateTime updatedAt;
 
     @Builder
-    private Product(String productName, String productCorp, NutritionFacts nutritionFacts, NutritionFactsPerGram nutritionFactsPerGram) {
+    public Product(String productName, String productCorp, NutritionFacts nutritionFacts) {
         this.productName = productName;
-        this.ProductCorp = productCorp;
+        this.productCorp = productCorp;
         this.nutritionFacts = nutritionFacts;
-        this.nutritionFactsPerGram = nutritionFactsPerGram;
     }
 }
+

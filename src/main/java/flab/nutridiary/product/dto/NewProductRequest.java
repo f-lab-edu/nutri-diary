@@ -1,40 +1,50 @@
 package flab.nutridiary.product.dto;
 
-import flab.nutridiary.product.domain.NutritionFacts;
-import flab.nutridiary.product.domain.NutritionFactsPerGram;
-import flab.nutridiary.product.domain.Product;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 @Getter
 @ToString
 public class NewProductRequest {
-    // 필요하다면 분리하자.
-    public final int SCALE = 2;
-    public final RoundingMode ROUNDING_MODE = RoundingMode.HALF_UP;
 
+    @NotNull(message = "상품명을 입력해주세요.")
     private String productName;
+
+    @NotNull(message = "제조사명을 입력해주세요.")
     private String corpName;
+
+    @Min(value = 0, message = "서빙 사이즈는 0 이상이어야 합니다.")
+    @NotNull(message = "서빙 사이즈를 입력해주세요.")
     private int servingSize;
+
+    @NotNull(message = "서빙 단위를 입력해주세요.")
     private String servingUnit;
+
+    @Min(value = 0, message = "서빙 단위당 중량은 0 이상이어야 합니다.")
+    @NotNull(message = "서빙 단위당 중량을 입력해주세요.")
     private int servingWeightGram;
+
+    @Min(value = 0, message = "칼로리는 0 이상이어야 합니다.")
+    @NotNull(message = "칼로리를 입력해주세요.")
     private BigDecimal calories;
+
+    @Min(value = 0, message = "탄수화물은 0 이상이어야 합니다.")
+    @NotNull(message = "탄수화물을 입력해주세요.")
     private BigDecimal carbohydrate;
+
+    @Min(value = 0, message = "단백질은 0 이상이어야 합니다.")
+    @NotNull(message = "단백질을 입력해주세요.")
     private BigDecimal protein;
+
+    @Min(value = 0, message = "지방은 0 이상이어야 합니다.")
+    @NotNull(message = "지방을 입력해주세요.")
     private BigDecimal fat;
 
-    public Product toProduct() {
-        return Product.builder()
-                .productName(productName)
-                .productCorp(corpName)
-                .nutritionFacts(getNutritionFacts())
-                .nutritionFactsPerGram(getNutritionFactsPerGram())
-                .build();
-    }
 
     @Builder
     private NewProductRequest(String productName, String corpName, int servingSize, String servingUnit, int servingWeightGram, BigDecimal calories, BigDecimal carbohydrate, BigDecimal protein, BigDecimal fat) {
@@ -47,25 +57,5 @@ public class NewProductRequest {
         this.carbohydrate = carbohydrate;
         this.protein = protein;
         this.fat = fat;
-    }
-
-    private NutritionFacts getNutritionFacts() {
-        return NutritionFacts.builder()
-                .calories(calories)
-                .carbohydrate(carbohydrate)
-                .protein(protein)
-                .fat(fat)
-                .servingUnit(servingUnit)
-                .servingWeightGram(servingWeightGram)
-                .build();
-    }
-
-    private NutritionFactsPerGram getNutritionFactsPerGram() {
-        return NutritionFactsPerGram.builder()
-                .calories(calories.divide(BigDecimal.valueOf(servingWeightGram), SCALE, ROUNDING_MODE))
-                .carbohydrate(carbohydrate.divide(BigDecimal.valueOf(servingWeightGram), SCALE, ROUNDING_MODE))
-                .protein(protein.divide(BigDecimal.valueOf(servingWeightGram), SCALE, ROUNDING_MODE))
-                .fat(fat.divide(BigDecimal.valueOf(servingWeightGram), SCALE, ROUNDING_MODE))
-                .build();
     }
 }

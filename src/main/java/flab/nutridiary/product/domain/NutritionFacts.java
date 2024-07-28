@@ -2,34 +2,48 @@ package flab.nutridiary.product.domain;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.data.relational.core.mapping.Table;
 
 import java.math.BigDecimal;
 
+import static flab.nutridiary.commom.constant.DecimalConstant.ROUNDING_MODE;
+import static flab.nutridiary.commom.constant.DecimalConstant.SCALE;
+import static java.math.BigDecimal.valueOf;
+
 @Getter
 @ToString
-@Table
+@NoArgsConstructor
 public class NutritionFacts {
-    private BigDecimal calories;
+    private BigDecimal productCalories;
 
-    private BigDecimal carbohydrate;
+    private BigDecimal productCarbohydrate;
 
-    private BigDecimal protein;
+    private BigDecimal productProtein;
 
-    private BigDecimal fat;
+    private BigDecimal productFat;
 
-    private String servingUnit;
+    private String productServingUnit;
 
-    private int servingWeightGram;
+    private int productServingWeightGram;
 
     @Builder
-    private NutritionFacts(BigDecimal calories, BigDecimal carbohydrate, BigDecimal protein, BigDecimal fat, String servingUnit, int servingWeightGram) {
-        this.calories = calories;
-        this.carbohydrate = carbohydrate;
-        this.protein = protein;
-        this.fat = fat;
-        this.servingUnit = servingUnit;
-        this.servingWeightGram = servingWeightGram;
+    public NutritionFacts(BigDecimal productCalories, BigDecimal productCarbohydrate, BigDecimal productProtein, BigDecimal productFat, String productServingUnit, int productServingWeightGram) {
+        this.productCalories = productCalories;
+        this.productCarbohydrate = productCarbohydrate;
+        this.productProtein = productProtein;
+        this.productFat = productFat;
+        this.productServingUnit = productServingUnit;
+        this.productServingWeightGram = productServingWeightGram;
+    }
+
+    public NutritionFactsPerGram calculateNutritionFactsPerGram() {
+        return NutritionFactsPerGram.builder()
+                .productCaloriesPerGram(productCalories.divide(valueOf(productServingWeightGram), SCALE, ROUNDING_MODE))
+                .productCarbohydratePerGram(productCarbohydrate.divide(valueOf(productServingWeightGram), SCALE, ROUNDING_MODE))
+                .productProteinPerGram(productProtein.divide(valueOf(productServingWeightGram), SCALE, ROUNDING_MODE))
+                .productFatPerGram(productFat.divide(valueOf(productServingWeightGram), SCALE, ROUNDING_MODE))
+                .build();
+
     }
 }
