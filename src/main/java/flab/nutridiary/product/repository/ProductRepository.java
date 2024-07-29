@@ -5,5 +5,5 @@ import flab.nutridiary.product.domain.Product;
 public interface ProductRepository {
     Product save(Product product);
 
-    Boolean productDuplicatedCheckByNormalizedName(String normalizedName);
+    Boolean DuplicatedProductCheck(String normalizedName);
 }
