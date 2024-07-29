@@ -41,6 +41,27 @@ class ProductValidatorTest {
         Assertions.assertThrows(ProductDuplicatedException.class, () -> {
             productValidator.validate(product2);
         });
-    }
 
+    }
+    @DisplayName("서로 다른 상품이 등록되면 정상처리된다..")
+    @Test
+    void validate2() throws Exception {
+        // given
+        Product product = Product.builder()
+                .productName("촉촉한   초코칩  쿠키")
+                .productCorp(" 오리온")
+                .build();
+        productRepository.save(product);
+
+        // when
+        Product product2 = Product.builder()
+                .productName("쵹촉한초코칩쿠키")
+                .productCorp("오리온")
+                .build();
+
+        // then
+        Assertions.assertDoesNotThrow(() -> {
+            productValidator.validate(product2);
+        });
+    }
 }
