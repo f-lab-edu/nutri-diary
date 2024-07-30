@@ -8,7 +8,7 @@ import org.springframework.data.convert.ReadingConverter;
 import java.io.IOException;
 
 @ReadingConverter
-public class JsonToNutritionFactsConverter implements Converter<String, NutritionFacts> {
+public class JsonToNutritionFactsConverter implements Converter<byte[], NutritionFacts> {
 
     private final ObjectMapper objectMapper;
 
@@ -17,11 +17,13 @@ public class JsonToNutritionFactsConverter implements Converter<String, Nutritio
     }
 
     @Override
-    public NutritionFacts convert(String jsonSource) {
+    public NutritionFacts convert(byte[] source) {
         try {
+            String jsonSource = objectMapper.readValue(source, String.class);
             return objectMapper.readValue(jsonSource, NutritionFacts.class);
         } catch (IOException e) {
             throw new RuntimeException("JSON 타입을 NutritionFacts 객체로 변경하는데 실패했습니다.", e);
         }
     }
 }
+
