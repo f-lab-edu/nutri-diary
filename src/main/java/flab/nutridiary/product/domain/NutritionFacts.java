@@ -7,8 +7,8 @@ import lombok.ToString;
 
 import java.math.BigDecimal;
 
-import static flab.nutridiary.commom.constant.DecimalConstant.ROUNDING_MODE;
-import static flab.nutridiary.commom.constant.DecimalConstant.SCALE;
+import static flab.nutridiary.product.constant.DecimalConstant.ROUNDING_MODE;
+import static flab.nutridiary.product.constant.DecimalConstant.SCALE;
 import static java.math.BigDecimal.valueOf;
 
 @Getter

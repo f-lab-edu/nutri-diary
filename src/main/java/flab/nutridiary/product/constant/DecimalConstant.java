@@ -1,4 +1,4 @@
-package flab.nutridiary.commom.constant;
+package flab.nutridiary.product.constant;
 
 import lombok.Getter;
 
