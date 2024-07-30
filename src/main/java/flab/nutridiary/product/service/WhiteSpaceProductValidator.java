@@ -18,7 +18,7 @@ public class WhiteSpaceProductValidator implements ProductValidator {
     }
 
     private void validate(String normalizedName) {
-        if (productValidatorRepository.isExitsDuplicatedProductByNormalizedName(normalizedName)) {
+        if (productValidatorRepository.isExistDuplicatedProductByNormalizedName(normalizedName)) {
             throw new ProductDuplicatedException();
         }
     }
