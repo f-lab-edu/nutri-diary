@@ -26,6 +26,8 @@ public class Product {
 
     private NutritionFacts nutritionFacts;
 
+    private Long memberId = 1L;
+
     @Setter
     private LocalDateTime createdAt;
 
