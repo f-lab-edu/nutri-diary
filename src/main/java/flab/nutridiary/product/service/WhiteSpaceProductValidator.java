@@ -1,7 +1,6 @@
 package flab.nutridiary.product.service;
 
 import flab.nutridiary.product.domain.Product;
-import flab.nutridiary.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +10,7 @@ public class WhiteSpaceProductValidator implements ProductValidator {
 
     private static final String WHITESPACE_REGEX = "\\s+";
     private static final String EMPTY = "";
-    private final ProductRepository productRepository;
+    private final ProductValidatorRepository productValidatorRepository;
 
     @Override
     public void validate(Product product) {
@@ -19,7 +18,7 @@ public class WhiteSpaceProductValidator implements ProductValidator {
     }
 
     private void validate(String normalizedName) {
-        if (productRepository.DuplicatedProductCheck(normalizedName)) {
+        if (productValidatorRepository.DuplicatedProductCheck(normalizedName)) {
             throw new ProductDuplicatedException();
         }
     }

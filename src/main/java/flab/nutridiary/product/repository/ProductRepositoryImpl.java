@@ -1,12 +1,13 @@
 package flab.nutridiary.product.repository;
 
 import flab.nutridiary.product.domain.Product;
+import flab.nutridiary.product.service.ProductValidatorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class ProductRepositoryImpl implements ProductRepository{
+public class ProductRepositoryImpl implements ProductRepository, ProductValidatorRepository {
 
     private final ProductCrudRepository productCrudRepository;
 
@@ -15,11 +16,6 @@ public class ProductRepositoryImpl implements ProductRepository{
         return productCrudRepository.save(product);
     }
 
-    /**
-     * 여기에 특정 전략이 들어오도록 할 수 있을까?
-     * @param normalizedName
-     * @return
-     */
     @Override
     public Boolean DuplicatedProductCheck(String normalizedName) {
         return productCrudRepository.countByNormalizedName(normalizedName) > 0;
