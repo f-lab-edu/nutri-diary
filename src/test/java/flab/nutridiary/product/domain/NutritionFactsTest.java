@@ -14,12 +14,12 @@ class NutritionFactsTest {
     void calculateNutritionFactsPerGram() throws Exception {
         // given
         NutritionFacts nutritionFacts = NutritionFacts.builder()
-                .productCalories(BigDecimal.valueOf(100))
-                .productCarbohydrate(BigDecimal.valueOf(10))
-                .productProtein(BigDecimal.valueOf(20))
-                .productFat(BigDecimal.valueOf(30))
+                .productTotalCalories(BigDecimal.valueOf(100))
+                .productTotalCarbohydrate(BigDecimal.valueOf(10))
+                .productTotalProtein(BigDecimal.valueOf(20))
+                .productTotalFat(BigDecimal.valueOf(30))
                 .productServingUnit("컵")
-                .productServingWeightGram(80)
+                .productTotalWeightGram(BigDecimal.valueOf(80))
                 .build();
 
         // when
@@ -30,7 +30,5 @@ class NutritionFactsTest {
         assertThat(result.getProductCarbohydratePerGram()).isEqualTo(BigDecimal.valueOf(0.13));
         assertThat(result.getProductProteinPerGram()).isEqualTo(BigDecimal.valueOf(0.25));
         assertThat(result.getProductFatPerGram()).isEqualTo(BigDecimal.valueOf(0.38));
-
     }
-
 }

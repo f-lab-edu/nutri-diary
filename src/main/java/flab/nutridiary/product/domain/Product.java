@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 
 import java.time.LocalDateTime;
 
@@ -15,7 +16,7 @@ public class Product {
     private static final String WHITESPACE_REGEX = "\\s+";
     private static final String EMPTY = "";
 
-    @Id
+    @Id @Column("PRODUCT_ID")
     private Long id;
 
     private String productName;

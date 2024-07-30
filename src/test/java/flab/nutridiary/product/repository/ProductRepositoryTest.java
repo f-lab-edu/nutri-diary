@@ -26,12 +26,12 @@ class ProductRepositoryTest {
     void saveTest() throws Exception {
         // given
         NutritionFacts nutritionFacts = NutritionFacts.builder()
-                .productCalories(BigDecimal.valueOf(100))
-                .productCarbohydrate(BigDecimal.valueOf(10))
-                .productProtein(BigDecimal.valueOf(20))
-                .productFat(BigDecimal.valueOf(30))
+                .productTotalCalories(BigDecimal.valueOf(100))
+                .productTotalCarbohydrate(BigDecimal.valueOf(10))
+                .productTotalProtein(BigDecimal.valueOf(20))
+                .productTotalFat(BigDecimal.valueOf(30))
                 .productServingUnit("컵")
-                .productServingWeightGram(100)
+                .productTotalWeightGram(BigDecimal.valueOf(100))
                 .build();
 
         Product product = Product.builder()
@@ -47,11 +47,11 @@ class ProductRepositoryTest {
         assertThat(savedProduct.getId()).isNotNull();
         assertThat(savedProduct.getProductName()).isEqualTo("사과");
         assertThat(savedProduct.getProductCorp()).isEqualTo("사과회사");
-        assertThat(savedProduct.getNutritionFacts().getProductCalories()).isEqualTo(BigDecimal.valueOf(100));
-        assertThat(savedProduct.getNutritionFacts().getProductCarbohydrate()).isEqualTo(BigDecimal.valueOf(10));
-        assertThat(savedProduct.getNutritionFacts().getProductProtein()).isEqualTo(BigDecimal.valueOf(20));
-        assertThat(savedProduct.getNutritionFacts().getProductFat()).isEqualTo(BigDecimal.valueOf(30));
+        assertThat(savedProduct.getNutritionFacts().getProductTotalCalories()).isEqualTo(BigDecimal.valueOf(100));
+        assertThat(savedProduct.getNutritionFacts().getProductTotalCarbohydrate()).isEqualTo(BigDecimal.valueOf(10));
+        assertThat(savedProduct.getNutritionFacts().getProductTotalProtein()).isEqualTo(BigDecimal.valueOf(20));
+        assertThat(savedProduct.getNutritionFacts().getProductTotalFat()).isEqualTo(BigDecimal.valueOf(30));
         assertThat(savedProduct.getNutritionFacts().getProductServingUnit()).isEqualTo("컵");
-        assertThat(savedProduct.getNutritionFacts().getProductServingWeightGram()).isEqualTo(100);
+        assertThat(savedProduct.getNutritionFacts().getProductTotalWeightGram()).isEqualTo(BigDecimal.valueOf(100));
     }
 }

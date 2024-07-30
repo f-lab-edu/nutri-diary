@@ -16,12 +16,13 @@ public class ProductMapper {
 
     private static NutritionFacts getNutritionFacts(NewProductRequest productRequest) {
         return NutritionFacts.builder()
-                .productCalories(productRequest.getCalories())
-                .productCarbohydrate(productRequest.getCarbohydrate())
-                .productProtein(productRequest.getProtein())
-                .productFat(productRequest.getFat())
+                .productTotalCalories(productRequest.getCalories())
+                .productTotalCarbohydrate(productRequest.getCarbohydrate())
+                .productTotalProtein(productRequest.getProtein())
+                .productTotalFat(productRequest.getFat())
+                .productServingSize(productRequest.getServingSize())
                 .productServingUnit(productRequest.getServingUnit())
-                .productServingWeightGram(productRequest.getServingWeightGram())
+                .productTotalWeightGram(productRequest.getTotalWeightGram())
                 .build();
     }
 }

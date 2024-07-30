@@ -1,49 +1,49 @@
 package flab.nutridiary.product.domain;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.math.BigDecimal;
 
 import static flab.nutridiary.product.constant.DecimalConstant.ROUNDING_MODE;
 import static flab.nutridiary.product.constant.DecimalConstant.SCALE;
-import static java.math.BigDecimal.valueOf;
 
 @Getter
+@Setter
 @ToString
+@EqualsAndHashCode
 @NoArgsConstructor
 public class NutritionFacts {
-    private BigDecimal productCalories;
+    private BigDecimal productTotalCalories;
 
-    private BigDecimal productCarbohydrate;
+    private BigDecimal productTotalCarbohydrate;
 
-    private BigDecimal productProtein;
+    private BigDecimal productTotalProtein;
 
-    private BigDecimal productFat;
+    private BigDecimal productTotalFat;
+
+    private BigDecimal productServingSize;
 
     private String productServingUnit;
 
-    private int productServingWeightGram;
+    private BigDecimal productTotalWeightGram;
 
     @Builder
-    public NutritionFacts(BigDecimal productCalories, BigDecimal productCarbohydrate, BigDecimal productProtein, BigDecimal productFat, String productServingUnit, int productServingWeightGram) {
-        this.productCalories = productCalories;
-        this.productCarbohydrate = productCarbohydrate;
-        this.productProtein = productProtein;
-        this.productFat = productFat;
+    public NutritionFacts(BigDecimal productTotalCalories, BigDecimal productTotalCarbohydrate, BigDecimal productTotalProtein, BigDecimal productTotalFat, BigDecimal productServingSize, String productServingUnit, BigDecimal productTotalWeightGram) {
+        this.productTotalCalories = productTotalCalories;
+        this.productTotalCarbohydrate = productTotalCarbohydrate;
+        this.productTotalProtein = productTotalProtein;
+        this.productTotalFat = productTotalFat;
+        this.productServingSize = productServingSize;
         this.productServingUnit = productServingUnit;
-        this.productServingWeightGram = productServingWeightGram;
+        this.productTotalWeightGram = productTotalWeightGram;
     }
 
     public NutritionFactsPerGram calculateNutritionFactsPerGram() {
         return NutritionFactsPerGram.builder()
-                .productCaloriesPerGram(productCalories.divide(valueOf(productServingWeightGram), SCALE, ROUNDING_MODE))
-                .productCarbohydratePerGram(productCarbohydrate.divide(valueOf(productServingWeightGram), SCALE, ROUNDING_MODE))
-                .productProteinPerGram(productProtein.divide(valueOf(productServingWeightGram), SCALE, ROUNDING_MODE))
-                .productFatPerGram(productFat.divide(valueOf(productServingWeightGram), SCALE, ROUNDING_MODE))
+                .productCaloriesPerGram(productTotalCalories.divide(productTotalWeightGram, SCALE, ROUNDING_MODE))
+                .productCarbohydratePerGram(productTotalCarbohydrate.divide(productTotalWeightGram, SCALE, ROUNDING_MODE))
+                .productProteinPerGram(productTotalProtein.divide(productTotalWeightGram, SCALE, ROUNDING_MODE))
+                .productFatPerGram(productTotalFat.divide(productTotalWeightGram, SCALE, ROUNDING_MODE))
                 .build();
-
     }
 }
