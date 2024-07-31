@@ -8,9 +8,6 @@ import static flab.nutridiary.product.constant.DecimalConstant.ROUNDING_MODE;
 import static flab.nutridiary.product.constant.DecimalConstant.SCALE;
 
 @Getter
-@Setter
-@ToString
-@EqualsAndHashCode
 @NoArgsConstructor
 public class NutritionFacts {
     private BigDecimal productTotalCalories;
