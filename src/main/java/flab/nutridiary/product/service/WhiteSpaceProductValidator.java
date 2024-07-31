@@ -1,5 +1,6 @@
 package flab.nutridiary.product.service;
 
+import flab.nutridiary.commom.exception.SystemException;
 import flab.nutridiary.product.domain.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -19,7 +20,7 @@ public class WhiteSpaceProductValidator implements ProductValidator {
 
     private void validate(String normalizedName) {
         if (productValidatorRepository.isExistDuplicatedProductByNormalizedName(normalizedName)) {
-            throw new ProductDuplicatedException();
+            throw new SystemException("이미 등록된 상품입니다.", 400);
         }
     }
 

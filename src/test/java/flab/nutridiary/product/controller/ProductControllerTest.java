@@ -58,7 +58,7 @@ class ProductControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.success").value(true))
+                .andExpect(jsonPath("$.success").value("ok"))
                 .andExpect(jsonPath("$.statusCode").value(200))
                 .andExpect(jsonPath("$.data.productId").exists());
     }
@@ -92,8 +92,8 @@ class ProductControllerTest {
                                 .content(objectMapper.writeValueAsString(newProductRequest))
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.success").value(true))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.success").value("fail"))
                 .andExpect(jsonPath("$.statusCode").value(400))
                 .andExpect(jsonPath("$.message").value("이미 등록된 상품입니다."));
     }
