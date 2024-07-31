@@ -3,17 +3,15 @@ package flab.nutridiary.product.domain.converter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import flab.nutridiary.product.domain.NutritionFacts;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.WritingConverter;
 
+@RequiredArgsConstructor
 @WritingConverter
 public class NutritionFactsToJsonConverter implements Converter<NutritionFacts, String> {
 
     private final ObjectMapper objectMapper;
-
-    public NutritionFactsToJsonConverter() {
-        this.objectMapper = new ObjectMapper();
-    }
 
     @Override
     public String convert(NutritionFacts nutritionFacts) {

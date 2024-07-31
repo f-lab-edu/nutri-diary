@@ -1,5 +1,6 @@
 package flab.nutridiary.product.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import flab.nutridiary.product.domain.converter.JsonToNutritionFactsConverter;
 import flab.nutridiary.product.domain.converter.NutritionFactsToJsonConverter;
 import org.springframework.context.annotation.Bean;
@@ -14,10 +15,10 @@ public class ProductJdbcConfig extends AbstractJdbcConfiguration {
 
     // JdbcCustomConversions 빈을 등록한다.
     @Bean
-    public JdbcCustomConversions jdbcCustomConversions() {
+    public JdbcCustomConversions jdbcCustomConversions(ObjectMapper objectMapper) {
         return new JdbcCustomConversions(Arrays.asList(
-                new NutritionFactsToJsonConverter(),
-                new JsonToNutritionFactsConverter()
+                new NutritionFactsToJsonConverter(objectMapper),
+                new JsonToNutritionFactsConverter(objectMapper)
         ));
     }
 }

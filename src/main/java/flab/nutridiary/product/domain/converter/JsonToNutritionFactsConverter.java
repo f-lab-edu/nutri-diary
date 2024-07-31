@@ -2,19 +2,17 @@ package flab.nutridiary.product.domain.converter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import flab.nutridiary.product.domain.NutritionFacts;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
 
 import java.io.IOException;
 
+@RequiredArgsConstructor
 @ReadingConverter
 public class JsonToNutritionFactsConverter implements Converter<byte[], NutritionFacts> {
 
     private final ObjectMapper objectMapper;
-
-    public JsonToNutritionFactsConverter() {
-        this.objectMapper = new ObjectMapper();
-    }
 
     @Override
     public NutritionFacts convert(byte[] source) {
