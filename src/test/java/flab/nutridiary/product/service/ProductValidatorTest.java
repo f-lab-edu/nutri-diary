@@ -1,5 +1,6 @@
 package flab.nutridiary.product.service;
 
+import flab.nutridiary.commom.exception.SystemException;
 import flab.nutridiary.product.domain.Product;
 import flab.nutridiary.product.repository.ProductRepository;
 import org.junit.jupiter.api.Assertions;
@@ -38,7 +39,7 @@ class ProductValidatorTest {
                 .build();
 
         // then
-        Assertions.assertThrows(ProductDuplicatedException.class, () -> {
+        Assertions.assertThrows(SystemException.class, () -> {
             productValidator.validate(product2);
         });
 
