@@ -11,13 +11,13 @@ public class ExceptionController {
 
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(BusinessException.class)
-    public ApiResponse<?> BusinessExceptionHandler(BusinessException e) {
+    public ApiResponse<Void> BusinessExceptionHandler(BusinessException e) {
         return ApiResponse.failure(e.getStatusCode(), e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(SystemException.class)
-    public ApiResponse<?> SystemExceptionHandler(SystemException e) {
+    public ApiResponse<Void> SystemExceptionHandler(SystemException e) {
         return ApiResponse.failure(e.getStatusCode(), e.getMessage());
     }
 }
