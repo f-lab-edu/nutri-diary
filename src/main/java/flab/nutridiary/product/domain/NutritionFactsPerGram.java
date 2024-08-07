@@ -3,27 +3,25 @@ package flab.nutridiary.product.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
-import org.springframework.data.relational.core.mapping.Table;
 
 import java.math.BigDecimal;
 
 @Getter
 @ToString
-@Table
 public class NutritionFactsPerGram {
-    private BigDecimal calories;
+    private BigDecimal productCaloriesPerGram;
 
-    private BigDecimal carbohydrate;
+    private BigDecimal productCarbohydratePerGram;
 
-    private BigDecimal protein;
+    private BigDecimal productProteinPerGram;
 
-    private BigDecimal fat;
+    private BigDecimal productFatPerGram;
 
     @Builder
-    private NutritionFactsPerGram(BigDecimal calories, BigDecimal carbohydrate, BigDecimal protein, BigDecimal fat) {
-        this.calories = calories;
-        this.carbohydrate = carbohydrate;
-        this.protein = protein;
-        this.fat = fat;
+    private NutritionFactsPerGram(BigDecimal productCaloriesPerGram, BigDecimal productCarbohydratePerGram, BigDecimal productProteinPerGram, BigDecimal productFatPerGram) {
+        this.productCaloriesPerGram = productCaloriesPerGram;
+        this.productCarbohydratePerGram = productCarbohydratePerGram;
+        this.productProteinPerGram = productProteinPerGram;
+        this.productFatPerGram = productFatPerGram;
     }
 }
