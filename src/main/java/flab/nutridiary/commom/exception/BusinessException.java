@@ -3,11 +3,11 @@ package flab.nutridiary.commom.exception;
 import lombok.Getter;
 
 @Getter
-public class BusinessException extends Exception{
+public class BusinessException extends RuntimeException{
     private final int statusCode;
 
-    public BusinessException(String message, int statusCode) {
-        super(message);
-        this.statusCode = statusCode;
+    public BusinessException(StatusConst statusConst) {
+        super(statusConst.getMessage());
+        this.statusCode = statusConst.getStatusCode();
     }
 }

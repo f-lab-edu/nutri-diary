@@ -2,25 +2,30 @@ package flab.nutridiary.commom.dto;
 
 import lombok.Getter;
 
+import static flab.nutridiary.commom.exception.StatusConst.OK;
+import static flab.nutridiary.commom.exception.StatusConst.SYSTEM_ERROR;
+
 @Getter
 public class ApiResponse<T> {
-    private final String success;
     private final int statusCode;
-    private final T Data;
     private final String message;
+    private final T Data;
 
-    private ApiResponse(String success, Integer statusCode, T data, String message) {
-        this.success = success;
+    private ApiResponse(Integer statusCode, String message, T data) {
         this.statusCode = statusCode;
-        this.Data = data;
         this.message = message;
+        this.Data = data;
     }
 
     public static <T> ApiResponse<T> success(T data) {
-        return new ApiResponse<>("ok", 200, data, null);
+        return new ApiResponse<>(OK.getStatusCode(), OK.getMessage(), data);
     }
 
-    public static ApiResponse<Void> failure(Integer statusCode, String message) {
-        return new ApiResponse<>("fail", statusCode, null, message);
+    public static ApiResponse<Void> bizException(Integer statusCode, String message) {
+        return new ApiResponse<>(statusCode, message, null);
+    }
+
+    public static ApiResponse<Void> sysException() {
+        return new ApiResponse<>(SYSTEM_ERROR.getStatusCode(), SYSTEM_ERROR.getMessage(), null);
     }
 }

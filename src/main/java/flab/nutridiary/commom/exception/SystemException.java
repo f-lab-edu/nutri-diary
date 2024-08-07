@@ -4,10 +4,13 @@ import lombok.Getter;
 
 @Getter
 public class SystemException extends RuntimeException{
-    private final int statusCode;
+    private static final String MESSAGE = "서버에서 에러가 발생했습니다.";
 
-    public SystemException(String message, int statusCode) {
+    public SystemException() {
+        super(MESSAGE);
+    }
+
+    public SystemException(String message) {
         super(message);
-        this.statusCode = statusCode;
     }
 }

@@ -2,6 +2,7 @@ package flab.nutridiary.product.domain.converter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import flab.nutridiary.commom.exception.SystemException;
 import flab.nutridiary.product.domain.NutritionFacts;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
@@ -18,7 +19,7 @@ public class NutritionFactsToJsonConverter implements Converter<NutritionFacts, 
         try {
             return objectMapper.writeValueAsString(nutritionFacts);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("NutritionFacts 객체를 JSON 타입으로 변경에 실패했습니다.", e);
+            throw new SystemException("NutritionFacts 객체를 JSON 타입으로 변경에 실패했습니다.");
         }
     }
 }

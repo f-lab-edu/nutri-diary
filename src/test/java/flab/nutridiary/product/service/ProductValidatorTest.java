@@ -1,15 +1,18 @@
 package flab.nutridiary.product.service;
 
-import flab.nutridiary.commom.exception.SystemException;
+import flab.nutridiary.commom.exception.BusinessException;
 import flab.nutridiary.product.domain.Product;
 import flab.nutridiary.product.repository.ProductRepository;
-import org.junit.jupiter.api.Assertions;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ActiveProfiles("test")
 @Transactional
@@ -39,9 +42,11 @@ class ProductValidatorTest {
                 .build();
 
         // then
-        Assertions.assertThrows(SystemException.class, () -> {
+        BusinessException businessException = assertThrows(BusinessException.class, () -> {
             productValidator.validate(product2);
         });
+        Assertions.assertThat(businessException.getStatusCode()).isEqualTo(4002);
+        Assertions.assertThat(businessException.getMessage()).isEqualTo("이미 등록된 식품입니다.");
 
     }
     @DisplayName("서로 다른 상품이 등록되면 정상처리된다..")
@@ -61,7 +66,7 @@ class ProductValidatorTest {
                 .build();
 
         // then
-        Assertions.assertDoesNotThrow(() -> {
+        assertDoesNotThrow(() -> {
             productValidator.validate(product2);
         });
     }
