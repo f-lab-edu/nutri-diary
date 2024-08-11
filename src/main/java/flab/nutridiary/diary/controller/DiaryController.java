@@ -1,5 +1,7 @@
 package flab.nutridiary.diary.controller;
 
+import flab.nutridiary.commom.dto.ApiResponse;
+import flab.nutridiary.diary.dto.DiaryRegisterResponse;
 import flab.nutridiary.diary.service.DiaryRegisterService;
 import flab.nutridiary.diary.dto.DiaryRegisterRequest;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +16,7 @@ public class DiaryController {
     private final DiaryRegisterService diaryRegisterService;
 
     @PostMapping("/diary/new")
-    public void createDiary(@RequestBody DiaryRegisterRequest diaryRegisterRequest) {
-        diaryRegisterService.writeDiaryRecord(diaryRegisterRequest);
+    public ApiResponse<DiaryRegisterResponse> createDiary(@RequestBody DiaryRegisterRequest diaryRegisterRequest) {
+        return ApiResponse.success(diaryRegisterService.writeDiaryRecord(diaryRegisterRequest));
     }
 }

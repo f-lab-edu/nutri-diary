@@ -4,6 +4,7 @@ import flab.nutridiary.diary.domain.Diary;
 import flab.nutridiary.diary.domain.DiaryRecord;
 import flab.nutridiary.diary.domain.MealType;
 import flab.nutridiary.diary.dto.DiaryRegisterRequest;
+import flab.nutridiary.diary.dto.DiaryRegisterResponse;
 import flab.nutridiary.diary.repository.DiaryRepository;
 import flab.nutridiary.product.domain.NutritionFacts;
 import flab.nutridiary.product.domain.Product;
@@ -65,7 +66,8 @@ class DiaryRegisterServiceTest {
         DiaryRegisterRequest diaryRegisterRequest = new DiaryRegisterRequest(productId, MealType.BREAKFAST, BigDecimal.ONE, "gram", LocalDate.of(2024, 8, 1));
 
         // when
-        Long savedId = diaryRegisterService.writeDiaryRecord(diaryRegisterRequest);
+        DiaryRegisterResponse diaryRegisterResponse = diaryRegisterService.writeDiaryRecord(diaryRegisterRequest);
+        Long savedId = diaryRegisterResponse.getDiaryId();
 
         // then
         Diary findDiary = diaryRepository.findById(savedId).get();
@@ -94,7 +96,8 @@ class DiaryRegisterServiceTest {
         DiaryRegisterRequest diaryRegisterRequest2 = new DiaryRegisterRequest(productId, MealType.LUNCH, BigDecimal.TEN, "개", LocalDate.of(2024, 8, 1));
 
         // when
-        Long savedId = diaryRegisterService.writeDiaryRecord(diaryRegisterRequest2);
+        DiaryRegisterResponse diaryRegisterResponse = diaryRegisterService.writeDiaryRecord(diaryRegisterRequest2);
+        Long savedId = diaryRegisterResponse.getDiaryId();
 
         // then
         Diary findDiary = diaryRepository.findById(savedId).get();
