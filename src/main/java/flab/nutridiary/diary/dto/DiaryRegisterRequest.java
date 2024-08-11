@@ -11,7 +11,7 @@ import java.time.LocalDate;
 
 @Getter
 @ToString
-public class NewDiaryRequest {
+public class DiaryRegisterRequest {
     @NotNull(message = "상품 ID를 입력해주세요.")
     private Long productId;
 
@@ -30,7 +30,7 @@ public class NewDiaryRequest {
     @NotNull(message = "섭취 날짜를 입력해주세요.")
     private LocalDate intakeDate;
 
-    public NewDiaryRequest(Long productId, MealType mealType, BigDecimal quantity, String servingUnit, LocalDate intakeDate) {
+    public DiaryRegisterRequest(Long productId, MealType mealType, BigDecimal quantity, String servingUnit, LocalDate intakeDate) {
         this.productId = productId;
         this.mealType = mealType;
         this.quantity = quantity;

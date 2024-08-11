@@ -3,7 +3,7 @@ package flab.nutridiary.diary.service;
 import flab.nutridiary.diary.domain.Diary;
 import flab.nutridiary.diary.domain.DiaryRecord;
 import flab.nutridiary.diary.domain.MealType;
-import flab.nutridiary.diary.dto.NewDiaryRequest;
+import flab.nutridiary.diary.dto.DiaryRegisterRequest;
 import flab.nutridiary.diary.repository.DiaryRepository;
 import flab.nutridiary.product.domain.NutritionFacts;
 import flab.nutridiary.product.domain.Product;
@@ -62,10 +62,10 @@ class DiaryRegisterServiceTest {
     void writeDiaryRecord() throws Exception {
         // given
         Long productId = savedProduct.getId();
-        NewDiaryRequest newDiaryRequest = new NewDiaryRequest(productId, MealType.BREAKFAST, BigDecimal.ONE, "gram", LocalDate.of(2024, 8, 1));
+        DiaryRegisterRequest diaryRegisterRequest = new DiaryRegisterRequest(productId, MealType.BREAKFAST, BigDecimal.ONE, "gram", LocalDate.of(2024, 8, 1));
 
         // when
-        Long savedId = diaryRegisterService.writeDiaryRecord(newDiaryRequest);
+        Long savedId = diaryRegisterService.writeDiaryRecord(diaryRegisterRequest);
 
         // then
         Diary findDiary = diaryRepository.findById(savedId).get();
@@ -88,13 +88,13 @@ class DiaryRegisterServiceTest {
     void writeDiaryRecord2() throws Exception {
         // given
         Long productId = savedProduct.getId();
-        NewDiaryRequest newDiaryRequest1 = new NewDiaryRequest(productId, MealType.BREAKFAST, BigDecimal.ONE, "gram", LocalDate.of(2024, 8, 1));
-        diaryRegisterService.writeDiaryRecord(newDiaryRequest1);
+        DiaryRegisterRequest diaryRegisterRequest1 = new DiaryRegisterRequest(productId, MealType.BREAKFAST, BigDecimal.ONE, "gram", LocalDate.of(2024, 8, 1));
+        diaryRegisterService.writeDiaryRecord(diaryRegisterRequest1);
 
-        NewDiaryRequest newDiaryRequest2 = new NewDiaryRequest(productId, MealType.LUNCH, BigDecimal.TEN, "개", LocalDate.of(2024, 8, 1));
+        DiaryRegisterRequest diaryRegisterRequest2 = new DiaryRegisterRequest(productId, MealType.LUNCH, BigDecimal.TEN, "개", LocalDate.of(2024, 8, 1));
 
         // when
-        Long savedId = diaryRegisterService.writeDiaryRecord(newDiaryRequest2);
+        Long savedId = diaryRegisterService.writeDiaryRecord(diaryRegisterRequest2);
 
         // then
         Diary findDiary = diaryRepository.findById(savedId).get();
