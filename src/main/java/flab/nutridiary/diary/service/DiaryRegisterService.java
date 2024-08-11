@@ -12,8 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Slf4j
 @RequiredArgsConstructor
 @Transactional
@@ -27,16 +25,22 @@ public class DiaryRegisterService {
     public DiaryRegisterResponse writeDiaryRecord(DiaryRegisterRequest diaryRegisterRequest) {
         ProductIntakeInfo productIntakeInfo = productIntakeInfoExtractor.extract(diaryRegisterRequest);
         DiaryRecord diaryRecord = DiaryRecord.of(productIntakeInfo, nutritionCalculator);
-        Optional<Diary> diaryOptional = diaryRepository.findByMemberIdAndDate(diaryRegisterRequest.getMemberId(), diaryRegisterRequest.getIntakeDate());
-        if (diaryOptional.isPresent()) {
-            Diary diary = diaryOptional.get();
-            diary.addDiaryRecord(diaryRecord);
-            Diary saved = diaryRepository.save(diary);
-            return DiaryRegisterResponse.of(saved.getId());
-        } else {
-            Diary diary = new Diary(diaryRegisterRequest.getIntakeDate(), diaryRecord);
-            Diary saved = diaryRepository.save(diary);
-            return DiaryRegisterResponse.of(saved.getId());
-        }
+
+        Diary diary = diaryRepository.findByMemberIdAndDate(diaryRegisterRequest.getMemberId(), diaryRegisterRequest.getIntakeDate())
+                .map(existingDiary -> updateDiary(existingDiary, diaryRecord))
+                .orElseGet(() -> createNewDiary(diaryRegisterRequest, diaryRecord));
+
+        Diary saved = diaryRepository.save(diary);
+        return DiaryRegisterResponse.of(saved.getId());
+    }
+
+    private Diary updateDiary(Diary diary, DiaryRecord diaryRecord) {
+        diary.addDiaryRecord(diaryRecord);
+        return diary;
+    }
+
+    private Diary createNewDiary(DiaryRegisterRequest diaryRegisterRequest, DiaryRecord diaryRecord) {
+        return new Diary(diaryRegisterRequest.getIntakeDate(), diaryRecord);
     }
 }
+
