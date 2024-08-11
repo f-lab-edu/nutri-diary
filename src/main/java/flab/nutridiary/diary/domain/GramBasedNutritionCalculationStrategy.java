@@ -2,11 +2,9 @@ package flab.nutridiary.diary.domain;
 
 import flab.nutridiary.product.domain.NutritionFacts;
 import flab.nutridiary.product.domain.NutritionFactsPerGram;
-import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
-@Component
 public class GramBasedNutritionCalculationStrategy implements NutritionCalculationStrategy {
 
     @Override
