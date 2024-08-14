@@ -11,14 +11,12 @@ public class ProductIntakeInfo {
     private final MealType mealType;
     private final String servingUnit;
     private final BigDecimal quantity;
-    private final String ServingUnit;
 
     @Builder
-    public ProductIntakeInfo(Long productId, MealType mealType, String servingUnit, BigDecimal quantity, String ServingUnit) {
+    public ProductIntakeInfo(Long productId, MealType mealType, String servingUnit, BigDecimal quantity) {
         this.productId = productId;
         this.mealType = mealType;
         this.servingUnit = servingUnit;
         this.quantity = quantity;
-        this.ServingUnit = ServingUnit;
     }
 }

@@ -12,7 +12,6 @@ public class ProductIntakeInfoExtractor {
                 .mealType(diaryRegisterRequest.getMealType())
                 .servingUnit(diaryRegisterRequest.getServingUnit())
                 .quantity(diaryRegisterRequest.getQuantity())
-                .ServingUnit(diaryRegisterRequest.getServingUnit())
                 .build();
     }
 }
