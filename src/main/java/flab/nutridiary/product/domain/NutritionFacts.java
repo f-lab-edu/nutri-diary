@@ -38,19 +38,32 @@ public class NutritionFacts {
 
     public NutritionFactsPerGram calculateNutritionFactsPerGram() {
         return NutritionFactsPerGram.builder()
-                .productCaloriesPerGram(productTotalCalories.divide(productTotalWeightGram, SCALE, ROUNDING_MODE))
-                .productCarbohydratePerGram(productTotalCarbohydrate.divide(productTotalWeightGram, SCALE, ROUNDING_MODE))
-                .productProteinPerGram(productTotalProtein.divide(productTotalWeightGram, SCALE, ROUNDING_MODE))
-                .productFatPerGram(productTotalFat.divide(productTotalWeightGram, SCALE, ROUNDING_MODE))
+                .productCaloriesPerGram(stripIfNecessary(
+                        productTotalCalories.divide(productTotalWeightGram, SCALE, ROUNDING_MODE)))
+                .productCarbohydratePerGram(stripIfNecessary(
+                        productTotalCarbohydrate.divide(productTotalWeightGram, SCALE, ROUNDING_MODE)))
+                .productProteinPerGram(stripIfNecessary(
+                        productTotalProtein.divide(productTotalWeightGram, SCALE, ROUNDING_MODE)))
+                .productFatPerGram(stripIfNecessary(
+                        productTotalFat.divide(productTotalWeightGram, SCALE, ROUNDING_MODE)))
                 .build();
     }
 
     public NutritionFactsPerOneServing calculateNutritionFactsPerOneServingUnit() {
         return NutritionFactsPerOneServing.builder()
-                .productCaloriesPerOneServing(productTotalCalories.divide(productServingSize, SCALE, ROUNDING_MODE))
-                .productCarbohydratePerOneServing(productTotalCarbohydrate.divide(productServingSize, SCALE, ROUNDING_MODE))
-                .productProteinPerOneServing(productTotalProtein.divide(productServingSize, SCALE, ROUNDING_MODE))
-                .productFatPerOneServing(productTotalFat.divide(productServingSize, SCALE, ROUNDING_MODE))
+                .productCaloriesPerOneServing(stripIfNecessary(
+                        productTotalCalories.divide(productServingSize, SCALE, ROUNDING_MODE)))
+                .productCarbohydratePerOneServing(stripIfNecessary(
+                        productTotalCarbohydrate.divide(productServingSize, SCALE, ROUNDING_MODE)))
+                .productProteinPerOneServing(stripIfNecessary(
+                        productTotalProtein.divide(productServingSize, SCALE, ROUNDING_MODE)))
+                .productFatPerOneServing(stripIfNecessary(
+                        productTotalFat.divide(productServingSize, SCALE, ROUNDING_MODE)))
                 .build();
+    }
+
+    private BigDecimal stripIfNecessary(BigDecimal value) {
+        BigDecimal strippedValue = value.stripTrailingZeros();
+        return strippedValue.scale() <= 0 ? strippedValue.setScale(0) : value;
     }
 }
