@@ -64,6 +64,6 @@ public class NutritionFacts {
 
     private BigDecimal stripIfNecessary(BigDecimal value) {
         BigDecimal strippedValue = value.stripTrailingZeros();
-        return strippedValue.scale() <= 0 ? strippedValue.setScale(0) : value;
+        return strippedValue.scale() <= 0 ? strippedValue.setScale(0) : strippedValue;
     }
 }

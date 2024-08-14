@@ -4,9 +4,11 @@ import flab.nutridiary.diary.domain.CalculatedNutrition;
 import flab.nutridiary.diary.domain.ProductIntakeInfo;
 import flab.nutridiary.product.domain.NutritionFacts;
 import flab.nutridiary.product.domain.NutritionFactsPerGram;
+import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 
+@Slf4j
 public class GramBasedNutritionCalculationStrategy implements NutritionCalculationStrategy {
 
     @Override
@@ -27,6 +29,6 @@ public class GramBasedNutritionCalculationStrategy implements NutritionCalculati
 
     private BigDecimal stripIfNecessary(BigDecimal value) {
         BigDecimal strippedValue = value.stripTrailingZeros();
-        return strippedValue.scale() <= 0 ? strippedValue.setScale(0) : value;
+        return strippedValue.scale() <= 0 ? strippedValue.setScale(0) : strippedValue;
     }
 }
