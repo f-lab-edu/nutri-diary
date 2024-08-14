@@ -1,5 +1,6 @@
 package flab.nutridiary.diary.domain;
 
+import flab.nutridiary.diary.domain.calculator.NutritionCalculator;
 import lombok.*;
 
 import java.math.BigDecimal;

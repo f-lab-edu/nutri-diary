@@ -1,4 +1,4 @@
-package flab.nutridiary.diary.domain;
+package flab.nutridiary.diary.domain.calculator;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

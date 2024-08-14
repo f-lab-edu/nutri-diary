@@ -2,7 +2,7 @@ package flab.nutridiary.diary.service;
 
 import flab.nutridiary.diary.domain.Diary;
 import flab.nutridiary.diary.domain.DiaryRecord;
-import flab.nutridiary.diary.domain.NutritionCalculator;
+import flab.nutridiary.diary.domain.calculator.NutritionCalculator;
 import flab.nutridiary.diary.domain.ProductIntakeInfo;
 import flab.nutridiary.diary.dto.DiaryRegisterRequest;
 import flab.nutridiary.diary.dto.DiaryRegisterResponse;

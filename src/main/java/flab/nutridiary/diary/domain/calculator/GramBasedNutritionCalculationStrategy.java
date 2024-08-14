@@ -1,5 +1,7 @@
-package flab.nutridiary.diary.domain;
+package flab.nutridiary.diary.domain.calculator;
 
+import flab.nutridiary.diary.domain.CalculatedNutrition;
+import flab.nutridiary.diary.domain.ProductIntakeInfo;
 import flab.nutridiary.product.domain.NutritionFacts;
 import flab.nutridiary.product.domain.NutritionFactsPerGram;
 
