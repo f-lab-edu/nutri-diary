@@ -14,10 +14,19 @@ public class DefaultNutritionCalculationStrategy implements NutritionCalculation
         NutritionFactsPerOneServing nutritionFactsPerOneServing = nutritionFacts.calculateNutritionFactsPerOneServingUnit();
         BigDecimal quantity = productIntakeInfo.getQuantity();
         return CalculatedNutrition.builder()
-                .calories(nutritionFactsPerOneServing.getProductCaloriesPerOneServing().multiply(quantity))
-                .carbohydrate(nutritionFactsPerOneServing.getProductCarbohydratePerOneServing().multiply(quantity))
-                .protein(nutritionFactsPerOneServing.getProductProteinPerOneServing().multiply(quantity))
-                .fat(nutritionFactsPerOneServing.getProductFatPerOneServing().multiply(quantity))
+                .calories(stripIfNecessary(
+                        nutritionFactsPerOneServing.getProductCaloriesPerOneServing().multiply(quantity)))
+                .carbohydrate(stripIfNecessary(
+                        nutritionFactsPerOneServing.getProductCarbohydratePerOneServing().multiply(quantity)))
+                .protein(stripIfNecessary(
+                        nutritionFactsPerOneServing.getProductProteinPerOneServing().multiply(quantity)))
+                .fat(stripIfNecessary(
+                        nutritionFactsPerOneServing.getProductFatPerOneServing().multiply(quantity)))
                 .build();
+    }
+
+    private BigDecimal stripIfNecessary(BigDecimal value) {
+        BigDecimal strippedValue = value.stripTrailingZeros();
+        return strippedValue.scale() <= 0 ? strippedValue.setScale(0) : value;
     }
 }

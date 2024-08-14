@@ -14,10 +14,19 @@ public class GramBasedNutritionCalculationStrategy implements NutritionCalculati
         NutritionFactsPerGram nutritionFactsPerGram = nutritionFacts.calculateNutritionFactsPerGram();
         BigDecimal quantity = productIntakeInfo.getQuantity();
         return CalculatedNutrition.builder()
-                .calories(nutritionFactsPerGram.getProductCaloriesPerGram().multiply(quantity))
-                .carbohydrate(nutritionFactsPerGram.getProductCarbohydratePerGram().multiply(quantity))
-                .protein(nutritionFactsPerGram.getProductProteinPerGram().multiply(quantity))
-                .fat(nutritionFactsPerGram.getProductFatPerGram().multiply(quantity))
+                .calories(stripIfNecessary(
+                        nutritionFactsPerGram.getProductCaloriesPerGram().multiply(quantity)))
+                .carbohydrate(stripIfNecessary(
+                        nutritionFactsPerGram.getProductCarbohydratePerGram().multiply(quantity)))
+                .protein(stripIfNecessary(
+                        nutritionFactsPerGram.getProductProteinPerGram().multiply(quantity)))
+                .fat(stripIfNecessary(
+                        nutritionFactsPerGram.getProductFatPerGram().multiply(quantity)))
                 .build();
+    }
+
+    private BigDecimal stripIfNecessary(BigDecimal value) {
+        BigDecimal strippedValue = value.stripTrailingZeros();
+        return strippedValue.scale() <= 0 ? strippedValue.setScale(0) : value;
     }
 }
