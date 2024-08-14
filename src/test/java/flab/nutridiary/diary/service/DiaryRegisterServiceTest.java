@@ -1,8 +1,6 @@
 package flab.nutridiary.diary.service;
 
-import flab.nutridiary.diary.domain.Diary;
-import flab.nutridiary.diary.domain.DiaryRecord;
-import flab.nutridiary.diary.domain.MealType;
+import flab.nutridiary.diary.domain.*;
 import flab.nutridiary.diary.dto.DiaryRegisterRequest;
 import flab.nutridiary.diary.dto.DiaryRegisterResponse;
 import flab.nutridiary.diary.repository.DiaryRepository;
@@ -18,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 import static java.math.BigDecimal.valueOf;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -67,22 +65,27 @@ class DiaryRegisterServiceTest {
 
         // when
         DiaryRegisterResponse diaryRegisterResponse = diaryRegisterService.writeDiaryRecord(diaryRegisterRequest);
-        Long savedId = diaryRegisterResponse.getDiaryId();
+        Long savedDiaryId = diaryRegisterResponse.getDiaryId();
 
         // then
-        Diary findDiary = diaryRepository.findById(savedId).get();
-        List<DiaryRecord> diaryRecords = findDiary.getDiaryRecords();
-        DiaryRecord diaryRecord = diaryRecords.get(0);
+        Diary findDiary = diaryRepository.findById(savedDiaryId).get();
 
-        assertThat(findDiary.getMemberId()).isEqualTo(1L);
-        assertThat(findDiary.getDiaryDate()).isEqualTo(LocalDate.of(2024, 8, 1));
-        assertThat(findDiary.getDiaryRecords().size()).isEqualTo(1);
-        assertThat(diaryRecord.getMealType()).isEqualTo(MealType.BREAKFAST);
-        assertThat(diaryRecord.getQuantity()).isEqualTo(BigDecimal.ONE);
-        assertThat(diaryRecord.getServingUnit()).isEqualTo("gram");
-        assertThat(diaryRecord.getCalculatedNutrition().getCalories()).isEqualTo(BigDecimal.valueOf(1.0));
-        assertThat(diaryRecord.getCalculatedNutrition().getCarbohydrate()).isEqualTo(BigDecimal.valueOf(0.1));
-        assertThat(diaryRecord.getCalculatedNutrition().getProtein()).isEqualTo(BigDecimal.valueOf(0.2));
+        DiaryRecord expectedDiaryRecord = DiaryRecord.builder()
+                .productId(productId)
+                .mealType(MealType.BREAKFAST)
+                .quantity(BigDecimal.ONE)
+                .servingUnit("gram")
+                .calculatedNutrition(CalculatedNutrition.builder()
+                        .calories(BigDecimal.valueOf(1))
+                        .carbohydrate(BigDecimal.valueOf(0.1))
+                        .protein(BigDecimal.valueOf(0.2))
+                        .fat(BigDecimal.valueOf(0.3))
+                        .build())
+                .build();
+
+        assertThat(findDiary)
+                .extracting("diaryDate", "diaryRecords")
+                .contains(LocalDate.of(2024, 8, 1), Set.of(expectedDiaryRecord));
     }
 
     @DisplayName("다이어리에 섭취한 식품을 기록한다. - 기존 다이어리에 추가.")
@@ -93,7 +96,7 @@ class DiaryRegisterServiceTest {
         DiaryRegisterRequest diaryRegisterRequest1 = new DiaryRegisterRequest(productId, MealType.BREAKFAST, BigDecimal.ONE, "gram", LocalDate.of(2024, 8, 1));
         diaryRegisterService.writeDiaryRecord(diaryRegisterRequest1);
 
-        DiaryRegisterRequest diaryRegisterRequest2 = new DiaryRegisterRequest(productId, MealType.LUNCH, BigDecimal.TEN, "개", LocalDate.of(2024, 8, 1));
+        DiaryRegisterRequest diaryRegisterRequest2 = new DiaryRegisterRequest(productId, MealType.LUNCH, BigDecimal.TEN, "컵", LocalDate.of(2024, 8, 1));
 
         // when
         DiaryRegisterResponse diaryRegisterResponse = diaryRegisterService.writeDiaryRecord(diaryRegisterRequest2);
@@ -101,8 +104,38 @@ class DiaryRegisterServiceTest {
 
         // then
         Diary findDiary = diaryRepository.findById(savedId).get();
-        List<DiaryRecord> diaryRecords = findDiary.getDiaryRecords();
-        assertThat(diaryRecords.size()).isEqualTo(2);
+
+        DiaryRecord expectedDiaryRecord1 = DiaryRecord.builder()
+                .productId(productId)
+                .mealType(MealType.BREAKFAST)
+                .quantity(BigDecimal.ONE)
+                .servingUnit("gram")
+                .calculatedNutrition(CalculatedNutrition.builder()
+                        .calories(BigDecimal.valueOf(1))
+                        .carbohydrate(BigDecimal.valueOf(0.1))
+                        .protein(BigDecimal.valueOf(0.2))
+                        .fat(BigDecimal.valueOf(0.3))
+                        .build())
+                .build();
+
+        DiaryRecord expectedDiaryRecord2 = DiaryRecord.builder()
+                .productId(productId)
+                .mealType(MealType.LUNCH)
+                .quantity(BigDecimal.TEN)
+                .servingUnit("컵")
+                .calculatedNutrition(CalculatedNutrition.builder()
+                        .calories(BigDecimal.valueOf(1000))
+                        .carbohydrate(BigDecimal.valueOf(100))
+                        .protein(BigDecimal.valueOf(200))
+                        .fat(BigDecimal.valueOf(300))
+                        .build())
+                .build();
+
+        assertThat(findDiary)
+                .extracting("diaryDate", "diaryRecords")
+                .contains(LocalDate.of(2024, 8, 1), Set.of(expectedDiaryRecord2, expectedDiaryRecord1));
+
+
     }
 
 }

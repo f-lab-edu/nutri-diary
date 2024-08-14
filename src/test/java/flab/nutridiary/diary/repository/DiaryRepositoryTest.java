@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,11 +23,13 @@ class DiaryRepositoryTest {
     @Autowired
     private DiaryRepository diaryRepository;
 
-    @DisplayName("memberId 와 date 로 Diary 조회")
+    private Long memberId = 1L;
+
+    @DisplayName("memberId 와 date 로 사용자 Diary 를 조회한다.")
     @Test
     void findByMemberIdAndDate() throws Exception {
+
         // given
-        Long memberId = 1L;
         LocalDate date = LocalDate.of(2024, 8, 1);
         CalculatedNutrition calculatedNutrition = CalculatedNutrition.builder()
                 .calories(BigDecimal.valueOf(100))
@@ -48,19 +51,14 @@ class DiaryRepositoryTest {
         Diary findDiary = diaryRepository.findByMemberIdAndDate(memberId, date).get();
 
         // then
-        assertThat(findDiary.getDiaryDate()).isEqualTo(date);
-        assertThat(findDiary.getDiaryRecords().get(0).getMealType()).isEqualTo(MealType.BREAKFAST);
-        assertThat(findDiary.getDiaryRecords().get(0).getQuantity()).isEqualTo(BigDecimal.ONE);
-        assertThat(findDiary.getDiaryRecords().get(0).getServingUnit()).isEqualTo("개");
-        assertThat(findDiary.getDiaryRecords().get(0).getCalculatedNutrition().getCalories()).isEqualTo(BigDecimal.valueOf(100));
-        assertThat(findDiary.getDiaryRecords().get(0).getCalculatedNutrition().getCarbohydrate()).isEqualTo(BigDecimal.valueOf(10));
-        assertThat(findDiary.getDiaryRecords().get(0).getCalculatedNutrition().getProtein()).isEqualTo(BigDecimal.valueOf(20));
-        assertThat(findDiary.getDiaryRecords().get(0).getCalculatedNutrition().getFat()).isEqualTo(BigDecimal.valueOf(30));
+        assertThat(findDiary).extracting("memberId", "diaryDate", "diaryRecords")
+                .containsExactly(memberId, date, Set.of(diaryRecord));
     }
 
-    @DisplayName("새로운 Diary 저장")
+    @DisplayName("Diary 의 id 로 다이어리를 조회한다.")
     @Test
-    void save() throws Exception {
+    void findById() throws Exception {
+        // given
         // given
         LocalDate date = LocalDate.of(2024, 8, 1);
         CalculatedNutrition calculatedNutrition = CalculatedNutrition.builder()
@@ -84,14 +82,7 @@ class DiaryRepositoryTest {
         // then
         Long id = saved.getId();
         Diary findDiary = diaryRepository.findById(id).get();
-
-        assertThat(findDiary.getDiaryDate()).isEqualTo(date);
-        assertThat(findDiary.getDiaryRecords().get(0).getMealType()).isEqualTo(MealType.BREAKFAST);
-        assertThat(findDiary.getDiaryRecords().get(0).getQuantity()).isEqualTo(BigDecimal.ONE);
-        assertThat(findDiary.getDiaryRecords().get(0).getServingUnit()).isEqualTo("개");
-        assertThat(findDiary.getDiaryRecords().get(0).getCalculatedNutrition().getCalories()).isEqualTo(BigDecimal.valueOf(100));
-        assertThat(findDiary.getDiaryRecords().get(0).getCalculatedNutrition().getCarbohydrate()).isEqualTo(BigDecimal.valueOf(10));
-        assertThat(findDiary.getDiaryRecords().get(0).getCalculatedNutrition().getProtein()).isEqualTo(BigDecimal.valueOf(20));
-        assertThat(findDiary.getDiaryRecords().get(0).getCalculatedNutrition().getFat()).isEqualTo(BigDecimal.valueOf(30));
+        assertThat(findDiary).extracting("memberId", "diaryDate", "diaryRecords")
+                .containsExactly(memberId, date, Set.of(diaryRecord));
     }
 }

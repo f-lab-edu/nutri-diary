@@ -1,12 +1,10 @@
 package flab.nutridiary.diary.domain;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.math.BigDecimal;
 
+@EqualsAndHashCode
 @ToString
 @Getter
 @NoArgsConstructor

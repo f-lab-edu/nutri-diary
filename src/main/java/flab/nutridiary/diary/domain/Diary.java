@@ -8,8 +8,8 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @ToString
 @Getter
@@ -24,8 +24,8 @@ public class Diary {
 
     private LocalDate diaryDate;
 
-    @MappedCollection(idColumn = "DIARY_ID", keyColumn = "DIARY_RECORD_ID")
-    private List<DiaryRecord> diaryRecords = new ArrayList<>();
+    @MappedCollection(idColumn = "DIARY_ID")
+    private Set<DiaryRecord> diaryRecords = new HashSet<>();
 
     public Diary(LocalDate diaryDate, DiaryRecord diaryRecord) {
         this.diaryDate = diaryDate;

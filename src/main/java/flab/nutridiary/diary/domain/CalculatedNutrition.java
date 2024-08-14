@@ -1,11 +1,13 @@
 package flab.nutridiary.diary.domain;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
 
+@EqualsAndHashCode
 @Getter
 @ToString
 public class CalculatedNutrition {
