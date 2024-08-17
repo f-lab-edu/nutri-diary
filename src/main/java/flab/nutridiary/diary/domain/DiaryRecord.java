@@ -1,7 +1,9 @@
 package flab.nutridiary.diary.domain;
 
 import flab.nutridiary.diary.domain.calculator.NutritionCalculator;
+import flab.nutridiary.product.domain.Product;
 import lombok.*;
+import org.springframework.data.jdbc.core.mapping.AggregateReference;
 
 import java.math.BigDecimal;
 
@@ -10,7 +12,7 @@ import java.math.BigDecimal;
 @Getter
 @NoArgsConstructor
 public class DiaryRecord {
-    private Long productId;
+    private AggregateReference<Product, Long> productId;
 
     private MealType mealType;
 
@@ -22,7 +24,7 @@ public class DiaryRecord {
 
     @Builder
     public DiaryRecord(Long productId, MealType mealType, BigDecimal quantity, String servingUnit, CalculatedNutrition calculatedNutrition) {
-        this.productId = productId;
+        this.productId = AggregateReference.to(productId);
         this.mealType = mealType;
         this.quantity = quantity;
         this.servingUnit = servingUnit;
