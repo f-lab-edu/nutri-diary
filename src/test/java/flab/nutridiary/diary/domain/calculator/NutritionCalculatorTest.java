@@ -69,6 +69,7 @@ class NutritionCalculatorTest {
         ProductIntakeInfo productIntakeInfo = ProductIntakeInfo.builder()
                 .productId(savedProduct1.getId())
                 .quantity(BigDecimal.valueOf(195))
+                .mealType("BREAKFAST")
                 .servingUnit("gram")
                 .build();
 
@@ -92,6 +93,7 @@ class NutritionCalculatorTest {
         ProductIntakeInfo productIntakeInfo = ProductIntakeInfo.builder()
                 .productId(savedProduct2.getId())
                 .quantity(BigDecimal.valueOf(2))
+                .mealType("BREAKFAST")
                 .servingUnit("개")
                 .build();
 

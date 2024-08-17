@@ -1,7 +1,6 @@
 package flab.nutridiary.diary.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import flab.nutridiary.diary.domain.MealType;
 import flab.nutridiary.diary.dto.DiaryRegisterRequest;
 import flab.nutridiary.product.domain.NutritionFacts;
 import flab.nutridiary.product.domain.Product;
@@ -63,7 +62,7 @@ class DiaryControllerTest {
     @Test
     void createDiary() throws Exception {
         // given
-        DiaryRegisterRequest diaryRegisterRequest = new DiaryRegisterRequest(savedProductId, MealType.BREAKFAST, BigDecimal.valueOf(1), "gram", LocalDate.of(2024, 8, 10));
+        DiaryRegisterRequest diaryRegisterRequest = new DiaryRegisterRequest(savedProductId, "BREAKFAST", BigDecimal.valueOf(1), "gram", LocalDate.of(2024, 8, 10));
 
         // when then
         mockMvc.perform(

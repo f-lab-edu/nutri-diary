@@ -19,7 +19,7 @@ class ProductIntakeInfoExtractorTest {
     @Test
     void extract() throws Exception {
         // given
-        DiaryRegisterRequest diaryRegisterRequest = new DiaryRegisterRequest(2L, MealType.BREAKFAST, BigDecimal.valueOf(25), "gram", LocalDate.of(2021, 8, 1));
+        DiaryRegisterRequest diaryRegisterRequest = new DiaryRegisterRequest(2L, "BREAKFAST", BigDecimal.valueOf(25), "gram", LocalDate.of(2021, 8, 1));
 
         // when
         ProductIntakeInfo productIntakeInfo = productIntakeInfoExtractor.extract(diaryRegisterRequest);

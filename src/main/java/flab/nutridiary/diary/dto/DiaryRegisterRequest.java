@@ -1,6 +1,5 @@
 package flab.nutridiary.diary.dto;
 
-import flab.nutridiary.diary.domain.MealType;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -17,8 +16,8 @@ public class DiaryRegisterRequest {
 
     private Long memberId = 1L;
 
-    @NotNull(message = "식사 타입을 입력해주세요.")
-    private MealType mealType;
+    //@EnumValidator(enumClass = MealType.class, message = "올바른 식사 타입을 입력해주세요.")
+    private String mealType;
 
     @NotNull(message = "섭취량을 입력해주세요.")
     @Min(value = 0, message = "섭취량은 0 이상이어야 합니다.")
@@ -30,7 +29,7 @@ public class DiaryRegisterRequest {
     @NotNull(message = "섭취 날짜를 입력해주세요.")
     private LocalDate intakeDate;
 
-    public DiaryRegisterRequest(Long productId, MealType mealType, BigDecimal quantity, String servingUnit, LocalDate intakeDate) {
+    public DiaryRegisterRequest(Long productId, String mealType, BigDecimal quantity, String servingUnit, LocalDate intakeDate) {
         this.productId = productId;
         this.mealType = mealType;
         this.quantity = quantity;

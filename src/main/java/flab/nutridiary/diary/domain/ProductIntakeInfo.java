@@ -13,9 +13,9 @@ public class ProductIntakeInfo {
     private final BigDecimal quantity;
 
     @Builder
-    public ProductIntakeInfo(Long productId, MealType mealType, String servingUnit, BigDecimal quantity) {
+    public ProductIntakeInfo(Long productId, String mealType, String servingUnit, BigDecimal quantity) {
         this.productId = productId;
-        this.mealType = mealType;
+        this.mealType = MealType.valueOf(mealType);
         this.servingUnit = servingUnit;
         this.quantity = quantity;
     }

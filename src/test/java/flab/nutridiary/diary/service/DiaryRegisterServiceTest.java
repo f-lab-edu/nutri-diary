@@ -61,7 +61,7 @@ class DiaryRegisterServiceTest {
     void writeDiaryRecord() throws Exception {
         // given
         Long productId = savedProduct.getId();
-        DiaryRegisterRequest diaryRegisterRequest = new DiaryRegisterRequest(productId, MealType.BREAKFAST, BigDecimal.ONE, "gram", LocalDate.of(2024, 8, 1));
+        DiaryRegisterRequest diaryRegisterRequest = new DiaryRegisterRequest(productId, "BREAKFAST", BigDecimal.ONE, "gram", LocalDate.of(2024, 8, 1));
 
         // when
         DiaryRegisterResponse diaryRegisterResponse = diaryRegisterService.writeDiaryRecord(diaryRegisterRequest);
@@ -93,10 +93,10 @@ class DiaryRegisterServiceTest {
     void writeDiaryRecord2() throws Exception {
         // given
         Long productId = savedProduct.getId();
-        DiaryRegisterRequest diaryRegisterRequest1 = new DiaryRegisterRequest(productId, MealType.BREAKFAST, BigDecimal.ONE, "gram", LocalDate.of(2024, 8, 1));
+        DiaryRegisterRequest diaryRegisterRequest1 = new DiaryRegisterRequest(productId, "BREAKFAST", BigDecimal.ONE, "gram", LocalDate.of(2024, 8, 1));
         diaryRegisterService.writeDiaryRecord(diaryRegisterRequest1);
 
-        DiaryRegisterRequest diaryRegisterRequest2 = new DiaryRegisterRequest(productId, MealType.LUNCH, BigDecimal.TEN, "컵", LocalDate.of(2024, 8, 1));
+        DiaryRegisterRequest diaryRegisterRequest2 = new DiaryRegisterRequest(productId, "LUNCH", BigDecimal.TEN, "컵", LocalDate.of(2024, 8, 1));
 
         // when
         DiaryRegisterResponse diaryRegisterResponse = diaryRegisterService.writeDiaryRecord(diaryRegisterRequest2);
