@@ -14,7 +14,7 @@ public class DiaryRepositoryImpl implements DiaryRepository{
     private final DiaryCrudRepository diaryCrudRepository;
 
     @Override
-    public Optional<Diary> findByMemberIdAndDate(Long memberId, LocalDate date) {
+    public Optional<Diary> findByMemberIdAndDiaryDate(Long memberId, LocalDate date) {
         return diaryCrudRepository.findByMemberIdAndDiaryDate(memberId, date);
     }
 

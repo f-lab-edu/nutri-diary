@@ -27,7 +27,7 @@ class DiaryRepositoryTest {
 
     @DisplayName("memberId 와 date 로 사용자 Diary 를 조회한다.")
     @Test
-    void findByMemberIdAndDate() throws Exception {
+    void findByMemberIdAndDiaryDate() throws Exception {
 
         // given
         LocalDate date = LocalDate.of(2024, 8, 1);
@@ -48,7 +48,7 @@ class DiaryRepositoryTest {
         diaryRepository.save(diary);
 
         // when
-        Diary findDiary = diaryRepository.findByMemberIdAndDate(memberId, date).get();
+        Diary findDiary = diaryRepository.findByMemberIdAndDiaryDate(memberId, date).get();
 
         // then
         assertThat(findDiary).extracting("memberId", "diaryDate", "diaryRecords")

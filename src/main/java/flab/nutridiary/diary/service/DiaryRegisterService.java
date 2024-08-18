@@ -26,7 +26,7 @@ public class DiaryRegisterService {
         ProductIntakeInfo productIntakeInfo = productIntakeInfoExtractor.extract(diaryRegisterRequest);
         DiaryRecord diaryRecord = DiaryRecord.of(productIntakeInfo, nutritionCalculator);
 
-        Diary diary = diaryRepository.findByMemberIdAndDate(diaryRegisterRequest.getMemberId(), diaryRegisterRequest.getIntakeDate())
+        Diary diary = diaryRepository.findByMemberIdAndDiaryDate(diaryRegisterRequest.getMemberId(), diaryRegisterRequest.getIntakeDate())
                 .map(existingDiary -> updateDiary(existingDiary, diaryRecord))
                 .orElseGet(() -> createNewDiary(diaryRegisterRequest, diaryRecord));
 
