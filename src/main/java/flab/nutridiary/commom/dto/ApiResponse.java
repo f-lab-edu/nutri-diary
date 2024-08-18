@@ -25,6 +25,10 @@ public class ApiResponse<T> {
         return new ApiResponse<>(statusCode, message, null);
     }
 
+    public static <T> ApiResponse<T> bizException(Integer statusCode, String message, T errors) {
+        return new ApiResponse<>(statusCode, message, errors);
+    }
+
     public static ApiResponse<Void> sysException() {
         return new ApiResponse<>(SYSTEM_ERROR.getStatusCode(), SYSTEM_ERROR.getMessage(), null);
     }
