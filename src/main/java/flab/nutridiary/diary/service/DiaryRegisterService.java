@@ -2,7 +2,7 @@ package flab.nutridiary.diary.service;
 
 import flab.nutridiary.diary.domain.Diary;
 import flab.nutridiary.diary.domain.DiaryRecord;
-import flab.nutridiary.diary.domain.calculator.NutritionCalculator;
+import flab.nutridiary.diary.domain.NutritionCalculator;
 import flab.nutridiary.diary.domain.ProductIntakeInfo;
 import flab.nutridiary.diary.dto.DiaryRegisterRequest;
 import flab.nutridiary.diary.dto.DiaryRegisterResponse;
@@ -27,16 +27,14 @@ public class DiaryRegisterService {
         DiaryRecord diaryRecord = DiaryRecord.of(productIntakeInfo, nutritionCalculator);
 
         Diary diary = diaryRepository.findByMemberIdAndDiaryDate(diaryRegisterRequest.getMemberId(), diaryRegisterRequest.getIntakeDate())
-                .map(existingDiary -> updateDiary(existingDiary, diaryRecord))
+                .map(existingDiary -> {
+                    existingDiary.addDiaryRecord(diaryRecord);
+                    return existingDiary;
+                })
                 .orElseGet(() -> createNewDiary(diaryRegisterRequest, diaryRecord));
 
         Diary saved = diaryRepository.save(diary);
         return DiaryRegisterResponse.of(saved.getId());
-    }
-
-    private Diary updateDiary(Diary diary, DiaryRecord diaryRecord) {
-        diary.addDiaryRecord(diaryRecord);
-        return diary;
     }
 
     private Diary createNewDiary(DiaryRegisterRequest diaryRegisterRequest, DiaryRecord diaryRecord) {

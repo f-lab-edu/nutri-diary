@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ProductIntakeInfoMapperTest {
 
-   private ProductIntakeInfoMapper productIntakeInfoMapper = new ProductIntakeInfoMapper();
+    private ProductIntakeInfoMapper productIntakeInfoMapper = new ProductIntakeInfoMapper();
 
     @DisplayName("DiaryRegisterRequest로부터 ProductIntakeInfo를 추출한다.")
     @Test

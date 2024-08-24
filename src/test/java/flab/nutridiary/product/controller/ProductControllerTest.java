@@ -42,7 +42,7 @@ class ProductControllerTest {
         NewProductRequest newProductRequest = NewProductRequest.builder()
                 .productName("상품명")
                 .corpName("업체명")
-                .servingSize(BigDecimal.ONE)
+                .servingSize(BigDecimal.TWO)
                 .servingUnit("컵")
                 .totalWeightGram(BigDecimal.valueOf(90))
                 .calories(BigDecimal.valueOf(120))
@@ -53,9 +53,9 @@ class ProductControllerTest {
 
         // when
         mockMvc.perform(
-                post("/product/new")
-                        .content(objectMapper.writeValueAsString(newProductRequest))
-                        .contentType(MediaType.APPLICATION_JSON)
+                        post("/product/new")
+                                .content(objectMapper.writeValueAsString(newProductRequest))
+                                .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.statusCode").value(2001))
@@ -78,7 +78,7 @@ class ProductControllerTest {
                 .productName("촉촉한초코칩쿠키")
                 .corpName("오리온")
                 .servingSize(BigDecimal.ONE)
-                .servingUnit("컵")
+                .servingUnit("개")
                 .totalWeightGram(BigDecimal.valueOf(90))
                 .calories(BigDecimal.valueOf(120))
                 .carbohydrate(BigDecimal.valueOf(15.5))

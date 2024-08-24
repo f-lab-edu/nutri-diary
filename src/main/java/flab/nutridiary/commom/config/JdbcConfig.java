@@ -1,8 +1,8 @@
 package flab.nutridiary.commom.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import flab.nutridiary.diary.domain.converter.CalculatedNutritionToJsonConverter;
-import flab.nutridiary.diary.domain.converter.JsonToCalculatedNutritionConverter;
+import flab.nutridiary.commom.generic.converter.JsonToNutritionConverter;
+import flab.nutridiary.commom.generic.converter.NutritionToJsonConverter;
 import flab.nutridiary.product.domain.converter.JsonToNutritionFactsConverter;
 import flab.nutridiary.product.domain.converter.NutritionFactsToJsonConverter;
 import org.springframework.context.annotation.Bean;
@@ -21,8 +21,8 @@ public class JdbcConfig extends AbstractJdbcConfiguration {
         return new JdbcCustomConversions(Arrays.asList(
                 new NutritionFactsToJsonConverter(objectMapper),
                 new JsonToNutritionFactsConverter(objectMapper),
-                new CalculatedNutritionToJsonConverter(objectMapper),
-                new JsonToCalculatedNutritionConverter(objectMapper)
+                new NutritionToJsonConverter(objectMapper),
+                new JsonToNutritionConverter(objectMapper)
         ));
     }
 }

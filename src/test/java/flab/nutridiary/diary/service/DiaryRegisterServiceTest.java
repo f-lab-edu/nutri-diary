@@ -1,6 +1,9 @@
 package flab.nutridiary.diary.service;
 
-import flab.nutridiary.diary.domain.*;
+import flab.nutridiary.commom.generic.Nutrition;
+import flab.nutridiary.diary.domain.Diary;
+import flab.nutridiary.diary.domain.DiaryRecord;
+import flab.nutridiary.diary.domain.MealType;
 import flab.nutridiary.diary.dto.DiaryRegisterRequest;
 import flab.nutridiary.diary.dto.DiaryRegisterResponse;
 import flab.nutridiary.diary.repository.DiaryRepository;
@@ -31,17 +34,15 @@ class DiaryRegisterServiceTest {
     private ProductRepository productRepository;
     @Autowired
     private DiaryRepository diaryRepository;
+
     private Product savedProduct;
 
     @BeforeEach
     void init() {
         // given
         NutritionFacts nutritionFacts = NutritionFacts.builder()
-                .productTotalCalories(valueOf(100))
-                .productTotalCarbohydrate(valueOf(10))
-                .productTotalProtein(valueOf(20))
-                .productTotalFat(valueOf(30))
-                .productServingSize(valueOf(1))
+                .totalNutrition(Nutrition.of(100, 10, 20, 30))
+                .productServingSize(valueOf(2))
                 .productServingUnit("컵")
                 .productTotalWeightGram(valueOf(100))
                 .build();
@@ -75,12 +76,7 @@ class DiaryRegisterServiceTest {
                 .mealType(MealType.BREAKFAST)
                 .quantity(BigDecimal.ONE)
                 .servingUnit("gram")
-                .calculatedNutrition(CalculatedNutrition.builder()
-                        .calories(BigDecimal.valueOf(1))
-                        .carbohydrate(BigDecimal.valueOf(0.1))
-                        .protein(BigDecimal.valueOf(0.2))
-                        .fat(BigDecimal.valueOf(0.3))
-                        .build())
+                .calculatedNutrition(Nutrition.of(1, 0.1, 0.2, 0.3))
                 .build();
 
         assertThat(findDiary)
@@ -88,7 +84,7 @@ class DiaryRegisterServiceTest {
                 .contains(LocalDate.of(2024, 8, 1), Set.of(expectedDiaryRecord));
     }
 
-    @DisplayName("다이어리에 섭취한 식품을 기록한다. - 기존 다이어리에 추가.")
+    @DisplayName("기존의 다이어리에 섭취한 식품을 기록한다.")
     @Test
     void writeDiaryRecord2() throws Exception {
         // given
@@ -110,12 +106,7 @@ class DiaryRegisterServiceTest {
                 .mealType(MealType.BREAKFAST)
                 .quantity(BigDecimal.ONE)
                 .servingUnit("gram")
-                .calculatedNutrition(CalculatedNutrition.builder()
-                        .calories(BigDecimal.valueOf(1))
-                        .carbohydrate(BigDecimal.valueOf(0.1))
-                        .protein(BigDecimal.valueOf(0.2))
-                        .fat(BigDecimal.valueOf(0.3))
-                        .build())
+                .calculatedNutrition(Nutrition.of(1, 0.1, 0.2, 0.3))
                 .build();
 
         DiaryRecord expectedDiaryRecord2 = DiaryRecord.builder()
@@ -123,19 +114,12 @@ class DiaryRegisterServiceTest {
                 .mealType(MealType.LUNCH)
                 .quantity(BigDecimal.TEN)
                 .servingUnit("컵")
-                .calculatedNutrition(CalculatedNutrition.builder()
-                        .calories(BigDecimal.valueOf(1000))
-                        .carbohydrate(BigDecimal.valueOf(100))
-                        .protein(BigDecimal.valueOf(200))
-                        .fat(BigDecimal.valueOf(300))
-                        .build())
+                .calculatedNutrition(Nutrition.of(500, 50, 100, 150))
                 .build();
 
         assertThat(findDiary)
                 .extracting("diaryDate", "diaryRecords")
                 .contains(LocalDate.of(2024, 8, 1), Set.of(expectedDiaryRecord2, expectedDiaryRecord1));
-
-
     }
 
 }

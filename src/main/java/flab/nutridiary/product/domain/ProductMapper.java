@@ -1,5 +1,6 @@
 package flab.nutridiary.product.domain;
 
+import flab.nutridiary.commom.generic.Nutrition;
 import flab.nutridiary.product.dto.NewProductRequest;
 import org.springframework.stereotype.Component;
 
@@ -16,10 +17,7 @@ public class ProductMapper {
 
     private static NutritionFacts getNutritionFacts(NewProductRequest productRequest) {
         return NutritionFacts.builder()
-                .productTotalCalories(productRequest.getCalories())
-                .productTotalCarbohydrate(productRequest.getCarbohydrate())
-                .productTotalProtein(productRequest.getProtein())
-                .productTotalFat(productRequest.getFat())
+                .totalNutrition(Nutrition.of(productRequest.getCalories(), productRequest.getCarbohydrate(), productRequest.getProtein(), productRequest.getFat()))
                 .productServingSize(productRequest.getServingSize())
                 .productServingUnit(productRequest.getServingUnit())
                 .productTotalWeightGram(productRequest.getTotalWeightGram())

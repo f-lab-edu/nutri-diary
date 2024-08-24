@@ -1,25 +1,25 @@
-package flab.nutridiary.diary.domain.converter;
+package flab.nutridiary.commom.generic.converter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import flab.nutridiary.commom.exception.SystemException;
-import flab.nutridiary.diary.domain.CalculatedNutrition;
+import flab.nutridiary.commom.generic.Nutrition;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.WritingConverter;
 
 @RequiredArgsConstructor
 @WritingConverter
-public class CalculatedNutritionToJsonConverter implements Converter<CalculatedNutrition, String> {
+public class NutritionToJsonConverter implements Converter<Nutrition, String> {
 
     private final ObjectMapper objectMapper;
 
     @Override
-    public String convert(CalculatedNutrition calculatedNutrition) {
+    public String convert(Nutrition nutrition) {
         try {
-            return objectMapper.writeValueAsString(calculatedNutrition);
+            return objectMapper.writeValueAsString(nutrition);
         } catch (JsonProcessingException e) {
-            throw new SystemException("CalculatedNutrition 객체를 JSON 타입으로 변경에 실패했습니다.");
+            throw new SystemException("Nutrition 객체를 JSON 타입으로 변경에 실패했습니다.");
         }
     }
 }

@@ -1,6 +1,6 @@
 package flab.nutridiary.diary.domain;
 
-import flab.nutridiary.diary.domain.calculator.NutritionCalculator;
+import flab.nutridiary.commom.generic.Nutrition;
 import flab.nutridiary.product.domain.Product;
 import lombok.*;
 import org.springframework.data.jdbc.core.mapping.AggregateReference;
@@ -20,10 +20,10 @@ public class DiaryRecord {
 
     private String servingUnit;
 
-    private CalculatedNutrition calculatedNutrition;
+    private Nutrition calculatedNutrition;
 
     @Builder
-    public DiaryRecord(Long productId, MealType mealType, BigDecimal quantity, String servingUnit, CalculatedNutrition calculatedNutrition) {
+    public DiaryRecord(Long productId, MealType mealType, BigDecimal quantity, String servingUnit, Nutrition calculatedNutrition) {
         this.productId = AggregateReference.to(productId);
         this.mealType = mealType;
         this.quantity = quantity;

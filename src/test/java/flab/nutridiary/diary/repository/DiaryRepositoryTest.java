@@ -1,6 +1,6 @@
 package flab.nutridiary.diary.repository;
 
-import flab.nutridiary.diary.domain.CalculatedNutrition;
+import flab.nutridiary.commom.generic.Nutrition;
 import flab.nutridiary.diary.domain.Diary;
 import flab.nutridiary.diary.domain.DiaryRecord;
 import flab.nutridiary.diary.domain.MealType;
@@ -25,18 +25,37 @@ class DiaryRepositoryTest {
 
     private Long memberId = 1L;
 
+    @DisplayName("Diary를 저장한다.")
+    @Test
+    void savd() throws Exception {
+        // given
+        LocalDate date = LocalDate.of(2024, 8, 1);
+        Nutrition calculatedNutrition = Nutrition.of(100, 10, 20, 30);
+        DiaryRecord diaryRecord = DiaryRecord.builder()
+                .productId(1L)
+                .mealType(MealType.BREAKFAST)
+                .quantity(BigDecimal.ONE)
+                .servingUnit("개")
+                .calculatedNutrition(calculatedNutrition)
+                .build();
+        Diary diary = new Diary(date, diaryRecord);
+
+        // when
+        Diary savedDiary = diaryRepository.save(diary);
+
+        // then
+        assertThat(savedDiary).extracting("memberId", "diaryDate", "diaryRecords")
+                .containsExactly(memberId, date, Set.of(diaryRecord));
+    }
+
+
     @DisplayName("memberId 와 date 로 사용자 Diary 를 조회한다.")
     @Test
     void findByMemberIdAndDiaryDate() throws Exception {
 
         // given
         LocalDate date = LocalDate.of(2024, 8, 1);
-        CalculatedNutrition calculatedNutrition = CalculatedNutrition.builder()
-                .calories(BigDecimal.valueOf(100))
-                .carbohydrate(BigDecimal.valueOf(10))
-                .protein(BigDecimal.valueOf(20))
-                .fat(BigDecimal.valueOf(30))
-                .build();
+        Nutrition calculatedNutrition = Nutrition.of(100, 10, 20, 30);
         DiaryRecord diaryRecord = DiaryRecord.builder()
                 .productId(1L)
                 .mealType(MealType.BREAKFAST)
@@ -55,18 +74,12 @@ class DiaryRepositoryTest {
                 .containsExactly(memberId, date, Set.of(diaryRecord));
     }
 
-    @DisplayName("Diary 의 id 로 다이어리를 조회한다.")
+    @DisplayName("Diary의 id 로 다이어리를 조회한다.")
     @Test
     void findById() throws Exception {
         // given
-        // given
         LocalDate date = LocalDate.of(2024, 8, 1);
-        CalculatedNutrition calculatedNutrition = CalculatedNutrition.builder()
-                .calories(BigDecimal.valueOf(100))
-                .carbohydrate(BigDecimal.valueOf(10))
-                .protein(BigDecimal.valueOf(20))
-                .fat(BigDecimal.valueOf(30))
-                .build();
+        Nutrition calculatedNutrition = Nutrition.of(100, 10, 20, 30);
         DiaryRecord diaryRecord = DiaryRecord.builder()
                 .productId(1L)
                 .mealType(MealType.BREAKFAST)
@@ -78,9 +91,9 @@ class DiaryRepositoryTest {
 
         // when
         Diary saved = diaryRepository.save(diary);
+        Long id = saved.getId();
 
         // then
-        Long id = saved.getId();
         Diary findDiary = diaryRepository.findById(id).get();
         assertThat(findDiary).extracting("memberId", "diaryDate", "diaryRecords")
                 .containsExactly(memberId, date, Set.of(diaryRecord));

@@ -16,7 +16,7 @@ public class DiaryRegisterRequest {
 
     private Long memberId = 1L;
 
-    //@EnumValidator(enumClass = MealType.class, message = "올바른 식사 타입을 입력해주세요.")
+//    @EnumValidator(enumClass = MealType.class, message = "올바른 식사 타입을 입력해주세요.")
     private String mealType;
 
     @NotNull(message = "섭취량을 입력해주세요.")

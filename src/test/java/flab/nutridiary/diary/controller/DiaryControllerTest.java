@@ -1,6 +1,7 @@
 package flab.nutridiary.diary.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import flab.nutridiary.commom.generic.Nutrition;
 import flab.nutridiary.diary.dto.DiaryRegisterRequest;
 import flab.nutridiary.product.domain.NutritionFacts;
 import flab.nutridiary.product.domain.Product;
@@ -14,7 +15,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static java.math.BigDecimal.valueOf;
@@ -39,10 +39,7 @@ class DiaryControllerTest {
     void init() {
         // given
         NutritionFacts nutritionFacts = NutritionFacts.builder()
-                .productTotalCalories(valueOf(100))
-                .productTotalCarbohydrate(valueOf(10))
-                .productTotalProtein(valueOf(20))
-                .productTotalFat(valueOf(30))
+                .totalNutrition(Nutrition.of(100, 10, 20, 30))
                 .productServingSize(valueOf(2))
                 .productServingUnit("개")
                 .productTotalWeightGram(valueOf(100))
@@ -62,17 +59,35 @@ class DiaryControllerTest {
     @Test
     void createDiary() throws Exception {
         // given
-        DiaryRegisterRequest diaryRegisterRequest = new DiaryRegisterRequest(savedProductId, "BREAKFAST", BigDecimal.valueOf(1), "gram", LocalDate.of(2024, 8, 10));
+        DiaryRegisterRequest diaryRegisterRequest = new DiaryRegisterRequest(savedProductId, "BREAKFAST", valueOf(1), "gram", LocalDate.of(2024, 8, 10));
 
         // when then
         mockMvc.perform(
-                post("/diary/new")
-                        .content(objectMapper.writeValueAsString(diaryRegisterRequest))
-                        .contentType("application/json")
+                        post("/diary/new")
+                                .content(objectMapper.writeValueAsString(diaryRegisterRequest))
+                                .contentType("application/json")
                 )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.statusCode").value(2001))
                 .andExpect(jsonPath("$.message").value("OK"))
                 .andExpect(jsonPath("$.data.diaryId").exists());
     }
+
+//    @DisplayName("올바른 식사타입 실패 테스트")
+//    @Test
+//    void mealType() throws Exception {
+//        // given
+//        DiaryRegisterRequest diaryRegisterRequest = new DiaryRegisterRequest(savedProductId, "WRONG", valueOf(1), "gram", LocalDate.of(2024, 8, 10));
+//
+//        // when then
+//        mockMvc.perform(
+//                        post("/diary/new")
+//                                .content(objectMapper.writeValueAsString(diaryRegisterRequest))
+//                                .contentType("application/json")
+//                )
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.statusCode").value(4004))
+//                .andExpect(jsonPath("$.message").value("유효성 검사에 실패했습니다."))
+//                .andExpect(jsonPath("$.data.mealType").value("올바른 식사 타입을 입력해주세요."));
+//    }
 }

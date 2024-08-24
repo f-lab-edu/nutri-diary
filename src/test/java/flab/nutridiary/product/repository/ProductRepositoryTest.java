@@ -1,5 +1,6 @@
 package flab.nutridiary.product.repository;
 
+import flab.nutridiary.commom.generic.Nutrition;
 import flab.nutridiary.product.domain.NutritionFacts;
 import flab.nutridiary.product.domain.Product;
 import org.junit.jupiter.api.DisplayName;
@@ -24,10 +25,8 @@ class ProductRepositoryTest {
     void saveTest() throws Exception {
         // given
         NutritionFacts nutritionFacts = NutritionFacts.builder()
-                .productTotalCalories(valueOf(100))
-                .productTotalCarbohydrate(valueOf(10))
-                .productTotalProtein(valueOf(20))
-                .productTotalFat(valueOf(30))
+                .totalNutrition(Nutrition.of(100, 10, 20, 30))
+                .productServingSize(valueOf(2))
                 .productServingUnit("컵")
                 .productTotalWeightGram(valueOf(100))
                 .build();
@@ -45,12 +44,11 @@ class ProductRepositoryTest {
         assertThat(savedProduct.getId()).isNotNull();
         assertThat(savedProduct.getProductName()).isEqualTo("사과");
         assertThat(savedProduct.getProductCorp()).isEqualTo("사과회사");
-        assertThat(savedProduct.getNutritionFacts().getProductTotalCalories()).isEqualTo(valueOf(100));
-        assertThat(savedProduct.getNutritionFacts().getProductTotalCarbohydrate()).isEqualTo(valueOf(10));
-        assertThat(savedProduct.getNutritionFacts().getProductTotalProtein()).isEqualTo(valueOf(20));
-        assertThat(savedProduct.getNutritionFacts().getProductTotalFat()).isEqualTo(valueOf(30));
+        assertThat(savedProduct.getNutritionFacts().getProductServingSize()).isEqualTo(valueOf(2));
         assertThat(savedProduct.getNutritionFacts().getProductServingUnit()).isEqualTo("컵");
         assertThat(savedProduct.getNutritionFacts().getProductTotalWeightGram()).isEqualTo(valueOf(100));
+        assertThat(savedProduct.getNutritionFacts().getTotalNutrition()).isEqualTo(Nutrition.of(100, 10, 20, 30));
+
     }
 
     @DisplayName("상품 조회 리포지토리 테스트.")
@@ -58,10 +56,8 @@ class ProductRepositoryTest {
     void findById() throws Exception {
         // given
         NutritionFacts nutritionFacts = NutritionFacts.builder()
-                .productTotalCalories(valueOf(100))
-                .productTotalCarbohydrate(valueOf(10))
-                .productTotalProtein(valueOf(20))
-                .productTotalFat(valueOf(30))
+                .totalNutrition(Nutrition.of(100, 10, 20, 30))
+                .productServingSize(valueOf(2))
                 .productServingUnit("컵")
                 .productTotalWeightGram(valueOf(100))
                 .build();
@@ -82,11 +78,9 @@ class ProductRepositoryTest {
         assertThat(foundProduct.getId()).isEqualTo(savedProductId);
         assertThat(foundProduct.getProductName()).isEqualTo("사과");
         assertThat(foundProduct.getProductCorp()).isEqualTo("사과회사");
-        assertThat(foundProduct.getNutritionFacts().getProductTotalCalories()).isEqualTo(valueOf(100));
-        assertThat(foundProduct.getNutritionFacts().getProductTotalCarbohydrate()).isEqualTo(valueOf(10));
-        assertThat(foundProduct.getNutritionFacts().getProductTotalProtein()).isEqualTo(valueOf(20));
-        assertThat(foundProduct.getNutritionFacts().getProductTotalFat()).isEqualTo(valueOf(30));
+        assertThat(foundProduct.getNutritionFacts().getProductServingSize()).isEqualTo(valueOf(2));
         assertThat(foundProduct.getNutritionFacts().getProductServingUnit()).isEqualTo("컵");
         assertThat(foundProduct.getNutritionFacts().getProductTotalWeightGram()).isEqualTo(valueOf(100));
+        assertThat(foundProduct.getNutritionFacts().getTotalNutrition()).isEqualTo(Nutrition.of(100, 10, 20, 30));
     }
 }
