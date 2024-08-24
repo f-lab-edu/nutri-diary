@@ -7,10 +7,10 @@ import lombok.ToString;
 @Getter
 @ToString
 @RequiredArgsConstructor
-public class DiaryRegisterResponse {
+public class DiarySavedResponse {
     private final Long diaryId;
 
-    public static DiaryRegisterResponse of(Long diaryId) {
-        return new DiaryRegisterResponse(diaryId);
+    public static DiarySavedResponse of(Long diaryId) {
+        return new DiarySavedResponse(diaryId);
     }
 }

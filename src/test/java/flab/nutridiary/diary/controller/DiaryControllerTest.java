@@ -2,7 +2,12 @@ package flab.nutridiary.diary.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import flab.nutridiary.commom.generic.Nutrition;
+import flab.nutridiary.diary.domain.Diary;
+import flab.nutridiary.diary.domain.DiaryRecord;
+import flab.nutridiary.diary.domain.MealType;
+import flab.nutridiary.diary.dto.AddDiaryRecordRequest;
 import flab.nutridiary.diary.dto.DiaryRegisterRequest;
+import flab.nutridiary.diary.repository.DiaryRepository;
 import flab.nutridiary.product.domain.NutritionFacts;
 import flab.nutridiary.product.domain.Product;
 import flab.nutridiary.product.repository.ProductRepository;
@@ -16,6 +21,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static java.math.BigDecimal.valueOf;
@@ -32,6 +38,8 @@ class DiaryControllerTest {
     private MockMvc mockMvc;
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private DiaryRepository diaryRepository;
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -73,5 +81,33 @@ class DiaryControllerTest {
                 .andExpect(jsonPath("$.statusCode").value(2001))
                 .andExpect(jsonPath("$.message").value("OK"))
                 .andExpect(jsonPath("$.data.diaryId").exists());
+    }
+
+    @DisplayName("기존 다이어리에 기록을 추가한다.")
+    @Test
+    void addDiaryRecord() throws Exception {
+        // given
+        Diary diary = new Diary(LocalDate.of(2024, 8, 10),
+                DiaryRecord.builder()
+                        .productId(savedProductId)
+                        .mealType(MealType.BREAKFAST)
+                        .quantity(valueOf(1))
+                        .servingUnit("gram")
+                        .calculatedNutrition(Nutrition.of(valueOf(100), valueOf(10), valueOf(20), valueOf(30)))
+                        .build());
+        Long diaryId = diaryRepository.save(diary).getId();
+
+        AddDiaryRecordRequest addDiaryRecordRequest = new AddDiaryRecordRequest(savedProductId, "BREAKFAST", BigDecimal.valueOf(10), "gram");
+
+        // when then
+        mockMvc.perform(
+                        post("/diary/{diaryId}", diaryId)
+                                .content(objectMapper.writeValueAsString(addDiaryRecordRequest))
+                                .contentType("application/json")
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.statusCode").value(2001))
+                .andExpect(jsonPath("$.message").value("OK"))
+                .andExpect(jsonPath("$.data.diaryId").value(diaryId));
     }
 }
