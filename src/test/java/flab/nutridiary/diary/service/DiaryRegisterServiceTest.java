@@ -43,7 +43,7 @@ class DiaryRegisterServiceTest {
     void init() {
         // given
         NutritionFacts nutritionFacts = NutritionFacts.builder()
-                .totalNutrition(Nutrition.of(100, 10, 20, 30))
+                .totalNutrition(Nutrition.of(valueOf(100), valueOf(10), valueOf(20), valueOf(30)))
                 .productServingSize(valueOf(2))
                 .productServingUnit("컵")
                 .productTotalWeightGram(valueOf(100))
@@ -78,7 +78,7 @@ class DiaryRegisterServiceTest {
                 .mealType(MealType.BREAKFAST)
                 .quantity(BigDecimal.ONE)
                 .servingUnit("gram")
-                .calculatedNutrition(Nutrition.of(1, 0.1, 0.2, 0.3))
+                .calculatedNutrition(Nutrition.of(valueOf(1), valueOf(0.1), valueOf(0.2), valueOf(0.3)))
                 .build();
 
         assertThat(findDiary)
@@ -108,7 +108,7 @@ class DiaryRegisterServiceTest {
                 .mealType(MealType.BREAKFAST)
                 .quantity(BigDecimal.ONE)
                 .servingUnit("gram")
-                .calculatedNutrition(Nutrition.of(1, 0.1, 0.2, 0.3))
+                .calculatedNutrition(Nutrition.of(valueOf(1), valueOf(0.1), valueOf(0.2), valueOf(0.3)))
                 .build();
 
         DiaryRecord expectedDiaryRecord2 = DiaryRecord.builder()
@@ -116,7 +116,7 @@ class DiaryRegisterServiceTest {
                 .mealType(MealType.LUNCH)
                 .quantity(BigDecimal.TEN)
                 .servingUnit("컵")
-                .calculatedNutrition(Nutrition.of(500, 50, 100, 150))
+                .calculatedNutrition(Nutrition.of(valueOf(500), valueOf(50), valueOf(100), valueOf(150)))
                 .build();
 
         assertThat(findDiary)

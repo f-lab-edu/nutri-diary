@@ -13,7 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
+import static java.math.BigDecimal.TWO;
+import static java.math.BigDecimal.valueOf;
 
 @ActiveProfiles("test")
 @Transactional
@@ -34,13 +35,13 @@ class ProductRegisterServiceTest {
         NewProductRequest newProductRequest = NewProductRequest.builder()
                 .productName("상품명")
                 .corpName("업체명")
-                .servingSize(BigDecimal.TWO)
+                .servingSize(TWO)
                 .servingUnit("컵")
-                .totalWeightGram(BigDecimal.valueOf(90))
-                .calories(BigDecimal.valueOf(120))
-                .carbohydrate(BigDecimal.valueOf(15.5))
-                .protein(BigDecimal.valueOf(3.5))
-                .fat(BigDecimal.valueOf(5.5))
+                .totalWeightGram(valueOf(90))
+                .calories(valueOf(120))
+                .carbohydrate(valueOf(15.5))
+                .protein(valueOf(3.5))
+                .fat(valueOf(5.5))
                 .build();
 
         // when
@@ -51,9 +52,9 @@ class ProductRegisterServiceTest {
         Assertions.assertThat(savedProduct.getId()).isNotNull();
         Assertions.assertThat(savedProduct.getProductName()).isEqualTo("상품명");
         Assertions.assertThat(savedProduct.getProductCorp()).isEqualTo("업체명");
-        Assertions.assertThat(savedProduct.getNutritionFacts().getProductServingSize()).isEqualTo(BigDecimal.TWO);
+        Assertions.assertThat(savedProduct.getNutritionFacts().getProductServingSize()).isEqualTo(TWO);
         Assertions.assertThat(savedProduct.getNutritionFacts().getProductServingUnit()).isEqualTo("컵");
-        Assertions.assertThat(savedProduct.getNutritionFacts().getProductTotalWeightGram()).isEqualTo(BigDecimal.valueOf(90));
-        Assertions.assertThat(savedProduct.getNutritionFacts().getTotalNutrition()).isEqualTo(Nutrition.of(120, 15.5, 3.5, 5.5));
+        Assertions.assertThat(savedProduct.getNutritionFacts().getProductTotalWeightGram()).isEqualTo(valueOf(90));
+        Assertions.assertThat(savedProduct.getNutritionFacts().getTotalNutrition()).isEqualTo(Nutrition.of(valueOf(120), valueOf(15.5), valueOf(3.5), valueOf(5.5)));
     }
 }

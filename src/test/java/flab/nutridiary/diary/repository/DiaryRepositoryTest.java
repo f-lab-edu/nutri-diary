@@ -11,10 +11,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Set;
 
+import static java.math.BigDecimal.ONE;
+import static java.math.BigDecimal.valueOf;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("test")
@@ -32,11 +33,11 @@ class DiaryRepositoryTest {
     void savd() throws Exception {
         // given
         LocalDate date = LocalDate.of(2024, 8, 1);
-        Nutrition calculatedNutrition = Nutrition.of(100, 10, 20, 30);
+        Nutrition calculatedNutrition = Nutrition.of(valueOf(100), valueOf(10), valueOf(20), valueOf(30));
         DiaryRecord diaryRecord = DiaryRecord.builder()
                 .productId(1L)
                 .mealType(MealType.BREAKFAST)
-                .quantity(BigDecimal.ONE)
+                .quantity(ONE)
                 .servingUnit("개")
                 .calculatedNutrition(calculatedNutrition)
                 .build();
@@ -57,11 +58,11 @@ class DiaryRepositoryTest {
 
         // given
         LocalDate date = LocalDate.of(2024, 8, 1);
-        Nutrition calculatedNutrition = Nutrition.of(100, 10, 20, 30);
+        Nutrition calculatedNutrition = Nutrition.of(valueOf(100), valueOf(10), valueOf(20), valueOf(30));
         DiaryRecord diaryRecord = DiaryRecord.builder()
                 .productId(1L)
                 .mealType(MealType.BREAKFAST)
-                .quantity(BigDecimal.ONE)
+                .quantity(ONE)
                 .servingUnit("개")
                 .calculatedNutrition(calculatedNutrition)
                 .build();
@@ -81,11 +82,11 @@ class DiaryRepositoryTest {
     void findById() throws Exception {
         // given
         LocalDate date = LocalDate.of(2024, 8, 1);
-        Nutrition calculatedNutrition = Nutrition.of(100, 10, 20, 30);
+        Nutrition calculatedNutrition = Nutrition.of(valueOf(100), valueOf(10), valueOf(20), valueOf(30));
         DiaryRecord diaryRecord = DiaryRecord.builder()
                 .productId(1L)
                 .mealType(MealType.BREAKFAST)
-                .quantity(BigDecimal.ONE)
+                .quantity(ONE)
                 .servingUnit("개")
                 .calculatedNutrition(calculatedNutrition)
                 .build();

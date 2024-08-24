@@ -41,7 +41,7 @@ class DiaryControllerTest {
     void init() {
         // given
         NutritionFacts nutritionFacts = NutritionFacts.builder()
-                .totalNutrition(Nutrition.of(100, 10, 20, 30))
+                .totalNutrition(Nutrition.of(valueOf(100), valueOf(10), valueOf(20), valueOf(30)))
                 .productServingSize(valueOf(2))
                 .productServingUnit("개")
                 .productTotalWeightGram(valueOf(100))

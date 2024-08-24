@@ -26,7 +26,7 @@ class ProductRepositoryTest {
     void saveTest() throws Exception {
         // given
         NutritionFacts nutritionFacts = NutritionFacts.builder()
-                .totalNutrition(Nutrition.of(100, 10, 20, 30))
+                .totalNutrition(Nutrition.of(valueOf(100), valueOf(10), valueOf(20), valueOf(30)))
                 .productServingSize(valueOf(2))
                 .productServingUnit("컵")
                 .productTotalWeightGram(valueOf(100))
@@ -48,7 +48,7 @@ class ProductRepositoryTest {
         assertThat(savedProduct.getNutritionFacts().getProductServingSize()).isEqualTo(valueOf(2));
         assertThat(savedProduct.getNutritionFacts().getProductServingUnit()).isEqualTo("컵");
         assertThat(savedProduct.getNutritionFacts().getProductTotalWeightGram()).isEqualTo(valueOf(100));
-        assertThat(savedProduct.getNutritionFacts().getTotalNutrition()).isEqualTo(Nutrition.of(100, 10, 20, 30));
+        assertThat(savedProduct.getNutritionFacts().getTotalNutrition()).isEqualTo(Nutrition.of(valueOf(100), valueOf(10), valueOf(20), valueOf(30)));
 
     }
 
@@ -57,7 +57,7 @@ class ProductRepositoryTest {
     void findById() throws Exception {
         // given
         NutritionFacts nutritionFacts = NutritionFacts.builder()
-                .totalNutrition(Nutrition.of(100, 10, 20, 30))
+                .totalNutrition(Nutrition.of(valueOf(100), valueOf(10), valueOf(20), valueOf(30)))
                 .productServingSize(valueOf(2))
                 .productServingUnit("컵")
                 .productTotalWeightGram(valueOf(100))
@@ -82,6 +82,6 @@ class ProductRepositoryTest {
         assertThat(foundProduct.getNutritionFacts().getProductServingSize()).isEqualTo(valueOf(2));
         assertThat(foundProduct.getNutritionFacts().getProductServingUnit()).isEqualTo("컵");
         assertThat(foundProduct.getNutritionFacts().getProductTotalWeightGram()).isEqualTo(valueOf(100));
-        assertThat(foundProduct.getNutritionFacts().getTotalNutrition()).isEqualTo(Nutrition.of(100, 10, 20, 30));
+        assertThat(foundProduct.getNutritionFacts().getTotalNutrition()).isEqualTo(Nutrition.of(valueOf(100), valueOf(10), valueOf(20), valueOf(30)));
     }
 }

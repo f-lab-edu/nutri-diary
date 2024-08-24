@@ -34,7 +34,7 @@ class NutritionCalculatorTest {
                 .productName("사과")
                 .productCorp("사과회사")
                 .nutritionFacts(NutritionFacts.builder()
-                        .totalNutrition(Nutrition.of(195, 19.5, 39, 58.5))
+                        .totalNutrition(Nutrition.of(valueOf(195), valueOf(19.5), valueOf(39), valueOf(58.5)))
                         .productServingSize(valueOf(1))
                         .productServingUnit("개")
                         .productTotalWeightGram(valueOf(100))
@@ -59,7 +59,7 @@ class NutritionCalculatorTest {
         Nutrition calculatedNutrition = nutritionCalculator.calculate(productIntakeInfo);
 
         // then
-        Nutrition expected = Nutrition.of(380.25, 39, 76.05, 115.05);
+        Nutrition expected = Nutrition.of(valueOf(380.25), valueOf(39), valueOf(76.05), valueOf(115.05));
         Assertions.assertThat(calculatedNutrition).isEqualTo(expected);
     }
 
@@ -78,7 +78,7 @@ class NutritionCalculatorTest {
         Nutrition calculatedNutrition = nutritionCalculator.calculate(productIntakeInfo);
 
         // then
-        Nutrition expected = Nutrition.of(390, 39, 78, 117);
+        Nutrition expected = Nutrition.of(valueOf(390), valueOf(39), valueOf(78), valueOf(117));
         Assertions.assertThat(calculatedNutrition).isEqualTo(expected);
     }
 }
