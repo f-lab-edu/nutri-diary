@@ -5,8 +5,8 @@ import flab.nutridiary.diary.dto.DiaryRegisterRequest;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProductIntakeInfoExtractor {
-    public ProductIntakeInfo extract(DiaryRegisterRequest diaryRegisterRequest) {
+public class ProductIntakeInfoMapper {
+    public ProductIntakeInfo from(DiaryRegisterRequest diaryRegisterRequest) {
         return ProductIntakeInfo.builder()
                 .productId(diaryRegisterRequest.getProductId())
                 .mealType(diaryRegisterRequest.getMealType())

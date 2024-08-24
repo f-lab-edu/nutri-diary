@@ -20,10 +20,10 @@ public class DiaryRegisterService {
 
     private final DiaryRepository diaryRepository;
     private final NutritionCalculator nutritionCalculator;
-    private final ProductIntakeInfoExtractor productIntakeInfoExtractor;
+    private final ProductIntakeInfoMapper productIntakeInfoMapper;
 
     public DiaryRegisterResponse writeDiaryRecord(DiaryRegisterRequest diaryRegisterRequest) {
-        ProductIntakeInfo productIntakeInfo = productIntakeInfoExtractor.extract(diaryRegisterRequest);
+        ProductIntakeInfo productIntakeInfo = productIntakeInfoMapper.from(diaryRegisterRequest);
         DiaryRecord diaryRecord = DiaryRecord.of(productIntakeInfo, nutritionCalculator);
 
         Diary diary = diaryRepository.findByMemberIdAndDiaryDate(diaryRegisterRequest.getMemberId(), diaryRegisterRequest.getIntakeDate())
