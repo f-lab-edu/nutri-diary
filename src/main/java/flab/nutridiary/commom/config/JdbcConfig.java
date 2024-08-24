@@ -7,11 +7,13 @@ import flab.nutridiary.product.domain.converter.JsonToNutritionFactsConverter;
 import flab.nutridiary.product.domain.converter.NutritionFactsToJsonConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.jdbc.core.convert.JdbcCustomConversions;
 import org.springframework.data.jdbc.repository.config.AbstractJdbcConfiguration;
 
 import java.util.Arrays;
 
+@Profile("dev")
 @Configuration
 public class JdbcConfig extends AbstractJdbcConfiguration {
 

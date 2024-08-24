@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@ActiveProfiles("test")
 @Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -72,22 +74,4 @@ class DiaryControllerTest {
                 .andExpect(jsonPath("$.message").value("OK"))
                 .andExpect(jsonPath("$.data.diaryId").exists());
     }
-
-//    @DisplayName("올바른 식사타입 실패 테스트")
-//    @Test
-//    void mealType() throws Exception {
-//        // given
-//        DiaryRegisterRequest diaryRegisterRequest = new DiaryRegisterRequest(savedProductId, "WRONG", valueOf(1), "gram", LocalDate.of(2024, 8, 10));
-//
-//        // when then
-//        mockMvc.perform(
-//                        post("/diary/new")
-//                                .content(objectMapper.writeValueAsString(diaryRegisterRequest))
-//                                .contentType("application/json")
-//                )
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.statusCode").value(4004))
-//                .andExpect(jsonPath("$.message").value("유효성 검사에 실패했습니다."))
-//                .andExpect(jsonPath("$.data.mealType").value("올바른 식사 타입을 입력해주세요."));
-//    }
 }
