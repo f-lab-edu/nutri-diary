@@ -1,5 +1,6 @@
 package flab.nutridiary.diary.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -27,6 +28,7 @@ public class Diary {
     @MappedCollection(idColumn = "DIARY_ID")
     private Set<DiaryRecord> diaryRecords = new HashSet<>();
 
+    @Builder
     public Diary(LocalDate diaryDate, DiaryRecord diaryRecord) {
         this.diaryDate = diaryDate;
         this.diaryRecords.add(diaryRecord);
@@ -34,5 +36,11 @@ public class Diary {
 
     public void addDiaryRecord(DiaryRecord diaryRecord) {
         diaryRecords.add(diaryRecord);
+    }
+
+    public static Diary of(LocalDate diaryDate, DiaryRecord diaryRecord, DiaryValidator diaryValidator) {
+        Diary diary = new Diary(diaryDate, diaryRecord);
+        diaryValidator.validate(diary);
+        return diary;
     }
 }

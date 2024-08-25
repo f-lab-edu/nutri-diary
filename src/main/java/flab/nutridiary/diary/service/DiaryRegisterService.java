@@ -1,9 +1,6 @@
 package flab.nutridiary.diary.service;
 
-import flab.nutridiary.diary.domain.Diary;
-import flab.nutridiary.diary.domain.DiaryRecord;
-import flab.nutridiary.diary.domain.NutritionCalculator;
-import flab.nutridiary.diary.domain.ProductIntakeInfo;
+import flab.nutridiary.diary.domain.*;
 import flab.nutridiary.diary.dto.DiaryRegisterRequest;
 import flab.nutridiary.diary.dto.DiarySavedResponse;
 import flab.nutridiary.diary.repository.DiaryRepository;
@@ -21,11 +18,12 @@ public class DiaryRegisterService {
     private final DiaryRepository diaryRepository;
     private final NutritionCalculator nutritionCalculator;
     private final ProductIntakeInfoMapper productIntakeInfoMapper;
+    private final DiaryValidator diaryValidator;
 
     public DiarySavedResponse createDiary(DiaryRegisterRequest diaryRegisterRequest) {
         ProductIntakeInfo productIntakeInfo = productIntakeInfoMapper.from(diaryRegisterRequest);
         DiaryRecord diaryRecord = DiaryRecord.of(productIntakeInfo, nutritionCalculator);
-        Diary saved = diaryRepository.save(new Diary(diaryRegisterRequest.getIntakeDate(), diaryRecord));
+        Diary saved = diaryRepository.save(Diary.of(diaryRegisterRequest.getIntakeDate(), diaryRecord, diaryValidator));
         return DiarySavedResponse.of(saved.getId());
     }
 }
