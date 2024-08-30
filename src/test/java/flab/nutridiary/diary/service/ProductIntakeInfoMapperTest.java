@@ -15,7 +15,7 @@ class ProductIntakeInfoMapperTest {
 
     private ProductIntakeInfoMapper productIntakeInfoMapper = new ProductIntakeInfoMapper();
 
-    @DisplayName("DiaryRegisterRequest로부터 ProductIntakeInfo를 추출한다.")
+    @DisplayName("DiaryRegisterRequest 로부터 ProductIntakeInfo 를 추출한다.")
     @Test
     void from() throws Exception {
         // given
@@ -25,7 +25,7 @@ class ProductIntakeInfoMapperTest {
         ProductIntakeInfo productIntakeInfo = productIntakeInfoMapper.from(diaryRegisterRequest);
 
         // then
-        assertThat(productIntakeInfo).extracting("productId", "mealType", "quantity", "servingUnit")
+        assertThat(productIntakeInfo).extracting("productId", "mealType", "quantity", "clientChoiceServingUnitDescription")
                 .containsExactly(2L, MealType.BREAKFAST, BigDecimal.valueOf(25), "gram");
     }
 

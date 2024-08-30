@@ -1,6 +1,8 @@
 package flab.nutridiary.diary.service;
 
+import flab.nutridiary.commom.exception.BusinessException;
 import flab.nutridiary.commom.generic.Nutrition;
+import flab.nutridiary.product.domain.ServingUnit;
 import flab.nutridiary.diary.domain.Diary;
 import flab.nutridiary.diary.domain.DiaryRecord;
 import flab.nutridiary.diary.domain.MealType;
@@ -11,6 +13,7 @@ import flab.nutridiary.diary.repository.DiaryRepository;
 import flab.nutridiary.product.domain.NutritionFacts;
 import flab.nutridiary.product.domain.Product;
 import flab.nutridiary.product.repository.ProductRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,6 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import static java.math.BigDecimal.valueOf;
@@ -46,10 +51,12 @@ class DiaryRegisterServiceTest {
     void init() {
         // given
         NutritionFacts nutritionFacts = NutritionFacts.builder()
-                .totalNutrition(Nutrition.of(valueOf(100), valueOf(10), valueOf(20), valueOf(30)))
-                .productServingSize(valueOf(2))
-                .productServingUnit("컵")
-                .productTotalWeightGram(valueOf(100))
+                .nutritionPerOneServingUnit(Nutrition.of(valueOf(50), valueOf(5), valueOf(10), valueOf(15)))
+                .allowedProductServingUnits(
+                        new ArrayList<>(List.of(
+                                ServingUnit.asOneServingUnit("개"),
+                                ServingUnit.ofGram(BigDecimal.ONE, valueOf(50)))
+                        ))
                 .build();
 
         Product product = Product.builder()
@@ -80,7 +87,7 @@ class DiaryRegisterServiceTest {
                 .productId(productId)
                 .mealType(MealType.BREAKFAST)
                 .quantity(BigDecimal.ONE)
-                .servingUnit("gram")
+                .clientChoiceServingUnitDescription("gram")
                 .calculatedNutrition(Nutrition.of(valueOf(1), valueOf(0.1), valueOf(0.2), valueOf(0.3)))
                 .build();
 
@@ -98,13 +105,13 @@ class DiaryRegisterServiceTest {
                 .productId(productId)
                 .mealType(MealType.BREAKFAST)
                 .quantity(BigDecimal.ONE)
-                .servingUnit("gram")
+                .clientChoiceServingUnitDescription("gram")
                 .calculatedNutrition(Nutrition.of(valueOf(1), valueOf(0.1), valueOf(0.2), valueOf(0.3))
                 ).build();
         Diary savedDiary = diaryRepository.save(new Diary(LocalDate.of(2024, 8, 1), diaryRecord));
         Long diaryId = savedDiary.getId();
 
-        AddDiaryRecordRequest addDiaryRecordRequest = new AddDiaryRecordRequest(productId, "LUNCH", BigDecimal.TEN, "컵");
+        AddDiaryRecordRequest addDiaryRecordRequest = new AddDiaryRecordRequest(productId, "LUNCH", BigDecimal.TEN, "개");
 
         // when
         DiarySavedResponse diarySavedResponse = addDiaryRecordService.addDiaryRecord(addDiaryRecordRequest, diaryId);
@@ -117,7 +124,7 @@ class DiaryRegisterServiceTest {
                 .productId(productId)
                 .mealType(MealType.BREAKFAST)
                 .quantity(BigDecimal.ONE)
-                .servingUnit("gram")
+                .clientChoiceServingUnitDescription("gram")
                 .calculatedNutrition(Nutrition.of(valueOf(1), valueOf(0.1), valueOf(0.2), valueOf(0.3)))
                 .build();
 
@@ -125,12 +132,25 @@ class DiaryRegisterServiceTest {
                 .productId(productId)
                 .mealType(MealType.LUNCH)
                 .quantity(BigDecimal.TEN)
-                .servingUnit("컵")
+                .clientChoiceServingUnitDescription("개")
                 .calculatedNutrition(Nutrition.of(valueOf(500), valueOf(50), valueOf(100), valueOf(150)))
                 .build();
 
         assertThat(findDiary)
                 .extracting("diaryDate", "diaryRecords")
                 .contains(LocalDate.of(2024, 8, 1), Set.of(expectedDiaryRecord2, expectedDiaryRecord1));
+    }
+
+    @DisplayName("허용되지 않은 서빙 단위를 입력하면 예외가 발생한다.")
+    @Test
+    void exception() throws Exception {
+        // given
+        Long productId = savedProduct.getId();
+        DiaryRegisterRequest diaryRegisterRequest = new DiaryRegisterRequest(productId, "BREAKFAST", BigDecimal.ONE, "인분", LocalDate.of(2024, 8, 1));
+
+        // when then
+        BusinessException businessException = Assertions.assertThrows(BusinessException.class, () -> diaryRegisterService.createDiary(diaryRegisterRequest));
+        assertThat(businessException.getMessage()).isEqualTo("허용되지 않은 서빙 단위입니다.");
+        assertThat(businessException.getStatusCode()).isEqualTo(4006);
     }
 }

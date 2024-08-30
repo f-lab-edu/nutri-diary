@@ -18,16 +18,16 @@ public class DiaryRecord {
 
     private BigDecimal quantity;
 
-    private String servingUnit;
+    private String clientChoiceServingUnitDescription;
 
     private Nutrition calculatedNutrition;
 
     @Builder
-    public DiaryRecord(Long productId, MealType mealType, BigDecimal quantity, String servingUnit, Nutrition calculatedNutrition) {
+    public DiaryRecord(Long productId, MealType mealType, BigDecimal quantity, String clientChoiceServingUnitDescription, Nutrition calculatedNutrition) {
         this.productId = AggregateReference.to(productId);
         this.mealType = mealType;
         this.quantity = quantity;
-        this.servingUnit = servingUnit;
+        this.clientChoiceServingUnitDescription = clientChoiceServingUnitDescription;
         this.calculatedNutrition = calculatedNutrition;
     }
 
@@ -36,7 +36,7 @@ public class DiaryRecord {
                 .productId(productIntakeInfo.getProductId())
                 .mealType(productIntakeInfo.getMealType())
                 .quantity(productIntakeInfo.getQuantity())
-                .servingUnit(productIntakeInfo.getServingUnit())
+                .clientChoiceServingUnitDescription(productIntakeInfo.getClientChoiceServingUnitDescription())
                 .calculatedNutrition(nutritionCalculator.calculate(productIntakeInfo))
                 .build();
     }

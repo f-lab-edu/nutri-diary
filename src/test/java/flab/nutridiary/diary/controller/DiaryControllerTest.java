@@ -2,6 +2,7 @@ package flab.nutridiary.diary.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import flab.nutridiary.commom.generic.Nutrition;
+import flab.nutridiary.product.domain.ServingUnit;
 import flab.nutridiary.diary.domain.Diary;
 import flab.nutridiary.diary.domain.DiaryRecord;
 import flab.nutridiary.diary.domain.MealType;
@@ -23,6 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.math.BigDecimal.valueOf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -49,10 +52,11 @@ class DiaryControllerTest {
     void init() {
         // given
         NutritionFacts nutritionFacts = NutritionFacts.builder()
-                .totalNutrition(Nutrition.of(valueOf(100), valueOf(10), valueOf(20), valueOf(30)))
-                .productServingSize(valueOf(2))
-                .productServingUnit("개")
-                .productTotalWeightGram(valueOf(100))
+                .nutritionPerOneServingUnit(Nutrition.of(valueOf(50), valueOf(5), valueOf(10), valueOf(15)))
+                .allowedProductServingUnits(
+                    new ArrayList<>(List.of(
+                            ServingUnit.asOneServingUnit("개"),
+                            ServingUnit.ofGram(BigDecimal.ONE, valueOf(50)))))
                 .build();
 
         Product product = Product.builder()
@@ -92,7 +96,7 @@ class DiaryControllerTest {
                         .productId(savedProductId)
                         .mealType(MealType.BREAKFAST)
                         .quantity(valueOf(1))
-                        .servingUnit("gram")
+                        .clientChoiceServingUnitDescription("컵")
                         .calculatedNutrition(Nutrition.of(valueOf(100), valueOf(10), valueOf(20), valueOf(30)))
                         .build());
         Long diaryId = diaryRepository.save(diary).getId();
@@ -109,5 +113,23 @@ class DiaryControllerTest {
                 .andExpect(jsonPath("$.statusCode").value(2001))
                 .andExpect(jsonPath("$.message").value("OK"))
                 .andExpect(jsonPath("$.data.diaryId").value(diaryId));
+    }
+
+    @DisplayName("허용되지 않은 서빙 단위는 예외가 발생한다.")
+    @Test
+    void addDiaryRecordWithInvalidServingUnit() throws Exception {
+        // given
+        DiaryRegisterRequest diaryRegisterRequest = new DiaryRegisterRequest(savedProductId, "BREAKFAST", valueOf(1), "InvalidServingUnit", LocalDate.of(2024, 8, 10));
+
+        // when then
+        mockMvc.perform(
+                        post("/diary/new")
+                                .content(objectMapper.writeValueAsString(diaryRegisterRequest))
+                                .contentType("application/json")
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.statusCode").value(4006))
+                .andExpect(jsonPath("$.message").value("허용되지 않은 서빙 단위입니다."))
+                .andExpect(jsonPath("$.data.diaryId").doesNotExist());
     }
 }

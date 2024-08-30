@@ -2,6 +2,7 @@ package flab.nutridiary.diary.domain;
 
 import flab.nutridiary.commom.exception.BusinessException;
 import flab.nutridiary.commom.generic.Nutrition;
+import flab.nutridiary.product.domain.ServingUnit;
 import flab.nutridiary.diary.repository.DiaryRepository;
 import flab.nutridiary.product.domain.NutritionFacts;
 import flab.nutridiary.product.domain.Product;
@@ -16,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.math.BigDecimal.valueOf;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,10 +41,13 @@ class DiaryValidatorTest {
     void init() {
         // given
         NutritionFacts nutritionFacts = NutritionFacts.builder()
-                .totalNutrition(Nutrition.of(valueOf(100), valueOf(10), valueOf(20), valueOf(30)))
-                .productServingSize(valueOf(2))
-                .productServingUnit("컵")
-                .productTotalWeightGram(valueOf(100))
+                .nutritionPerOneServingUnit(Nutrition.of(valueOf(500), valueOf(5), valueOf(10), valueOf(15)))
+                .allowedProductServingUnits(
+                        new ArrayList<>(List.of(
+                                ServingUnit.asOneServingUnit("컵"),
+                                ServingUnit.ofGram(BigDecimal.ONE, valueOf(50)))
+                        )
+                )
                 .build();
 
         Product product = Product.builder()
@@ -63,7 +69,7 @@ class DiaryValidatorTest {
                 .productId(productId)
                 .mealType(MealType.BREAKFAST)
                 .quantity(BigDecimal.ONE)
-                .servingUnit("gram")
+                .clientChoiceServingUnitDescription("gram")
                 .calculatedNutrition(Nutrition.of(valueOf(1), valueOf(0.1), valueOf(0.2), valueOf(0.3))
                 ).build();
         diaryRepository.save(new Diary(LocalDate.of(2024, 8, 1), diaryRecord));

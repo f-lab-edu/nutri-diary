@@ -24,16 +24,16 @@ public class DiaryRegisterRequest {
     private BigDecimal quantity;
 
     @NotNull(message = "서빙 단위를 입력해주세요.")
-    private String servingUnit;
+    private String clientChoiceServingUnit;
 
     @NotNull(message = "섭취 날짜를 입력해주세요.")
     private LocalDate intakeDate;
 
-    public DiaryRegisterRequest(Long productId, String mealType, BigDecimal quantity, String servingUnit, LocalDate intakeDate) {
+    public DiaryRegisterRequest(Long productId, String mealType, BigDecimal quantity, String clientChoiceServingUnit, LocalDate intakeDate) {
         this.productId = productId;
         this.mealType = mealType;
         this.quantity = quantity;
-        this.servingUnit = servingUnit;
+        this.clientChoiceServingUnit = clientChoiceServingUnit;
         this.intakeDate = intakeDate;
     }
 }

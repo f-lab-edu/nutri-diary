@@ -1,6 +1,7 @@
 package flab.nutridiary.diary.domain.calculator;
 
 import flab.nutridiary.commom.generic.Nutrition;
+import flab.nutridiary.product.domain.ServingUnit;
 import flab.nutridiary.diary.domain.NutritionCalculator;
 import flab.nutridiary.diary.domain.ProductIntakeInfo;
 import flab.nutridiary.product.domain.NutritionFacts;
@@ -14,6 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.math.BigDecimal.valueOf;
 
@@ -34,12 +39,14 @@ class NutritionCalculatorTest {
                 .productName("사과")
                 .productCorp("사과회사")
                 .nutritionFacts(NutritionFacts.builder()
-                        .totalNutrition(Nutrition.of(valueOf(195), valueOf(19.5), valueOf(39), valueOf(58.5)))
-                        .productServingSize(valueOf(1))
-                        .productServingUnit("개")
-                        .productTotalWeightGram(valueOf(100))
+                        .nutritionPerOneServingUnit(Nutrition.of(valueOf(195), valueOf(19.5), valueOf(39), valueOf(58.5)))
+                        .allowedProductServingUnits(
+                                new ArrayList<>(List.of(
+                                        ServingUnit.asOneServingUnit("개"),
+                                        ServingUnit.ofGram(BigDecimal.ONE, valueOf(100)))))
                         .build())
                 .build();
+
 
         savedProduct1 = productRepository.save(product1);
     }
@@ -52,7 +59,7 @@ class NutritionCalculatorTest {
                 .productId(savedProduct1.getId())
                 .quantity(valueOf(195))
                 .mealType("BREAKFAST")
-                .servingUnit("gram")
+                .clientChoiceServingUnitDescription("gram")
                 .build();
 
         // when
@@ -71,7 +78,7 @@ class NutritionCalculatorTest {
                 .productId(savedProduct1.getId())
                 .quantity(valueOf(2))
                 .mealType("BREAKFAST")
-                .servingUnit("개")
+                .clientChoiceServingUnitDescription("개")
                 .build();
 
         // when

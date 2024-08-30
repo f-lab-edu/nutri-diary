@@ -21,13 +21,13 @@ public class AddDiaryRecordRequest {
     private BigDecimal quantity;
 
     @NotNull(message = "서빙 단위를 입력해주세요.")
-    private String servingUnit;
+    private String clientChoiceServingUnit;
 
-    public AddDiaryRecordRequest(Long productId, String mealType, BigDecimal quantity, String servingUnit) {
+    public AddDiaryRecordRequest(Long productId, String mealType, BigDecimal quantity, String clientChoiceServingUnit) {
         this.productId = productId;
         this.mealType = mealType;
         this.quantity = quantity;
-        this.servingUnit = servingUnit;
+        this.clientChoiceServingUnit = clientChoiceServingUnit;
     }
 
     public ProductIntakeInfo toProductIntakeInfo() {
@@ -35,7 +35,7 @@ public class AddDiaryRecordRequest {
                 .productId(productId)
                 .mealType(mealType)
                 .quantity(quantity)
-                .servingUnit(servingUnit)
+                .clientChoiceServingUnitDescription(clientChoiceServingUnit)
                 .build();
     }
 }

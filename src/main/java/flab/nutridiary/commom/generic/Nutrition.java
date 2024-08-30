@@ -13,8 +13,8 @@ import java.math.RoundingMode;
 @EqualsAndHashCode
 @ToString
 public class Nutrition {
-    private static final int SCALE = 2;
-    private static final RoundingMode ROUNDING_MODE = RoundingMode.HALF_UP;
+    public static final int SCALE = 2;
+    public static final RoundingMode ROUNDING_MODE = RoundingMode.HALF_UP;
     private static final Nutrition ZERO = Nutrition.of(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
 
     private final BigDecimal calories;

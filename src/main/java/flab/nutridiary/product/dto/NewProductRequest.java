@@ -20,14 +20,14 @@ public class NewProductRequest {
 
     @Min(value = 0, message = "서빙 사이즈는 0 이상이어야 합니다.")
     @NotNull(message = "서빙 사이즈를 입력해주세요.")
-    private BigDecimal servingSize;
+    private BigDecimal productDefaultServingSize;
 
     @NotNull(message = "서빙 단위를 입력해주세요.")
-    private String servingUnit;
+    private String productDefaultServingUnit;
 
     @Min(value = 0, message = "총 중량은 0 이상이어야 합니다.")
     @NotNull(message = "총 중량을 입력해주세요.")
-    private BigDecimal totalWeightGram;
+    private BigDecimal productTotalWeightGram;
 
     @Min(value = 0, message = "칼로리는 0 이상이어야 합니다.")
     @NotNull(message = "칼로리를 입력해주세요.")
@@ -47,12 +47,12 @@ public class NewProductRequest {
 
 
     @Builder
-    private NewProductRequest(String productName, String corpName, BigDecimal servingSize, String servingUnit, BigDecimal totalWeightGram, BigDecimal calories, BigDecimal carbohydrate, BigDecimal protein, BigDecimal fat) {
+    private NewProductRequest(String productName, String corpName, BigDecimal productDefaultServingSize, String productDefaultServingUnit, BigDecimal productTotalWeightGram, BigDecimal calories, BigDecimal carbohydrate, BigDecimal protein, BigDecimal fat) {
         this.productName = productName;
         this.corpName = corpName;
-        this.servingSize = servingSize;
-        this.servingUnit = servingUnit;
-        this.totalWeightGram = totalWeightGram;
+        this.productDefaultServingSize = productDefaultServingSize;
+        this.productDefaultServingUnit = productDefaultServingUnit;
+        this.productTotalWeightGram = productTotalWeightGram;
         this.calories = calories;
         this.carbohydrate = carbohydrate;
         this.protein = protein;

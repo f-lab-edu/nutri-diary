@@ -38,7 +38,7 @@ class DiaryRepositoryTest {
                 .productId(1L)
                 .mealType(MealType.BREAKFAST)
                 .quantity(ONE)
-                .servingUnit("개")
+                .clientChoiceServingUnitDescription("개")
                 .calculatedNutrition(calculatedNutrition)
                 .build();
         Diary diary = new Diary(date, diaryRecord);
@@ -63,7 +63,7 @@ class DiaryRepositoryTest {
                 .productId(1L)
                 .mealType(MealType.BREAKFAST)
                 .quantity(ONE)
-                .servingUnit("개")
+                .clientChoiceServingUnitDescription("개")
                 .calculatedNutrition(calculatedNutrition)
                 .build();
         Diary diary = new Diary(date, diaryRecord);
@@ -87,7 +87,7 @@ class DiaryRepositoryTest {
                 .productId(1L)
                 .mealType(MealType.BREAKFAST)
                 .quantity(ONE)
-                .servingUnit("개")
+                .clientChoiceServingUnitDescription("개")
                 .calculatedNutrition(calculatedNutrition)
                 .build();
         Diary diary = new Diary(date, diaryRecord);

@@ -9,14 +9,14 @@ import java.math.BigDecimal;
 public class ProductIntakeInfo {
     private final Long productId;
     private final MealType mealType;
-    private final String servingUnit;
+    private final String clientChoiceServingUnitDescription;
     private final BigDecimal quantity;
 
     @Builder
-    public ProductIntakeInfo(Long productId, String mealType, String servingUnit, BigDecimal quantity) {
+    public ProductIntakeInfo(Long productId, String mealType, String clientChoiceServingUnitDescription, BigDecimal quantity) {
         this.productId = productId;
         this.mealType = MealType.valueOf(mealType);
-        this.servingUnit = servingUnit;
+        this.clientChoiceServingUnitDescription = clientChoiceServingUnitDescription;
         this.quantity = quantity;
     }
 }

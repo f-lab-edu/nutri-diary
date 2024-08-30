@@ -1,5 +1,6 @@
 package flab.nutridiary.product.domain;
 
+import flab.nutridiary.commom.exception.BusinessException;
 import flab.nutridiary.commom.generic.Nutrition;
 import lombok.Builder;
 import lombok.Getter;
@@ -7,33 +8,32 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.math.BigDecimal;
+import java.util.List;
+
+import static flab.nutridiary.commom.exception.StatusConst.NOT_ALLOWED_SERVING_UNIT;
 
 @ToString
 @Getter
 @NoArgsConstructor
 public class NutritionFacts {
-    private static final String GRAM = "gram";
 
-    private Nutrition totalNutrition;
+    private Nutrition nutritionPerOneServingUnit;
 
-    private BigDecimal productServingSize;
-
-    private String productServingUnit;
-
-    private BigDecimal productTotalWeightGram;
+    private List<ServingUnit> allowedProductServingUnits;
 
     @Builder
-    public NutritionFacts(Nutrition totalNutrition, BigDecimal productServingSize, String productServingUnit, BigDecimal productTotalWeightGram) {
-        this.totalNutrition = totalNutrition;
-        this.productServingSize = productServingSize;
-        this.productServingUnit = productServingUnit;
-        this.productTotalWeightGram = productTotalWeightGram;
+    public NutritionFacts(Nutrition nutritionPerOneServingUnit, List<ServingUnit> allowedProductServingUnits) {
+        this.nutritionPerOneServingUnit = nutritionPerOneServingUnit;
+        this.allowedProductServingUnits = allowedProductServingUnits;
     }
 
-    public Nutrition calculate(String servingUnit, BigDecimal quantity) {
-        if (servingUnit.equals(GRAM)) {
-            return totalNutrition.divide(productTotalWeightGram).multiply(quantity);
+    public Nutrition calculate(String clientChoiceServingUnitDescription, BigDecimal quantity) {
+        for (ServingUnit productServingUnit : allowedProductServingUnits) {
+            if (productServingUnit.isSupport(clientChoiceServingUnitDescription)) {
+                BigDecimal ratioFactor = productServingUnit.getUnitConversionRate();
+                return nutritionPerOneServingUnit.multiply(ratioFactor).multiply(quantity);
+            }
         }
-        return totalNutrition.divide(productServingSize).multiply(quantity);
+        throw new BusinessException(NOT_ALLOWED_SERVING_UNIT);
     }
 }

@@ -10,7 +10,7 @@ public class ProductIntakeInfoMapper {
         return ProductIntakeInfo.builder()
                 .productId(diaryRegisterRequest.getProductId())
                 .mealType(diaryRegisterRequest.getMealType())
-                .servingUnit(diaryRegisterRequest.getServingUnit())
+                .clientChoiceServingUnitDescription(diaryRegisterRequest.getClientChoiceServingUnit())
                 .quantity(diaryRegisterRequest.getQuantity())
                 .build();
     }

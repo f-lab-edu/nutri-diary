@@ -19,7 +19,7 @@ public class NutritionCalculator {
         Product product = productRepository.findById(productIntakeInfo.getProductId())
                 .orElseThrow(() -> new BusinessException(INVALID_PRODUCT_ID));
         NutritionFacts nutritionFacts = product.getNutritionFacts();
-        return nutritionFacts.calculate(productIntakeInfo.getServingUnit(), productIntakeInfo.getQuantity());
+        return nutritionFacts.calculate(productIntakeInfo.getClientChoiceServingUnitDescription(), productIntakeInfo.getQuantity());
     }
 }
 

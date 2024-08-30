@@ -1,6 +1,7 @@
 package flab.nutridiary.product.repository;
 
 import flab.nutridiary.commom.generic.Nutrition;
+import flab.nutridiary.product.domain.ServingUnit;
 import flab.nutridiary.product.domain.NutritionFacts;
 import flab.nutridiary.product.domain.Product;
 import org.junit.jupiter.api.DisplayName;
@@ -9,6 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.math.BigDecimal.valueOf;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,10 +31,11 @@ class ProductRepositoryTest {
     void saveTest() throws Exception {
         // given
         NutritionFacts nutritionFacts = NutritionFacts.builder()
-                .totalNutrition(Nutrition.of(valueOf(100), valueOf(10), valueOf(20), valueOf(30)))
-                .productServingSize(valueOf(2))
-                .productServingUnit("컵")
-                .productTotalWeightGram(valueOf(100))
+                .nutritionPerOneServingUnit(Nutrition.of(valueOf(50), valueOf(5), valueOf(10), valueOf(15)))
+                .allowedProductServingUnits(
+                        new ArrayList<>(List.of(
+                                ServingUnit.asOneServingUnit("개"),
+                                ServingUnit.ofGram(BigDecimal.ONE, valueOf(50)))))
                 .build();
 
         Product product = Product.builder()
@@ -45,10 +51,8 @@ class ProductRepositoryTest {
         assertThat(savedProduct.getId()).isNotNull();
         assertThat(savedProduct.getProductName()).isEqualTo("사과");
         assertThat(savedProduct.getProductCorp()).isEqualTo("사과회사");
-        assertThat(savedProduct.getNutritionFacts().getProductServingSize()).isEqualTo(valueOf(2));
-        assertThat(savedProduct.getNutritionFacts().getProductServingUnit()).isEqualTo("컵");
-        assertThat(savedProduct.getNutritionFacts().getProductTotalWeightGram()).isEqualTo(valueOf(100));
-        assertThat(savedProduct.getNutritionFacts().getTotalNutrition()).isEqualTo(Nutrition.of(valueOf(100), valueOf(10), valueOf(20), valueOf(30)));
+        assertThat(savedProduct.getNutritionFacts().getNutritionPerOneServingUnit()).isEqualTo(Nutrition.of(valueOf(50), valueOf(5), valueOf(10), valueOf(15)));
+        assertThat(savedProduct.getNutritionFacts().getAllowedProductServingUnits()).containsExactly(ServingUnit.asOneServingUnit("개"), ServingUnit.ofGram(BigDecimal.ONE, valueOf(50)));
 
     }
 
@@ -57,10 +61,11 @@ class ProductRepositoryTest {
     void findById() throws Exception {
         // given
         NutritionFacts nutritionFacts = NutritionFacts.builder()
-                .totalNutrition(Nutrition.of(valueOf(100), valueOf(10), valueOf(20), valueOf(30)))
-                .productServingSize(valueOf(2))
-                .productServingUnit("컵")
-                .productTotalWeightGram(valueOf(100))
+                .nutritionPerOneServingUnit(Nutrition.of(valueOf(50), valueOf(5), valueOf(10), valueOf(15)))
+                .allowedProductServingUnits(
+                        new ArrayList<>(List.of(
+                                ServingUnit.asOneServingUnit("개"),
+                                ServingUnit.ofGram(BigDecimal.ONE, valueOf(50)))))
                 .build();
 
         Product product = Product.builder()
@@ -79,9 +84,7 @@ class ProductRepositoryTest {
         assertThat(foundProduct.getId()).isEqualTo(savedProductId);
         assertThat(foundProduct.getProductName()).isEqualTo("사과");
         assertThat(foundProduct.getProductCorp()).isEqualTo("사과회사");
-        assertThat(foundProduct.getNutritionFacts().getProductServingSize()).isEqualTo(valueOf(2));
-        assertThat(foundProduct.getNutritionFacts().getProductServingUnit()).isEqualTo("컵");
-        assertThat(foundProduct.getNutritionFacts().getProductTotalWeightGram()).isEqualTo(valueOf(100));
-        assertThat(foundProduct.getNutritionFacts().getTotalNutrition()).isEqualTo(Nutrition.of(valueOf(100), valueOf(10), valueOf(20), valueOf(30)));
+        assertThat(foundProduct.getNutritionFacts().getNutritionPerOneServingUnit()).isEqualTo(Nutrition.of(valueOf(50), valueOf(5), valueOf(10), valueOf(15)));
+        assertThat(foundProduct.getNutritionFacts().getAllowedProductServingUnits()).containsExactly(ServingUnit.asOneServingUnit("개"), ServingUnit.ofGram(BigDecimal.ONE, valueOf(50)));
     }
 }
