@@ -1,4 +1,4 @@
-package flab.nutridiary.product.domain.converter;
+package flab.nutridiary.config.converter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import flab.nutridiary.commom.exception.SystemException;
@@ -11,12 +11,12 @@ import java.io.IOException;
 
 @RequiredArgsConstructor
 @ReadingConverter
-public class JsonToNutritionFactsConverter implements Converter<String, NutritionFacts> {
+public class JsonToNutritionFactsTestConverter implements Converter<byte[], NutritionFacts> {
 
     private final ObjectMapper objectMapper;
 
     @Override
-    public NutritionFacts convert(String source) {
+    public NutritionFacts convert(byte[] source) {
         try {
             return objectMapper.readValue(source, NutritionFacts.class);
         } catch (IOException e) {
@@ -24,4 +24,3 @@ public class JsonToNutritionFactsConverter implements Converter<String, Nutritio
         }
     }
 }
-

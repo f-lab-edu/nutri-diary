@@ -1,46 +1,39 @@
 package flab.nutridiary.product.domain;
 
-import lombok.*;
+import flab.nutridiary.commom.exception.BusinessException;
+import flab.nutridiary.commom.generic.Nutrition;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.math.BigDecimal;
+import java.util.List;
 
-import static flab.nutridiary.product.constant.DecimalConstant.ROUNDING_MODE;
-import static flab.nutridiary.product.constant.DecimalConstant.SCALE;
+import static flab.nutridiary.commom.exception.StatusConst.NOT_ALLOWED_SERVING_UNIT;
 
+@ToString
 @Getter
 @NoArgsConstructor
 public class NutritionFacts {
-    private BigDecimal productTotalCalories;
 
-    private BigDecimal productTotalCarbohydrate;
+    private Nutrition nutritionPerOneServingUnit;
 
-    private BigDecimal productTotalProtein;
-
-    private BigDecimal productTotalFat;
-
-    private BigDecimal productServingSize;
-
-    private String productServingUnit;
-
-    private BigDecimal productTotalWeightGram;
+    private List<ServingUnit> allowedProductServingUnits;
 
     @Builder
-    public NutritionFacts(BigDecimal productTotalCalories, BigDecimal productTotalCarbohydrate, BigDecimal productTotalProtein, BigDecimal productTotalFat, BigDecimal productServingSize, String productServingUnit, BigDecimal productTotalWeightGram) {
-        this.productTotalCalories = productTotalCalories;
-        this.productTotalCarbohydrate = productTotalCarbohydrate;
-        this.productTotalProtein = productTotalProtein;
-        this.productTotalFat = productTotalFat;
-        this.productServingSize = productServingSize;
-        this.productServingUnit = productServingUnit;
-        this.productTotalWeightGram = productTotalWeightGram;
+    public NutritionFacts(Nutrition nutritionPerOneServingUnit, List<ServingUnit> allowedProductServingUnits) {
+        this.nutritionPerOneServingUnit = nutritionPerOneServingUnit;
+        this.allowedProductServingUnits = allowedProductServingUnits;
     }
 
-    public NutritionFactsPerGram calculateNutritionFactsPerGram() {
-        return NutritionFactsPerGram.builder()
-                .productCaloriesPerGram(productTotalCalories.divide(productTotalWeightGram, SCALE, ROUNDING_MODE))
-                .productCarbohydratePerGram(productTotalCarbohydrate.divide(productTotalWeightGram, SCALE, ROUNDING_MODE))
-                .productProteinPerGram(productTotalProtein.divide(productTotalWeightGram, SCALE, ROUNDING_MODE))
-                .productFatPerGram(productTotalFat.divide(productTotalWeightGram, SCALE, ROUNDING_MODE))
-                .build();
+    public Nutrition calculate(String clientChoiceServingUnitDescription, BigDecimal quantity) {
+        for (ServingUnit productServingUnit : allowedProductServingUnits) {
+            if (productServingUnit.isSupport(clientChoiceServingUnitDescription)) {
+                BigDecimal ratioFactor = productServingUnit.getUnitConversionRate();
+                return nutritionPerOneServingUnit.multiply(ratioFactor).multiply(quantity);
+            }
+        }
+        throw new BusinessException(NOT_ALLOWED_SERVING_UNIT);
     }
 }
