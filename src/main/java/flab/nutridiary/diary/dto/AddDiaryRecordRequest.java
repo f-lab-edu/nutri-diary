@@ -1,5 +1,7 @@
 package flab.nutridiary.diary.dto;
 
+import flab.nutridiary.commom.validation.EnumValidator;
+import flab.nutridiary.diary.domain.MealType;
 import flab.nutridiary.diary.domain.ProductIntakeInfo;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -13,7 +15,8 @@ import java.math.BigDecimal;
 public class AddDiaryRecordRequest {
     @NotNull(message = "상품 ID를 입력해주세요.")
     private Long productId;
-//    @EnumValidator(enumClass = MealType.class, message = "올바른 식사 타입을 입력해주세요.")
+
+    @EnumValidator(enumClass = MealType.class, message = "올바른 식사 타입을 입력해주세요.")
     private String mealType;
 
     @NotNull(message = "섭취량을 입력해주세요.")
