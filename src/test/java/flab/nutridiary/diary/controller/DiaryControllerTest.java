@@ -128,8 +128,26 @@ class DiaryControllerTest {
                                 .contentType("application/json")
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.statusCode").value(4006))
+                .andExpect(jsonPath("$.statusCode").value(6002))
                 .andExpect(jsonPath("$.message").value("허용되지 않은 서빙 단위입니다."))
                 .andExpect(jsonPath("$.data.diaryId").doesNotExist());
+    }
+
+    @DisplayName("올바르지 않은 식사타입 실패 테스트")
+    @Test
+    void mealType() throws Exception {
+        // given
+        DiaryRegisterRequest diaryRegisterRequest = new DiaryRegisterRequest(savedProductId, "WRONG", valueOf(1), "gram", LocalDate.of(2024, 8, 10));
+
+        // when then
+        mockMvc.perform(
+                        post("/diary/new")
+                                .content(objectMapper.writeValueAsString(diaryRegisterRequest))
+                                .contentType("application/json")
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.statusCode").value(6001))
+                .andExpect(jsonPath("$.message").value("유효성 검사에 실패했습니다."))
+                .andExpect(jsonPath("$.data.mealType").value("올바른 식사 타입을 입력해주세요."));
     }
 }

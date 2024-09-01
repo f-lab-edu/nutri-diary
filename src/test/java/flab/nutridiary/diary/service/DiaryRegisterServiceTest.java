@@ -151,6 +151,6 @@ class DiaryRegisterServiceTest {
         // when then
         BusinessException businessException = Assertions.assertThrows(BusinessException.class, () -> diaryRegisterService.createDiary(diaryRegisterRequest));
         assertThat(businessException.getMessage()).isEqualTo("허용되지 않은 서빙 단위입니다.");
-        assertThat(businessException.getStatusCode()).isEqualTo(4006);
+        assertThat(businessException.getStatusCode()).isEqualTo(6002);
     }
 }
