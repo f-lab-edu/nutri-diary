@@ -8,6 +8,30 @@ spring:
 spring:
   config:
     activate:
+      on-profile: prod
+
+  datasource:
+    url: jdbc:mysql://db-p5b9b-kr.vpc-pub-cdb.ntruss.com:3306/nutridiary
+    username: koo995
+    password: koo995**
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  sql:
+    init:
+      mode: never
+      schema-locations: classpath:db/schema.sql
+      data-locations: optional:classpath:db/data.sql
+
+logging:
+  level:
+    org:
+      springframework:
+        jdbc:
+          core: debug
+
+---
+spring:
+  config:
+    activate:
       on-profile: dev
 
   datasource:
