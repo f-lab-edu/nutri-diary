@@ -2,17 +2,17 @@ package flab.nutridiary.diary.domain;
 
 import flab.nutridiary.commom.exception.BusinessException;
 import flab.nutridiary.commom.generic.Nutrition;
-import flab.nutridiary.product.domain.ServingUnit;
 import flab.nutridiary.diary.repository.DiaryRepository;
 import flab.nutridiary.product.domain.NutritionFacts;
 import flab.nutridiary.product.domain.Product;
+import flab.nutridiary.product.domain.ServingUnit;
 import flab.nutridiary.product.repository.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Profile;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -24,7 +24,7 @@ import static java.math.BigDecimal.valueOf;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@Profile("test")
+@ActiveProfiles("test")
 @Transactional
 @SpringBootTest
 class DiaryValidatorTest {
