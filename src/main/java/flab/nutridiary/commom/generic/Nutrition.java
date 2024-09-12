@@ -72,6 +72,15 @@ public class Nutrition {
         return strippedValue.scale() <= 0 ? strippedValue.setScale(0) : strippedValue;
     }
 
+    public static Nutrition empty() {
+        return Nutrition.builder()
+                .calories(BigDecimal.ZERO)
+                .carbohydrate(BigDecimal.ZERO)
+                .protein(BigDecimal.ZERO)
+                .fat(BigDecimal.ZERO)
+                .build();
+    }
+
     public static Nutrition of(BigDecimal calories, BigDecimal carbohydrate, BigDecimal protein, BigDecimal fat) {
         return Nutrition.builder().
                 calories(calories).
