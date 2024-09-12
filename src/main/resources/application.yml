@@ -11,7 +11,7 @@ spring:
       on-profile: prod
 
   datasource:
-    url: jdbc:mysql://db-p5b9b-kr.vpc-pub-cdb.ntruss.com:3306/nutridiary
+    url: jdbc:mysql://db-p93qe.vpc-cdb.ntruss.com:3306/nutridiary
     username: koo995
     password: koo995**
     driver-class-name: com.mysql.cj.jdbc.Driver
