@@ -6,6 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ProductCrudRepository extends CrudRepository<Product, Long> {
 
-    @Query("select count(*) from PRODUCT where PRODUCT_NORMALIZED_NAME = :normalizedName")
+    @Query("select count(*) from product where product_normalized_name = :normalizedName")
     Integer isExistDuplicatedProductByNormalizedName(String normalizedName);
 }
