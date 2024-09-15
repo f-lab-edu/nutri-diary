@@ -2,10 +2,8 @@ package flab.nutridiary.diary.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import flab.nutridiary.commom.generic.Nutrition;
+import flab.nutridiary.diary.domain.*;
 import flab.nutridiary.product.domain.ServingUnit;
-import flab.nutridiary.diary.domain.Diary;
-import flab.nutridiary.diary.domain.DiaryRecord;
-import flab.nutridiary.diary.domain.MealType;
 import flab.nutridiary.diary.dto.request.AddDiaryRecordRequest;
 import flab.nutridiary.diary.dto.request.DiaryRegisterRequest;
 import flab.nutridiary.diary.repository.DiaryRepository;
@@ -28,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.math.BigDecimal.valueOf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -40,32 +39,43 @@ class DiaryControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @Autowired
+    private NutritionCalculator nutritionCalculator;
+    @Autowired
     private ProductRepository productRepository;
     @Autowired
     private DiaryRepository diaryRepository;
     @Autowired
     private ObjectMapper objectMapper;
 
-    private Long savedProductId;
+    private List<Long> savedProductIds = new ArrayList<>();
 
     @BeforeEach
     void init() {
-        // given
-        NutritionFacts nutritionFacts = NutritionFacts.builder()
-                .nutritionPerOneServingUnit(Nutrition.of(valueOf(50), valueOf(5), valueOf(10), valueOf(15)))
-                .allowedProductServingUnits(
-                    new ArrayList<>(List.of(
-                            ServingUnit.asOneServingUnit("개"),
-                            ServingUnit.ofGram(BigDecimal.ONE, valueOf(50)))))
-                .build();
-
-        Product product = Product.builder()
+        Product product1 = Product.builder()
                 .productName("사과")
                 .productCorp("사과회사")
-                .nutritionFacts(nutritionFacts)
+                .nutritionFacts(NutritionFacts.builder()
+                        .nutritionPerOneServingUnit(Nutrition.of(valueOf(50), valueOf(5), valueOf(10), valueOf(15)))
+                        .allowedProductServingUnits(
+                            new ArrayList<>(List.of(
+                                    ServingUnit.asOneServingUnit("개"),
+                                    ServingUnit.ofGram(BigDecimal.ONE, valueOf(50)))))
+                        .build())
                 .build();
 
-        savedProductId = productRepository.save(product).getId();
+        Product product2 = Product.builder()
+                .productName("바나나")
+                .productCorp("바나나회사")
+                .nutritionFacts(NutritionFacts.builder()
+                        .nutritionPerOneServingUnit(Nutrition.of(valueOf(250), valueOf(20), valueOf(20), valueOf(15)))
+                        .allowedProductServingUnits(
+                                new ArrayList<>(List.of(
+                                        ServingUnit.asOneServingUnit("컵"),
+                                        ServingUnit.ofGram(BigDecimal.ONE, valueOf(150)))))
+                        .build())
+                .build();
+        savedProductIds.add(productRepository.save(product1).getId());
+        savedProductIds.add(productRepository.save(product2).getId());
     }
 
 
@@ -73,7 +83,7 @@ class DiaryControllerTest {
     @Test
     void createDiary() throws Exception {
         // given
-        DiaryRegisterRequest diaryRegisterRequest = new DiaryRegisterRequest(savedProductId, "BREAKFAST", valueOf(1), "gram", LocalDate.of(2024, 8, 10));
+        DiaryRegisterRequest diaryRegisterRequest = new DiaryRegisterRequest(savedProductIds.getFirst(), "BREAKFAST", valueOf(1), "gram", LocalDate.of(2024, 8, 10));
 
         // when then
         mockMvc.perform(
@@ -93,7 +103,7 @@ class DiaryControllerTest {
         // given
         Diary diary = new Diary(LocalDate.of(2024, 8, 10),
                 DiaryRecord.builder()
-                        .productId(savedProductId)
+                        .productId(savedProductIds.getFirst())
                         .mealType(MealType.BREAKFAST)
                         .quantity(valueOf(1))
                         .clientChoiceServingUnitDescription("컵")
@@ -101,7 +111,7 @@ class DiaryControllerTest {
                         .build());
         Long diaryId = diaryRepository.save(diary).getId();
 
-        AddDiaryRecordRequest addDiaryRecordRequest = new AddDiaryRecordRequest(savedProductId, "BREAKFAST", BigDecimal.valueOf(10), "gram");
+        AddDiaryRecordRequest addDiaryRecordRequest = new AddDiaryRecordRequest(savedProductIds.getFirst(), "BREAKFAST", BigDecimal.valueOf(10), "gram");
 
         // when then
         mockMvc.perform(
@@ -119,7 +129,7 @@ class DiaryControllerTest {
     @Test
     void addDiaryRecordWithInvalidServingUnit() throws Exception {
         // given
-        DiaryRegisterRequest diaryRegisterRequest = new DiaryRegisterRequest(savedProductId, "BREAKFAST", valueOf(1), "InvalidServingUnit", LocalDate.of(2024, 8, 10));
+        DiaryRegisterRequest diaryRegisterRequest = new DiaryRegisterRequest(savedProductIds.getFirst(), "BREAKFAST", valueOf(1), "InvalidServingUnit", LocalDate.of(2024, 8, 10));
 
         // when then
         mockMvc.perform(
@@ -137,7 +147,7 @@ class DiaryControllerTest {
     @Test
     void mealType() throws Exception {
         // given
-        DiaryRegisterRequest diaryRegisterRequest = new DiaryRegisterRequest(savedProductId, "WRONG", valueOf(1), "gram", LocalDate.of(2024, 8, 10));
+        DiaryRegisterRequest diaryRegisterRequest = new DiaryRegisterRequest(savedProductIds.getFirst(), "WRONG", valueOf(1), "gram", LocalDate.of(2024, 8, 10));
 
         // when then
         mockMvc.perform(
@@ -149,5 +159,50 @@ class DiaryControllerTest {
                 .andExpect(jsonPath("$.statusCode").value(6001))
                 .andExpect(jsonPath("$.message").value("유효성 검사에 실패했습니다."))
                 .andExpect(jsonPath("$.data.mealType").value("올바른 식사 타입을 입력해주세요."));
+    }
+
+    @DisplayName("다이어리 조회 테스트")
+    @Test
+    void getDiary() throws Exception {
+        // given
+        Diary diary = Diary.builder()
+                .diaryDate(LocalDate.of(2024, 8, 10))
+                .diaryRecord(DiaryRecord.of(
+                        ProductIntakeInfo.builder()
+                                .productId(savedProductIds.get(0))
+                                .mealType("BREAKFAST")
+                                .clientChoiceServingUnitDescription("개")
+                                .quantity(valueOf(2))
+                                .build(),
+                        nutritionCalculator))
+                .build();
+        diary.addDiaryRecord(DiaryRecord.of(
+                ProductIntakeInfo.builder()
+                        .productId(savedProductIds.get(1))
+                        .mealType("BREAKFAST")
+                        .clientChoiceServingUnitDescription("컵")
+                        .quantity(valueOf(2))
+                        .build(),
+                nutritionCalculator));
+        diary.addDiaryRecord(DiaryRecord.of(
+                ProductIntakeInfo.builder()
+                        .productId(savedProductIds.get(0))
+                        .mealType("LUNCH")
+                        .clientChoiceServingUnitDescription("gram")
+                        .quantity(valueOf(200))
+                        .build(),
+                nutritionCalculator));
+        Long diaryId = diaryRepository.save(diary).getId();
+
+        // when then
+        mockMvc.perform(
+                        get("/diary/ /2024-08-10")
+                                .contentType("application/json"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.statusCode").value(2001))
+                .andExpect(jsonPath("$.message").value("OK"))
+                .andExpect(jsonPath("$.data.diaryId").value(diaryId))
+                .andExpect(jsonPath("$.data.diaryDate").value("2024-08-10"))
+                .andExpect(jsonPath("$.data.diarySummary").exists());
     }
 }
