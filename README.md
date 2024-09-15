@@ -1,7 +1,7 @@
 # Nutri-Diary
 다이어트 음식을 기록하고 공유하는 서비스입니다.
 # 서비스 아키텍처
-![architecture](https://github.com/user-attachments/assets/48048996-a848-4d02-bcd2-ba0b036e8105)
+<a href="link"><img src="https://github.com/user-attachments/assets/48048996-a848-4d02-bcd2-ba0b036e8105" width="70%"></a>
 # 프로토타입 화면
 ![nutri-diary-prototype](https://github.com/user-attachments/assets/ccbbc96a-027e-46e2-829e-f724056f5dff)
 # skills
