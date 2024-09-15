@@ -1,20 +1,22 @@
-package flab.nutridiary.diary.dto;
+package flab.nutridiary.diary.dto.request;
 
 import flab.nutridiary.commom.validation.EnumValidator;
 import flab.nutridiary.diary.domain.MealType;
-import flab.nutridiary.diary.domain.ProductIntakeInfo;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Getter
 @ToString
-public class AddDiaryRecordRequest {
+public class DiaryRegisterRequest {
     @NotNull(message = "상품 ID를 입력해주세요.")
     private Long productId;
+
+    private Long memberId = 1L;
 
     @EnumValidator(enumClass = MealType.class, message = "올바른 식사 타입을 입력해주세요.")
     private String mealType;
@@ -26,19 +28,14 @@ public class AddDiaryRecordRequest {
     @NotNull(message = "서빙 단위를 입력해주세요.")
     private String clientChoiceServingUnit;
 
-    public AddDiaryRecordRequest(Long productId, String mealType, BigDecimal quantity, String clientChoiceServingUnit) {
+    @NotNull(message = "섭취 날짜를 입력해주세요.")
+    private LocalDate intakeDate;
+
+    public DiaryRegisterRequest(Long productId, String mealType, BigDecimal quantity, String clientChoiceServingUnit, LocalDate intakeDate) {
         this.productId = productId;
         this.mealType = mealType;
         this.quantity = quantity;
         this.clientChoiceServingUnit = clientChoiceServingUnit;
-    }
-
-    public ProductIntakeInfo toProductIntakeInfo() {
-        return ProductIntakeInfo.builder()
-                .productId(productId)
-                .mealType(mealType)
-                .quantity(quantity)
-                .clientChoiceServingUnitDescription(clientChoiceServingUnit)
-                .build();
+        this.intakeDate = intakeDate;
     }
 }

@@ -1,7 +1,7 @@
 package flab.nutridiary.diary.service;
 
 import flab.nutridiary.diary.domain.ProductIntakeInfo;
-import flab.nutridiary.diary.dto.DiaryRegisterRequest;
+import flab.nutridiary.diary.dto.request.DiaryRegisterRequest;
 import org.springframework.stereotype.Component;
 
 @Component
