@@ -1,4 +1,4 @@
-package flab.nutridiary.diary.service.retrievalService;
+package flab.nutridiary.diary.service;
 
 import flab.nutridiary.commom.exception.BusinessException;
 import flab.nutridiary.diary.dto.response.query.DiaryRetrievalQueryDto;

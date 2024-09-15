@@ -7,7 +7,7 @@ import flab.nutridiary.diary.dto.response.query.DiaryRetrievalQueryDto;
 import flab.nutridiary.diary.dto.response.DiarySavedResponse;
 import flab.nutridiary.diary.service.AddDiaryRecordService;
 import flab.nutridiary.diary.service.DiaryRegisterService;
-import flab.nutridiary.diary.service.retrievalService.DiaryRetrievalService;
+import flab.nutridiary.diary.service.DiaryRetrievalService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

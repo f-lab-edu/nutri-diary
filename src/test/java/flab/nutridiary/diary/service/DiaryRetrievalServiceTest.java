@@ -5,7 +5,6 @@ import flab.nutridiary.commom.generic.Nutrition;
 import flab.nutridiary.diary.domain.*;
 import flab.nutridiary.diary.dto.response.query.DiaryRetrievalQueryDto;
 import flab.nutridiary.diary.repository.DiaryRepository;
-import flab.nutridiary.diary.service.retrievalService.DiaryRetrievalService;
 import flab.nutridiary.product.domain.NutritionFacts;
 import flab.nutridiary.product.domain.Product;
 import flab.nutridiary.product.domain.ServingUnit;
