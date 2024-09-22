@@ -7,7 +7,7 @@
 * CI/CD 와 무중단 배포는 젠킨스와 NCP의 SourceDeploy 을 이용했습니다.
   * GitHub의 webhook 을 이용하여 젠킨스 서버에서 테스트와 빌드를 진행합니다.
   * 그 후 빌드된 파일을 NCP의 Object Storage 에 저장합니다.
-  * 젠킨스에서 SourceDeploy 을 실행시켜 블루그린배포가 진행되도록 하였습니다.
+  * 젠킨스에서 SourceDeploy 을 실행시켜 무중단 배포가 진행되도록 하였습니다.
 # 프로토타입 화면
 ![nutri-diary-prototype](https://github.com/user-attachments/assets/ccbbc96a-027e-46e2-829e-f724056f5dff)
 # skills
