@@ -1,9 +1,9 @@
 pipeline {
     agent any
     environment {
-            API_ACCESS_KEY = credentials('ncp-api-access-key')
-            API_SECRET_KEY = credentials('ncp-api-secret-key')
-        }
+        API_ACCESS_KEY = credentials('ncp-api-access-key')
+        API_SECRET_KEY = credentials('ncp-api-secret-key')
+    }
 
     stages {
         stage('Prepare') {
@@ -39,6 +39,7 @@ pipeline {
 
         stage('Upload') {
             steps {
+                sh 'chmod +x ./script/upload.sh'
                 sh './script/upload.sh'
             }
 
@@ -50,9 +51,11 @@ pipeline {
                     echo 'Upload failed!'
                 }
             }
+        }
 
         stage('Deploy') {
             steps {
+                sh 'chmod +x ./script/deploy.sh'
                 sh './script/deploy.sh'
             }
 
