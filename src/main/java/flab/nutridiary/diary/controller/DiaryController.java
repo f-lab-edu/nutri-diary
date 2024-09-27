@@ -32,8 +32,8 @@ public class DiaryController {
         return ApiResponse.success(addDiaryRecordService.addDiaryRecord(addDiaryRecordRequest, diaryId));
     }
 
-    @GetMapping("/diary/{diaryDate}")
-    public ApiResponse<DiaryRetrievalQueryDto> getDiary(@PathVariable(name = "diaryDate") LocalDate diaryDate) {
+    @GetMapping("/diary")
+    public ApiResponse<DiaryRetrievalQueryDto> getDiary(@RequestParam(name = "diaryDate") LocalDate diaryDate) {
         Long memberId = 1L;
         return ApiResponse.success(diaryRetrievalService.getDiary(memberId, diaryDate));
     }

@@ -196,7 +196,8 @@ class DiaryControllerTest {
 
         // when then
         mockMvc.perform(
-                        get("/diary/ /2024-08-10")
+                        get("/diary")
+                                .param("diaryDate", "2024-08-10")
                                 .contentType("application/json"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.statusCode").value(2001))
