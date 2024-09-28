@@ -3,12 +3,12 @@ package flab.nutridiary.diary.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import flab.nutridiary.commom.generic.Nutrition;
 import flab.nutridiary.diary.domain.*;
-import flab.nutridiary.product.domain.ServingUnit;
 import flab.nutridiary.diary.dto.request.AddDiaryRecordRequest;
 import flab.nutridiary.diary.dto.request.DiaryRegisterRequest;
 import flab.nutridiary.diary.repository.DiaryRepository;
 import flab.nutridiary.product.domain.NutritionFacts;
 import flab.nutridiary.product.domain.Product;
+import flab.nutridiary.product.domain.ServingUnit;
 import flab.nutridiary.product.repository.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -202,8 +202,7 @@ class DiaryControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.statusCode").value(2001))
                 .andExpect(jsonPath("$.message").value("OK"))
-                .andExpect(jsonPath("$.data.diaryId").value(diaryId))
-                .andExpect(jsonPath("$.data.diaryDate").value("2024-08-10"))
-                .andExpect(jsonPath("$.data.diarySummary").exists());
+                .andExpect(jsonPath("$.data[0].diaryId").value(diaryId))
+                .andExpect(jsonPath("$.data[0].diaryDate").value("2024-08-10"));
     }
 }

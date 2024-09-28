@@ -1,9 +1,8 @@
-package flab.nutridiary.diary.service;
+package flab.nutridiary.diary.repository;
 
 import flab.nutridiary.commom.generic.Nutrition;
 import flab.nutridiary.diary.domain.*;
 import flab.nutridiary.diary.dto.response.query.DiaryRecordWithProduct;
-import flab.nutridiary.diary.repository.DiaryRepository;
 import flab.nutridiary.product.domain.NutritionFacts;
 import flab.nutridiary.product.domain.Product;
 import flab.nutridiary.product.domain.ServingUnit;
@@ -27,20 +26,20 @@ import static java.math.BigDecimal.valueOf;
 @ActiveProfiles("test")
 @Transactional
 @SpringBootTest
-class DiaryRetrievalServiceTest {
+class DiaryRetrievalRepositoryTest{
     @Autowired
     private NutritionCalculator nutritionCalculator;
     @Autowired
-    private DiaryRepository diaryRepository;
+    private DiaryRetrievalRepository diaryRetrievalRepository;
     @Autowired
-    private DiaryRetrievalService diaryRetrievalService;
+    private DiaryRepository diaryRepository;
     @Autowired
     private ProductRepository productRepository;
     private List<Long> savedProductIds = new ArrayList<>();
+    private Long memberId = 1L;
 
     @BeforeEach
     void init() {
-        // product
         Product product1 = Product.builder()
                 .productName("사과")
                 .productCorp("사과회사")
@@ -66,8 +65,12 @@ class DiaryRetrievalServiceTest {
                 .build();
         savedProductIds.add(productRepository.save(product1).getId());
         savedProductIds.add(productRepository.save(product2).getId());
+    }
 
-        // diary
+    @DisplayName("memberId와 date로 DiaryRecordWithProduct 리스트를 조회한다.")
+    @Test
+    void findDiaryWithProductsByMemberIdAndDiaryDate() throws Exception {
+        // given
         Diary diary = Diary.builder()
                 .diaryDate(LocalDate.of(2024, 8, 10))
                 .diaryRecord(DiaryRecord.of(
@@ -95,26 +98,20 @@ class DiaryRetrievalServiceTest {
                         .quantity(valueOf(200))
                         .build(),
                 nutritionCalculator));
-        diaryRepository.save(diary);
-    }
+        Long diaryId = diaryRepository.save(diary).getId();
 
-    @DisplayName("memberId와 date로 DiaryRecordWithProduct 리스트를 조회한다.")
-    @Test
-    void getDiary() throws Exception {
-        // given
-        Long memberId = 1L;
-        LocalDate date = LocalDate.of(2024, 8, 10);
-
-        //when
-        List<DiaryRecordWithProduct> results = diaryRetrievalService.getDiary(memberId, date);
+        // when
+        List<DiaryRecordWithProduct> results = diaryRetrievalRepository.findDiaryWithProductAllByMemberIdAndDiaryDate(memberId, LocalDate.of(2024, 8, 10));
 
         // then
         List<DiaryRecordWithProduct> expectedResults = List.of(
-                new DiaryRecordWithProduct(1L, 1L, LocalDate.of(2024, 8, 10), 1L, MealType.BREAKFAST, "사과", "사과회사", valueOf(2), "개", Nutrition.of(valueOf(100), valueOf(10), valueOf(20), valueOf(30))),
+                new DiaryRecordWithProduct(1L, 1L, LocalDate.of(2024, 8, 10), 1L,  MealType.BREAKFAST, "사과", "사과회사", valueOf(2), "개", Nutrition.of(valueOf(100), valueOf(10), valueOf(20), valueOf(30))),
                 new DiaryRecordWithProduct(1L, 1L, LocalDate.of(2024, 8, 10), 2L, MealType.LUNCH, "사과", "사과회사", valueOf(200), "gram", Nutrition.of(valueOf(200), valueOf(20), valueOf(40), valueOf(60))),
                 new DiaryRecordWithProduct(1L, 1L, LocalDate.of(2024, 8, 10), 3L, MealType.BREAKFAST, "바나나", "바나나회사", valueOf(2), "컵", Nutrition.of(valueOf(500), valueOf(40), valueOf(40), valueOf(30)))
         );
 
         Assertions.assertThat(results).containsExactlyInAnyOrderElementsOf(expectedResults);
     }
+
+
 }
