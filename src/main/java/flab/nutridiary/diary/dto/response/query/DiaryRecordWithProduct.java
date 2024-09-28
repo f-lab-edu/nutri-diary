@@ -2,16 +2,20 @@ package flab.nutridiary.diary.dto.response.query;
 
 import flab.nutridiary.commom.generic.Nutrition;
 import flab.nutridiary.diary.domain.MealType;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
-@ToString
+@EqualsAndHashCode(exclude = {"diaryId", "diaryRecordId"})
+@Builder
 @RequiredArgsConstructor
+@ToString
 @Getter
 public class DiaryRecordWithProduct {
+    private final Long diaryId;
+    private final Long memberId;
+    private final LocalDate diaryDate;
     private final Long diaryRecordId;
     private final MealType mealType;
     private final String productName;

@@ -1,25 +1,22 @@
 package flab.nutridiary.diary.service;
 
-import flab.nutridiary.commom.exception.BusinessException;
-import flab.nutridiary.diary.dto.response.query.DiaryRetrievalQueryDto;
-import flab.nutridiary.diary.repository.DiaryRepository;
+import flab.nutridiary.diary.dto.response.query.DiaryRecordWithProduct;
+import flab.nutridiary.diary.repository.DiaryRetrievalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-
-import static flab.nutridiary.commom.exception.StatusConst.DIARY_NOT_FOUND;
+import java.util.List;
 
 @Transactional
 @Service
 @RequiredArgsConstructor
 public class DiaryRetrievalService {
-    private final DiaryRepository diaryRepository;
+    private final DiaryRetrievalRepository diaryRetrievalRepository;
 
     @Transactional(readOnly = true)
-    public DiaryRetrievalQueryDto getDiary(Long memberId, LocalDate diaryDate) {
-        return diaryRepository.findDiaryWithProductsByMemberIdAndDiaryDate(memberId, diaryDate)
-                .orElseThrow(() ->new BusinessException(DIARY_NOT_FOUND));
+    public List<DiaryRecordWithProduct> getDiary(Long memberId, LocalDate diaryDate) {
+        return diaryRetrievalRepository.findDiaryWithProductAllByMemberIdAndDiaryDate(memberId, diaryDate);
     }
 }

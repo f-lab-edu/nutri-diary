@@ -3,8 +3,8 @@ package flab.nutridiary.diary.controller;
 import flab.nutridiary.commom.dto.ApiResponse;
 import flab.nutridiary.diary.dto.request.AddDiaryRecordRequest;
 import flab.nutridiary.diary.dto.request.DiaryRegisterRequest;
-import flab.nutridiary.diary.dto.response.query.DiaryRetrievalQueryDto;
 import flab.nutridiary.diary.dto.response.DiarySavedResponse;
+import flab.nutridiary.diary.dto.response.query.DiaryRecordWithProduct;
 import flab.nutridiary.diary.service.AddDiaryRecordService;
 import flab.nutridiary.diary.service.DiaryRegisterService;
 import flab.nutridiary.diary.service.DiaryRetrievalService;
@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -33,7 +34,7 @@ public class DiaryController {
     }
 
     @GetMapping("/diary")
-    public ApiResponse<DiaryRetrievalQueryDto> getDiary(@RequestParam(name = "diaryDate") LocalDate diaryDate) {
+    public ApiResponse<List<DiaryRecordWithProduct>> getDiary(@RequestParam(name = "diaryDate") LocalDate diaryDate) {
         Long memberId = 1L;
         return ApiResponse.success(diaryRetrievalService.getDiary(memberId, diaryDate));
     }
