@@ -1,7 +1,7 @@
 # Nutri-Diary
 * 오늘 하루 섭취한 음식을 다이어리에 기록하고, 유용한 다이어트 음식을 공유하는 서비스입니다.
 # 서비스 아키텍처
-<a href="link"><img src="https://github.com/user-attachments/assets/79f1340e-415e-4b27-9c2c-e8a589139b93" width="70%"></a>
+<a href="link"><img src="https://github.com/user-attachments/assets/35c5906a-a9bb-4dc4-b493-185551e04ee6" width="70%"></a>
 * NCP(Naver Cloud Platform)을 이용하여 아케틱처를 구성했습니다.
 * AutoScaling Group을 활용하여 트래픽이 증가할 경우 Scale out되어 트래픽을 분산 처리하도록 구성했습니다.
 * CI/CD 와 무중단 배포를 위해 젠킨스와 NCP의 SourceDeploy을 이용했습니다.
