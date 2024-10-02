@@ -1,7 +1,7 @@
 package flab.nutridiary.diary.service;
 
 import flab.nutridiary.diary.dto.response.query.DiaryRecordWithProduct;
-import flab.nutridiary.diary.repository.DiaryRetrievalRepository;
+import flab.nutridiary.diary.repository.DiarySearchRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,11 +12,11 @@ import java.util.List;
 @Transactional
 @Service
 @RequiredArgsConstructor
-public class DiaryRetrievalService {
-    private final DiaryRetrievalRepository diaryRetrievalRepository;
+public class DiarySearchService {
+    private final DiarySearchRepository diarySearchRepository;
 
     @Transactional(readOnly = true)
     public List<DiaryRecordWithProduct> getDiary(Long memberId, LocalDate diaryDate) {
-        return diaryRetrievalRepository.findDiaryWithProductAllByMemberIdAndDiaryDate(memberId, diaryDate);
+        return diarySearchRepository.findDiaryWithProductAllByMemberIdAndDiaryDate(memberId, diaryDate);
     }
 }

@@ -1,7 +1,7 @@
 package flab.nutridiary.diary.repository.query;
 
 import flab.nutridiary.diary.dto.response.query.DiaryRecordWithProduct;
-import flab.nutridiary.diary.repository.DiaryRetrievalRepository;
+import flab.nutridiary.diary.repository.DiarySearchRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class JdbcTemplateDiaryRetrievalRepository implements DiaryRetrievalRepository {
+public class JdbcTemplateDiarySearchRepository implements DiarySearchRepository {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final DiaryRecordWithProductRowMapper diaryRecordWithProductRowMapper;
 
