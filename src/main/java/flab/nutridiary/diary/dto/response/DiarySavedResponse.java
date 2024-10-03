@@ -1,4 +1,4 @@
-package flab.nutridiary.diary.dto;
+package flab.nutridiary.diary.dto.response;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
