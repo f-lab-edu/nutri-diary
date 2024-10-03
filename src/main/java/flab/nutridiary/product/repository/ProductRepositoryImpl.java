@@ -25,6 +25,6 @@ public class ProductRepositoryImpl implements ProductRepository, ProductValidato
 
     @Override
     public Boolean isExistDuplicatedProductByNormalizedName(String normalizedName) {
-        return productCrudRepository.isExistDuplicatedProductByNormalizedName(normalizedName) > 0;
+        return productCrudRepository.countByProductNormalizedName(normalizedName) > 0;
     }
 }

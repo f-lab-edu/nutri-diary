@@ -1,8 +1,8 @@
 package flab.nutridiary.diary.service;
 
 import flab.nutridiary.diary.domain.*;
-import flab.nutridiary.diary.dto.DiaryRegisterRequest;
-import flab.nutridiary.diary.dto.DiarySavedResponse;
+import flab.nutridiary.diary.dto.request.DiaryRegisterRequest;
+import flab.nutridiary.diary.dto.response.DiarySavedResponse;
 import flab.nutridiary.diary.repository.DiaryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

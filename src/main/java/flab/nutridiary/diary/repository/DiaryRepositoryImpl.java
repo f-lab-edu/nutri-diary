@@ -10,7 +10,6 @@ import java.util.Optional;
 @Repository
 @RequiredArgsConstructor
 public class DiaryRepositoryImpl implements DiaryRepository{
-
     private final DiaryCrudRepository diaryCrudRepository;
 
     @Override
