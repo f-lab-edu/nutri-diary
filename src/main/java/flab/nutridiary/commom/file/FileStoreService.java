@@ -22,27 +22,17 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
-public class FileService {
+public class FileStoreService {
     private final AmazonS3 amazonS3;
 
     @Value("${cloud.aws.s3.bucketName}")
     private String bucketName;
 
-    public String uploadImage(MultipartFile image) {
-        String originalFilename = image.getOriginalFilename();
-        String extension = getFileExtension(originalFilename);
-        String s3FileName = generateS3FileName(extension);
+    public String uploadReviewImage(MultipartFile image) {
+        String directory = "review/";
 
-        try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(image.getBytes())) {
-            ObjectMetadata metadata = new ObjectMetadata();
-            metadata.setContentType(getContentType(extension));
-            metadata.setContentLength(image.getSize());
-
-            uploadToS3(s3FileName, byteArrayInputStream, metadata);
-            return getS3FileUrl(s3FileName);
-        } catch (IOException e) {
-            throw new SystemException("이미지 업로드 중 오류가 발생했습니다.");
-        }
+        String s3FileName = directory + generateS3FileName(image);
+        return uploadToS3(s3FileName, image);
     }
 
     public void deleteImageFromS3(String imageAddress){
@@ -54,25 +44,37 @@ public class FileService {
         }
     }
 
-    private String getFileExtension(String filename) {
-        return filename.substring(filename.lastIndexOf(".") + 1).toLowerCase();
+    private String getExtension(String fileName) {
+        return fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
     }
 
-    private String generateS3FileName(String extension) {
+    private String generateS3FileName(MultipartFile file) {
+        String extension = getExtension(file.getOriginalFilename());
         return UUID.randomUUID().toString().substring(0, 10) + "_" + LocalDateTime.now() + "." + extension;
     }
 
-    private String getContentType(String extension) {
-        return "image/" + extension;
-    }
-
-    private void uploadToS3(String s3FileName, ByteArrayInputStream inputStream, ObjectMetadata metadata) {
-        PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, s3FileName, inputStream, metadata);
-        amazonS3.putObject(putObjectRequest);
+    private ObjectMetadata getObjectMetadata(MultipartFile file, String extension) {
+        ObjectMetadata metadata = new ObjectMetadata();
+        metadata.setContentType("image/" + extension);
+        metadata.setContentLength(file.getSize());
+        return metadata;
     }
 
     private String getS3FileUrl(String s3FileName) {
         return amazonS3.getUrl(bucketName, s3FileName).toString();
+    }
+
+    private String uploadToS3(String s3FileName, MultipartFile file) {
+        String extension = getExtension(file.getOriginalFilename());
+        ByteArrayInputStream inputStream = null;
+        try {
+            inputStream = new ByteArrayInputStream(file.getBytes());
+        } catch (IOException e) {
+            throw new SystemException("이미지처리 중 오류가 발생했습니다.");
+        }
+        ObjectMetadata metadata = getObjectMetadata(file, extension);
+        amazonS3.putObject(new PutObjectRequest(bucketName, s3FileName, inputStream, metadata));
+        return getS3FileUrl(s3FileName);
     }
 
     private String getKeyFromImageAddress(String imageAddress){
