@@ -15,7 +15,9 @@ CREATE TABLE product (
     nutrition_facts VARCHAR(255),
     member_id BIGINT NOT NULL,
     created_at DATETIME NOT NULL,
-    updated_at DATETIME NOT NULL
+    updated_at DATETIME NOT NULL,
+    FULLTEXT (product_name, product_corp)
+
 );
 
 CREATE TABLE diary (
