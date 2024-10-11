@@ -1,8 +1,8 @@
 package flab.nutridiary.product.controller;
 
 import flab.nutridiary.commom.dto.ApiResponse;
-import flab.nutridiary.product.dto.NewProductRequest;
-import flab.nutridiary.product.dto.NewProductResponse;
+import flab.nutridiary.product.dto.request.NewProductRequest;
+import flab.nutridiary.product.dto.response.NewProductResponse;
 import flab.nutridiary.product.service.ProductRegisterService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
