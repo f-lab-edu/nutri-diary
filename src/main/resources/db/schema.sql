@@ -43,7 +43,10 @@ CREATE TABLE review (
     rating TINYINT NOT NULL,
     image_url VARCHAR(255),
     created_at DATETIME NOT NULL,
-    updated_at DATETIME NOT NULL
+    updated_at DATETIME NOT NULL,
+    CONSTRAINT uc_product_id_member_id UNIQUE (member_id, product_id),
+    INDEX idx_product_id (product_id),
+    INDEX idx_member_id (member_id)
 );
 
 CREATE TABLE diet_tag (
