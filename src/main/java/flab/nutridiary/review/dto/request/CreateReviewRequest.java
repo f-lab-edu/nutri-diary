@@ -3,6 +3,7 @@ package flab.nutridiary.review.dto.request;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,6 +30,7 @@ public class CreateReviewRequest {
     @NotNull(message = "평점을 입력해주세요.")
     private short rating;
 
+    @Builder
     public CreateReviewRequest(Long productId, String content, Long dietTagId, Long storeId, MultipartFile image, short rating) {
         this.productId = productId;
         this.content = content;

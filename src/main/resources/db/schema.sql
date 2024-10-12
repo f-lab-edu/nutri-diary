@@ -44,10 +44,10 @@ CREATE TABLE review (
     image_url VARCHAR(255),
     created_at DATETIME NOT NULL,
     updated_at DATETIME NOT NULL,
-    CONSTRAINT uc_product_id_member_id UNIQUE (member_id, product_id),
-    INDEX idx_product_id (product_id),
-    INDEX idx_member_id (member_id)
+    CONSTRAINT uc_product_id_member_id UNIQUE (member_id, product_id)
 );
+CREATE INDEX idx_product_id ON review (product_id);
+CREATE INDEX idx_member_id ON review (member_id);
 
 CREATE TABLE diet_tag (
     diet_tag_id BIGINT PRIMARY KEY AUTO_INCREMENT,

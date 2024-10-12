@@ -1,5 +1,6 @@
 package flab.nutridiary.review.repository;
 
+import flab.nutridiary.product.domain.Product;
 import flab.nutridiary.review.domain.Review;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jdbc.core.mapping.AggregateReference;
@@ -19,6 +20,6 @@ public class ReviewRepositoryImpl implements ReviewRepository {
 
     @Override
     public boolean existsByMemberIdAndProductId(Long memberId, Long productId) {
-        return crudReviewRepository.existsByMemberIdAndProductId(memberId, AggregateReference.to(productId));
+        return crudReviewRepository.existsByMemberIdAndProductId(memberId, productId);
     }
 }

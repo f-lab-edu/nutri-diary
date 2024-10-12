@@ -74,7 +74,7 @@ spring:
     init:
       mode: always
       schema-locations: classpath:db/schema.sql
-      data-locations: optional:classpath:db/data.sql
+#      data-locations: optional:classpath:db/data.sql
 
 logging:
   level:
@@ -90,9 +90,6 @@ spring:
       on-profile: common
 cloud:
   aws:
-    credentials:
-      accessKey: ${AWS_ACCESS_KEY}
-      secretKey: ${AWS_SECRET_KEY}
     s3:
       endpoint: ${S3_END_POINT}
       bucketName: ${S3_BUCKET_NAME}
