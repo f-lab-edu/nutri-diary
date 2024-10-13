@@ -1,15 +1,13 @@
 package flab.nutridiary.product.repository;
 
+import flab.nutridiary.TestContainerSupport;
 import flab.nutridiary.commom.generic.Nutrition;
-import flab.nutridiary.product.domain.ServingUnit;
 import flab.nutridiary.product.domain.NutritionFacts;
 import flab.nutridiary.product.domain.Product;
+import flab.nutridiary.product.domain.ServingUnit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -18,10 +16,7 @@ import java.util.List;
 import static java.math.BigDecimal.valueOf;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ActiveProfiles("test")
-@Transactional
-@SpringBootTest
-class ProductRepositoryTest {
+class ProductRepositoryTest extends TestContainerSupport {
 
     @Autowired
     private ProductRepository productRepository;

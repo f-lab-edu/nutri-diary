@@ -1,5 +1,6 @@
 package flab.nutridiary.diary.repository;
 
+import flab.nutridiary.TestContainerSupport;
 import flab.nutridiary.commom.generic.Nutrition;
 import flab.nutridiary.diary.domain.Diary;
 import flab.nutridiary.diary.domain.DiaryRecord;
@@ -12,9 +13,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -26,10 +24,7 @@ import static java.math.BigDecimal.ONE;
 import static java.math.BigDecimal.valueOf;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ActiveProfiles("test")
-@Transactional
-@SpringBootTest
-class DiaryRepositoryTest {
+class DiaryRepositoryTest extends TestContainerSupport {
     @Autowired
     private DiaryRepository diaryRepository;
     @Autowired

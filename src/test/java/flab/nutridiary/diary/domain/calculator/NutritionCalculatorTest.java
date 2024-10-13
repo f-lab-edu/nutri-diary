@@ -1,20 +1,18 @@
 package flab.nutridiary.diary.domain.calculator;
 
+import flab.nutridiary.TestContainerSupport;
 import flab.nutridiary.commom.generic.Nutrition;
-import flab.nutridiary.product.domain.ServingUnit;
 import flab.nutridiary.diary.domain.NutritionCalculator;
 import flab.nutridiary.diary.domain.ProductIntakeInfo;
 import flab.nutridiary.product.domain.NutritionFacts;
 import flab.nutridiary.product.domain.Product;
+import flab.nutridiary.product.domain.ServingUnit;
 import flab.nutridiary.product.repository.ProductRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -22,10 +20,7 @@ import java.util.List;
 
 import static java.math.BigDecimal.valueOf;
 
-@ActiveProfiles("test")
-@Transactional
-@SpringBootTest
-class NutritionCalculatorTest {
+class NutritionCalculatorTest extends TestContainerSupport {
     @Autowired
     private NutritionCalculator nutritionCalculator;
     @Autowired

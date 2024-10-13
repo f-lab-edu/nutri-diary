@@ -1,5 +1,6 @@
 package flab.nutridiary.product.service;
 
+import flab.nutridiary.TestContainerSupport;
 import flab.nutridiary.commom.exception.BusinessException;
 import flab.nutridiary.product.domain.Product;
 import flab.nutridiary.product.repository.ProductRepository;
@@ -7,17 +8,11 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@ActiveProfiles("test")
-@Transactional
-@SpringBootTest
-class ProductValidatorTest {
+class ProductValidatorTest extends TestContainerSupport {
 
     @Autowired
     private ProductValidator productValidator;
