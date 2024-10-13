@@ -1,8 +1,6 @@
 package flab.nutridiary;
 
-import flab.nutridiary.commom.file.FileStoreService;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -16,9 +14,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @SpringBootTest
 public abstract class TestContainerSupport {
     static final MySQLContainer<?> mysqlContainer;
-
-    @MockBean
-    protected FileStoreService fileStoreService;
 
     static {
         mysqlContainer = new MySQLContainer<>("mysql:8.0")
