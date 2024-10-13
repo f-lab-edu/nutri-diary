@@ -91,6 +91,6 @@ spring:
 cloud:
   aws:
     s3:
-      endpoint: ${S3_END_POINT}
-      bucketName: ${S3_BUCKET_NAME}
-      regionName: ${AWS_REGION_NAME}
+      endpoint: https://kr.object.ncloudstorage.com
+      bucketName: nutridiary-image
+      regionName: kr-standard
