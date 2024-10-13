@@ -3,6 +3,13 @@ spring:
     name: nutridiary
   profiles:
     default: dev
+    group:
+      prod:
+        - common
+      dev:
+        - common
+      test:
+        - common
 
 ---
 spring:
@@ -67,7 +74,7 @@ spring:
     init:
       mode: always
       schema-locations: classpath:db/schema.sql
-      data-locations: optional:classpath:db/data.sql
+#      data-locations: optional:classpath:db/data.sql
 
 logging:
   level:
@@ -75,3 +82,15 @@ logging:
       springframework:
         jdbc:
           core: trace
+
+---
+spring:
+  config:
+    activate:
+      on-profile: common
+cloud:
+  aws:
+    s3:
+      endpoint: ${S3_END_POINT}
+      bucketName: ${S3_BUCKET_NAME}
+      regionName: ${AWS_REGION_NAME}
