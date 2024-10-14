@@ -13,7 +13,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @Transactional
 @SpringBootTest
 public abstract class TestContainerSupport {
-    static final MySQLContainer<?> mysqlContainer;
+    protected static final MySQLContainer<?> mysqlContainer;
 
     static {
         mysqlContainer = new MySQLContainer<>("mysql:8.0")
