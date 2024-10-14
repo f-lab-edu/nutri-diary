@@ -1,6 +1,7 @@
 package flab.nutridiary.diary.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import flab.nutridiary.TestContainerControllerSupport;
 import flab.nutridiary.commom.generic.Nutrition;
 import flab.nutridiary.diary.domain.*;
 import flab.nutridiary.diary.dto.request.AddDiaryRecordRequest;
@@ -35,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
-class DiaryControllerTest {
+class DiaryControllerTest extends TestContainerControllerSupport {
     @Autowired
     private MockMvc mockMvc;
     @Autowired
