@@ -3,6 +3,13 @@ spring:
     name: nutridiary
   profiles:
     default: dev
+    group:
+      prod:
+        - common
+      dev:
+        - common
+      test:
+        - common
 
 ---
 spring:
@@ -11,9 +18,9 @@ spring:
       on-profile: prod
 
   datasource:
-    url: jdbc:mysql://db-p93qe.vpc-cdb.ntruss.com:3306/nutridiary
-    username: koo995
-    password: koo995**
+    url: ${MYSQL_URL}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
   sql:
     init:
@@ -67,7 +74,7 @@ spring:
     init:
       mode: always
       schema-locations: classpath:db/schema.sql
-      data-locations: optional:classpath:db/data.sql
+#      data-locations: optional:classpath:db/data.sql
 
 logging:
   level:
@@ -75,3 +82,25 @@ logging:
       springframework:
         jdbc:
           core: trace
+
+---
+spring:
+  config:
+    activate:
+      on-profile: common
+
+  datasource:
+    hikari:
+      maximum-pool-size: 10  # 커넥션 풀의 최대 크기 설정
+      minimum-idle: 10  # 커넥션 풀 사이즈 값을 max 값으로 고정하는 것을 권장한다. 커넥션을 만드는 속도보다 트래픽이 더 빨리 몰려온다면 문제가 된다.
+      idle-timeout: 1800000  # 유휴 커넥션의 최대 유지 시간 설정 (ms) 30분
+      max-lifetime: 1740000  # 커넥션 최대 생존 시간 설정 (ms) 29분
+      connection-timeout: 30000  # pool 에서 커넥션을 받기위해 대기하는 시간 (ms)
+
+
+cloud:
+  aws:
+    s3:
+      endpoint: ${S3_END_POINT}
+      bucketName: ${S3_BUCKET_NAME}
+      regionName: ${AWS_REGION_NAME}
