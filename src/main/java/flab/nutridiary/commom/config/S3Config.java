@@ -3,12 +3,11 @@ package flab.nutridiary.commom.config;
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
+import flab.nutridiary.commom.file.S3FileStore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 
-@Profile({"prod", "dev"})
 @Configuration
 public class S3Config {
 
@@ -23,5 +22,10 @@ public class S3Config {
         return AmazonS3Client.builder()
                 .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(endPoint, regionName))
                 .build();
+    }
+
+    @Bean
+    public S3FileStore s3FileStore() {
+        return new S3FileStore(amazonS3());
     }
 }

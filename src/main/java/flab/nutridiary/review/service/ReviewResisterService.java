@@ -1,7 +1,7 @@
 package flab.nutridiary.review.service;
 
 import flab.nutridiary.commom.exception.BusinessException;
-import flab.nutridiary.commom.file.FileStoreService;
+import flab.nutridiary.commom.file.FileStore;
 import flab.nutridiary.productDietTag.ProductDietTag;
 import flab.nutridiary.productDietTag.ProductDietTagRepository;
 import flab.nutridiary.productStore.ProductStore;
@@ -25,7 +25,7 @@ public class ReviewResisterService {
     private final ProductStoreRepository productStoreRepository;
     private final ProductDietTagRepository productDietTagRepository;
     private final ReviewRepository reviewRepository;
-    private final FileStoreService fileStoreService;
+    private final FileStore fileStore;
     private final ReviewResisterValidator reviewResisterValidator;
 
     public CreateReviewResponse create(Long memberId, CreateReviewRequest createReviewRequest) {
@@ -56,7 +56,7 @@ public class ReviewResisterService {
 
     private Review createReview(CreateReviewRequest request) {
         String imageUrl = Optional.ofNullable(request.getImage())
-                .map(fileStoreService::uploadReviewImage)
+                .map(fileStore::uploadReviewImage)
                 .orElse(null);
 
         return reviewRepository.save(Review.builder()

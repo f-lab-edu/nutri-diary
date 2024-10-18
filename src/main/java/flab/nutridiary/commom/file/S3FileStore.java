@@ -8,8 +8,6 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import flab.nutridiary.commom.exception.SystemException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
@@ -21,10 +19,8 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Profile({"dev", "prod"})
 @RequiredArgsConstructor
-@Service
-public class FileStoreServiceImpl implements FileStoreService {
+public class S3FileStore implements FileStore {
     private final AmazonS3 amazonS3;
 
     @Value("${cloud.aws.s3.bucketName}")

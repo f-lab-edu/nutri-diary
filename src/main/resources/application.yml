@@ -16,7 +16,6 @@ spring:
   config:
     activate:
       on-profile: prod
-
   datasource:
     url: jdbc:mysql://db-p93qe.vpc-cdb.ntruss.com:3306/nutridiary
     username: koo995
@@ -27,6 +26,14 @@ spring:
       mode: always
       schema-locations: classpath:db/schema.sql
       data-locations: optional:classpath:db/data.sql
+
+cloud:
+  aws:
+    s3:
+      config: true
+      endpoint: ${S3_END_POINT}
+      bucketName: ${S3_BUCKET_NAME}
+      regionName: ${AWS_REGION_NAME}
 
 logging:
   level:
@@ -52,6 +59,14 @@ spring:
       schema-locations: classpath:db/schema.sql
       data-locations: optional:classpath:db/data.sql
 
+cloud:
+  aws:
+    s3:
+      config: true
+      endpoint: ${S3_END_POINT}
+      bucketName: ${S3_BUCKET_NAME}
+      regionName: ${AWS_REGION_NAME}
+
 logging:
   level:
     org:
@@ -64,6 +79,8 @@ spring:
   config:
     activate:
       on-profile: test
+  main:
+    allow-bean-definition-overriding: true
 
   datasource:
     url: jdbc:h2:mem:nutridiary
@@ -88,9 +105,3 @@ spring:
   config:
     activate:
       on-profile: common
-cloud:
-  aws:
-    s3:
-      endpoint: ${S3_END_POINT}
-      bucketName: ${S3_BUCKET_NAME}
-      regionName: ${AWS_REGION_NAME}
