@@ -79,19 +79,17 @@ spring:
   config:
     activate:
       on-profile: test
+
+  datasource:
+    url: jdbc:tc:mysql:8.0.36:///nutridiary?TC_DAEMON=true
+
   main:
     allow-bean-definition-overriding: true
 
-  datasource:
-    url: jdbc:h2:mem:nutridiary
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
   sql:
     init:
       mode: always
       schema-locations: classpath:db/schema.sql
-#      data-locations: optional:classpath:db/data.sql
 
 logging:
   level:
