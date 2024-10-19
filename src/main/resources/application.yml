@@ -92,11 +92,11 @@ spring:
   datasource:
     hikari:
       maximum-pool-size: 10  # 커넥션 풀의 최대 크기 설정
-      minimum-idle: 10  # 커넥션 풀 사이즈 값을 max 값으로 고정하는 것을 권장한다. 커넥션을 만드는 속도보다 트래픽이 더 빨리 몰려온다면 문제가 된다.
-      idle-timeout: 1800000  # 유휴 커넥션의 최대 유지 시간 설정 (ms) 30분
-      max-lifetime: 1740000  # 커넥션 최대 생존 시간 설정 (ms) 29분
+      max-lifetime: 55000  # 커넥션 최대 생존 시간 설정 (ms) 55초
       connection-timeout: 30000  # pool 에서 커넥션을 받기위해 대기하는 시간 (ms)
-
+      data-source-properties:
+        wait_timeout: 60
+        net_read_timeout: 60
 
 cloud:
   aws:
