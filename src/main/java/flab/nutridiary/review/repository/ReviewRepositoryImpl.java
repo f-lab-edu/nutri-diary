@@ -1,9 +1,7 @@
 package flab.nutridiary.review.repository;
 
-import flab.nutridiary.product.domain.Product;
 import flab.nutridiary.review.domain.Review;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jdbc.core.mapping.AggregateReference;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
