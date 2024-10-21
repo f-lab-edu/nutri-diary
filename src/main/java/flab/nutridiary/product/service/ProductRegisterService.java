@@ -2,8 +2,8 @@ package flab.nutridiary.product.service;
 
 import flab.nutridiary.product.domain.Product;
 import flab.nutridiary.product.domain.ProductMapper;
-import flab.nutridiary.product.dto.NewProductRequest;
-import flab.nutridiary.product.dto.NewProductResponse;
+import flab.nutridiary.product.dto.request.NewProductRequest;
+import flab.nutridiary.product.dto.response.NewProductResponse;
 import flab.nutridiary.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -2,7 +2,7 @@ package flab.nutridiary.product.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import flab.nutridiary.product.domain.Product;
-import flab.nutridiary.product.dto.NewProductRequest;
+import flab.nutridiary.product.dto.request.NewProductRequest;
 import flab.nutridiary.product.repository.ProductRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

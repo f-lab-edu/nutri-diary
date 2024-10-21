@@ -3,12 +3,14 @@ package flab.nutridiary.diary.repository;
 import flab.nutridiary.diary.domain.Diary;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Optional;
 
-@Repository
 @RequiredArgsConstructor
+@Transactional
+@Repository
 public class DiaryRepositoryImpl implements DiaryRepository{
     private final DiaryCrudRepository diaryCrudRepository;
 

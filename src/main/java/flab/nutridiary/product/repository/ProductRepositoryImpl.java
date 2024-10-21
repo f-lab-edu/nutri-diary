@@ -4,11 +4,13 @@ import flab.nutridiary.product.domain.Product;
 import flab.nutridiary.product.service.ProductValidatorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-@Repository
 @RequiredArgsConstructor
+@Transactional
+@Repository
 public class ProductRepositoryImpl implements ProductRepository, ProductValidatorRepository {
 
     private final ProductCrudRepository productCrudRepository;
