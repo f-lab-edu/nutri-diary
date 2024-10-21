@@ -1,9 +1,9 @@
 package flab.nutridiary.product.repository;
 
 import flab.nutridiary.product.dto.response.ProductSearchResponse;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface ProductSearchRepository {
-    List<ProductSearchResponse> findFullTextSearch(String keyword);
+    Page<ProductSearchResponse> findFullTextSearch(String keyword, Pageable pageable);
 }

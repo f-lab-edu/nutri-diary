@@ -13,4 +13,5 @@ public class ProductSearchResponse {
     private final Long productId;
     private final String productName;
     private final String productCorp;
+    private final Integer reviewCount;
 }

@@ -8,9 +8,9 @@ import flab.nutridiary.product.service.ProductRegisterService;
 import flab.nutridiary.product.service.ProductSearchService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,9 +24,8 @@ public class ProductController {
         return ApiResponse.success(productRegisterService.process(productRequest));
     }
 
-    //todo : 전문검색 글자 2글자가능하도록, 검색결과 페이징?, 이미지가 필요할까?
     @GetMapping("/product")
-    public ApiResponse<List<ProductSearchResponse>> searchProduct(@RequestParam(name = "search") String condition) {
-        return ApiResponse.success(productSearchService.search(condition));
+    public ApiResponse<Page<ProductSearchResponse>> searchProduct(@RequestParam(name = "search") String condition, Pageable pageable) {
+        return ApiResponse.success(productSearchService.search(condition, pageable));
     }
 }
