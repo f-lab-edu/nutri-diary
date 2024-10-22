@@ -5,11 +5,13 @@ package flab.nutridiary.dummy;
 //    @Autowired
 //    private JdbcTemplate jdbcTemplate;
 //
-//    private final int batchSize = 1000;
-//    private final int threadCount = 5;
+//    private final int batchSize = 5000;
+//    private final int threadCount = 10;
 //    private final int totalDataCount = 20000000;
+//    private final Random random = new Random();
 //
-//    private final String productDietTagSQL = "INSERT INTO product_diet_tag (product_id, diet_tag_id, created_at, updated_at) VALUES (?, ?, ?, ?)";
+//    private final String productDietTagSQL = "INSERT INTO product_diet_tag (product_id, diet_tag_id, diet_tag_name, created_at, updated_at) VALUES (?, ?, ?, ?, ?)";
+//    private final String[] diet_tag_names = {"저칼로리", "저탄수화물", "무탄수화물", "저단백질", "고단백질", "무설탕", "저지방", "고지방", "저탄고지", "기토제닉"};
 //
 //    @Test
 //    public void insertProductDataInParallel() throws InterruptedException {
@@ -31,11 +33,12 @@ package flab.nutridiary.dummy;
 //        List<Object[]> batchArgs = new ArrayList<>();
 //
 //        for (int i = start; i <= end; i++) {
-//            int productId = (i % 8) * 100000 + i % 100000;
+//            int productId = random.nextInt(1000000);
 //            int dietTagId = i % 10 + 1;
+//            String dietTagName = diet_tag_names[dietTagId - 1];
 //            String createdAt = "2024-09-01 00:00:00";
 //            String updatedAt = "2024-09-01 00:00:00";
-//            batchArgs.add(new Object[]{productId, dietTagId, createdAt, updatedAt});
+//            batchArgs.add(new Object[]{productId, dietTagId, dietTagName, createdAt, updatedAt});
 //
 //            if (batchArgs.size() % batchSize == 0) {
 //                jdbcTemplate.batchUpdate(sql, batchArgs);

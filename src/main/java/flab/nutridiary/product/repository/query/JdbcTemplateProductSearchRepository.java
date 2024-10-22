@@ -27,7 +27,10 @@ public class JdbcTemplateProductSearchRepository implements ProductSearchReposit
         Integer total = getTotalCount(keyword);
 
         String sql = "SELECT " +
-                "p.product_id, p.product_name, p.product_corp, (SELECT COUNT(*) FROM review r where r.product_id = p.product_id) AS review_count " +
+                "p.product_id, p.product_name, p.product_corp, " +
+                "(SELECT COUNT(*) FROM review r WHERE r.product_id = p.product_id) AS review_count, " +
+                "(SELECT AVG(r.rating) FROM review r WHERE r.product_id = p.product_id) AS review_avg_rating, " +
+                "(SELECT GROUP_CONCAT(diet_tag_name) FROM (SELECT diet_tag_name FROM product_diet_tag pdt where pdt.product_id = p.product_id GROUP BY diet_tag_name ORDER BY COUNT(diet_tag_name) DESC LIMIT 3) AS top3_diet_tag) AS top3_diet_tag_names " +
                 "FROM product p " +
                 "WHERE MATCH (p.product_name, p.product_corp) AGAINST (:keyword)" +
                 "LIMIT :offset, :limit";

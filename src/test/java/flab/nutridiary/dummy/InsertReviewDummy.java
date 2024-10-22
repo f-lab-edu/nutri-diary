@@ -1,24 +1,15 @@
 package flab.nutridiary.dummy;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.jdbc.core.JdbcTemplate;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-
 //@SpringBootTest
 //public class InsertReviewDummy {
 //    @Autowired
 //    private JdbcTemplate jdbcTemplate;
 //
-//    private final int batchSize = 1000;
-//    private final int threadCount = 5;
+//    private final int batchSize = 5000;
+//    private final int threadCount = 10;
 //    private final int totalDataCount = 10000000;
+//    private final Random random = new Random();
+//
 //
 //    private final String reviewSQL = "INSERT INTO review (product_id, member_id, content, rating, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)";
 //
@@ -42,7 +33,7 @@ import java.util.concurrent.TimeUnit;
 //        List<Object[]> batchArgs = new ArrayList<>();
 //
 //        for (int i = start; i <= end; i++) {
-//            int productId = (i % 8) * 100000 + i % 100000;
+//            int productId = random.nextInt(1000000);
 //            int memberId = i;
 //            String content = i + "content " + i;
 //            int rating = i % 5 + 1;
