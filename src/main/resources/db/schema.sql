@@ -18,6 +18,7 @@ CREATE TABLE product (
     updated_at DATETIME NOT NULL,
     FULLTEXT (product_name, product_corp) WITH PARSER ngram
 );
+CREATE INDEX idx_member_id ON product (member_id);
 
 CREATE TABLE diary (
     diary_id BIGINT PRIMARY KEY AUTO_INCREMENT,
@@ -25,6 +26,7 @@ CREATE TABLE diary (
     diary_date DATE NOT NULL,
     CONSTRAINT uc_diary_date UNIQUE (member_id, diary_date)
 );
+CREATE INDEX idx_member_id ON diary (member_id);
 
 CREATE TABLE diary_record (
     diary_record_id BIGINT PRIMARY KEY AUTO_INCREMENT,
@@ -35,6 +37,8 @@ CREATE TABLE diary_record (
     client_choice_serving_unit_description VARCHAR(255),
     calculated_nutrition VARCHAR(255)
 );
+CREATE INDEX idx_diary_id ON diary_record (diary_id);
+CREATE INDEX idx_product_id ON diary_record (product_id);
 
 CREATE TABLE review (
     review_id BIGINT PRIMARY KEY AUTO_INCREMENT,
@@ -64,6 +68,7 @@ CREATE TABLE product_diet_tag (
     created_at DATETIME NOT NULL,
     updated_at DATETIME NOT NULL
 );
+CREATE INDEX idx_product_id ON product_diet_tag (product_id);
 
 CREATE TABLE store (
     store_id BIGINT PRIMARY KEY AUTO_INCREMENT,
@@ -80,3 +85,5 @@ CREATE TABLE product_store (
     created_at DATETIME NOT NULL,
     updated_at DATETIME NOT NULL
 );
+CREATE INDEX idx_product_id ON product_store (product_id);
+CREATE INDEX idx_store_id ON product_store (store_id);
