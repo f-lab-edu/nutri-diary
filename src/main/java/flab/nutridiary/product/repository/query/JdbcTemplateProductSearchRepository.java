@@ -27,9 +27,8 @@ public class JdbcTemplateProductSearchRepository implements ProductSearchReposit
         Integer total = getTotalCount(keyword);
 
         String sql = "SELECT " +
-                "p.product_id, p.product_name, p.product_corp, IFNULL(review_count, 0) AS review_count " +
+                "p.product_id, p.product_name, p.product_corp, (SELECT COUNT(*) FROM review r where r.product_id = p.product_id) AS review_count " +
                 "FROM product p " +
-                "LEFT JOIN (SELECT product_id, COUNT(*) AS review_count FROM review GROUP BY product_id) r ON p.product_id = r.product_id " +
                 "WHERE MATCH (p.product_name, p.product_corp) AGAINST (:keyword)" +
                 "LIMIT :offset, :limit";
         MapSqlParameterSource parameters = new MapSqlParameterSource()
@@ -43,7 +42,6 @@ public class JdbcTemplateProductSearchRepository implements ProductSearchReposit
     private Integer getTotalCount(String keyword) {
         String sql = "SELECT COUNT(*) " +
                 "FROM product p " +
-                "LEFT JOIN (SELECT product_id, COUNT(*) AS review_count FROM review GROUP BY product_id) r ON p.product_id = r.product_id " +
                 "WHERE MATCH (p.product_name, p.product_corp) AGAINST (:keyword)";
         MapSqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("keyword", keyword);
