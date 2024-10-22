@@ -1,6 +1,7 @@
 package flab.nutridiary.commom.file;
 
 import flab.nutridiary.commom.exception.SystemException;
+import flab.nutridiary.file.FileStore;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
