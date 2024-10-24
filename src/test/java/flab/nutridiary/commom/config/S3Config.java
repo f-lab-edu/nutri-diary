@@ -1,6 +1,6 @@
 package flab.nutridiary.commom.config;
 
-import flab.nutridiary.commom.file.FileStore;
+import flab.nutridiary.file.FileStore;
 import flab.nutridiary.commom.file.FakeFileStore;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,7 +1,7 @@
 package flab.nutridiary.review.service;
 
 import flab.nutridiary.commom.exception.BusinessException;
-import flab.nutridiary.commom.file.FileStore;
+import flab.nutridiary.file.FileStore;
 import flab.nutridiary.productDietTag.ProductDietTag;
 import flab.nutridiary.productDietTag.ProductDietTagRepository;
 import flab.nutridiary.productStore.ProductStore;

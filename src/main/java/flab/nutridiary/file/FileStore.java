@@ -1,4 +1,4 @@
-package flab.nutridiary.commom.file;
+package flab.nutridiary.file;
 
 import org.springframework.web.multipart.MultipartFile;
 

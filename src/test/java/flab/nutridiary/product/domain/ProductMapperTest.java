@@ -1,7 +1,7 @@
 package flab.nutridiary.product.domain;
 
 import flab.nutridiary.commom.generic.Nutrition;
-import flab.nutridiary.product.dto.NewProductRequest;
+import flab.nutridiary.product.dto.request.NewProductRequest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

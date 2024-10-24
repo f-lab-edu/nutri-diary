@@ -1,4 +1,4 @@
-package flab.nutridiary.product.dto;
+package flab.nutridiary.product.dto.request;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
