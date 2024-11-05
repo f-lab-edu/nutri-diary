@@ -14,7 +14,8 @@ public enum StatusConst {
     DIARY_NOT_FOUND(4004, "해당 다이어리를 찾을 수 없습니다."),
     DUPLICATED_DIARY(4005, "이미 등록된 다이어리입니다."),
     VALIDATION_CHECK_FAIL(6001, "유효성 검사에 실패했습니다."),
-    NOT_ALLOWED_SERVING_UNIT(6002, "허용되지 않은 서빙 단위입니다.");
+    NOT_ALLOWED_SERVING_UNIT(6002, "허용되지 않은 서빙 단위입니다."),
+    DUPLICATED_PRODUCT_REVIEW(4006, "이미 등록된 리뷰입니다.");
 
     private final int statusCode;
     private final String message;

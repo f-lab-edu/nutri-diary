@@ -1,6 +1,11 @@
 DROP TABLE IF EXISTS product;
 DROP TABLE IF EXISTS diary_record;
 DROP TABLE IF EXISTS diary;
+DROP TABLE IF EXISTS review;
+DROP TABLE IF EXISTS diet_tag;
+DROP TABLE IF EXISTS product_diet_tag;
+DROP TABLE IF EXISTS store;
+DROP TABLE IF EXISTS product_store;
 
 CREATE TABLE product (
     product_id BIGINT PRIMARY KEY AUTO_INCREMENT,
@@ -28,4 +33,49 @@ CREATE TABLE diary_record (
     quantity DECIMAL NOT NULL,
     client_choice_serving_unit_description VARCHAR(255),
     calculated_nutrition VARCHAR(255)
+);
+
+CREATE TABLE review (
+    review_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    product_id BIGINT NOT NULL,
+    member_id BIGINT NOT NULL,
+    content VARCHAR(255),
+    rating TINYINT NOT NULL,
+    image_url VARCHAR(255),
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME NOT NULL,
+    CONSTRAINT uc_product_id_member_id UNIQUE (member_id, product_id)
+);
+CREATE INDEX idx_product_id ON review (product_id);
+CREATE INDEX idx_member_id ON review (member_id);
+
+CREATE TABLE diet_tag (
+    diet_tag_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    diet_plan VARCHAR(255) NOT NULL,
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME NOT NULL
+);
+
+CREATE TABLE product_diet_tag (
+    product_diet_tag_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    product_id BIGINT,
+    diet_tag_id BIGINT,
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME NOT NULL
+);
+
+CREATE TABLE store (
+    store_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    store_name VARCHAR(255) NOT NULL,
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME NOT NULL
+);
+
+CREATE TABLE product_store (
+    product_store_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    product_id BIGINT,
+    store_id BIGINT,
+    status VARCHAR(255),
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME NOT NULL
 );
