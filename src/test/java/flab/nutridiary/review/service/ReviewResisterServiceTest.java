@@ -10,6 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
@@ -27,7 +29,7 @@ class ReviewResisterServiceTest {
         CreateReviewRequest request = CreateReviewRequest.builder()
                 .productId(1L)
                 .content("맛있어요")
-                .dietTagId(1L)
+                .dietTagId(List.of(1L))
                 .storeId(1L)
                 .image(null)
                 .rating((short) 5)
@@ -48,7 +50,7 @@ class ReviewResisterServiceTest {
         CreateReviewRequest request = CreateReviewRequest.builder()
                 .productId(1L)
                 .content("맛있어요")
-                .dietTagId(1L)
+                .dietTagId(List.of(1L))
                 .storeId(1L)
                 .image(null)
                 .rating((short) 5)

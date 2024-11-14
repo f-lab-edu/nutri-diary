@@ -1,7 +1,7 @@
 package flab.nutridiary.review.service;
 
 import flab.nutridiary.commom.exception.BusinessException;
-import flab.nutridiary.commom.file.FileStore;
+import flab.nutridiary.file.FileStore;
 import flab.nutridiary.productDietTag.ProductDietTag;
 import flab.nutridiary.productDietTag.ProductDietTagRepository;
 import flab.nutridiary.productStore.ProductStore;
@@ -14,7 +14,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static flab.nutridiary.commom.exception.StatusConst.DUPLICATED_PRODUCT_REVIEW;
 
@@ -40,19 +45,39 @@ public class ReviewResisterService {
         return CreateReviewResponse.of(savedReview.getId());
     }
 
-    private ProductStore saveProductStore(CreateReviewRequest request) {
-        return productStoreRepository.save(ProductStore.builder()
+    private void saveProductStore(CreateReviewRequest request) {
+        productStoreRepository.save(ProductStore.builder()
                 .productId(request.getProductId())
                 .storeId(request.getStoreId())
                 .build());
     }
 
-    private ProductDietTag saveProductDietTag(CreateReviewRequest request) {
-        return productDietTagRepository.save(ProductDietTag.builder()
-                .productId(request.getProductId())
-                .dietTagId(request.getDietTagId())
-                .build());
+    private void saveProductDietTag(CreateReviewRequest request) {
+        List<ProductDietTag> existingTags = productDietTagRepository.findByProductId(request.getProductId());
+        List<Long> requestTagIds = request.getDietTagId();
+
+        Map<Long, ProductDietTag> existingTagMap = existingTags.stream()
+                .collect(Collectors.toMap(ProductDietTag::getDietTagId, Function.identity()));
+
+        List<ProductDietTag> tagsToSave = new ArrayList<>();
+
+        for (Long tagId : requestTagIds) {
+            if (existingTagMap.containsKey(tagId)) {
+                existingTagMap.get(tagId).increaseTagCount();
+            } else {
+                // 새로운 태그는 리스트에 추가
+                tagsToSave.add(ProductDietTag.builder()
+                        .productId(request.getProductId())
+                        .dietTagId(tagId)
+                        .build());
+            }
+        }
+
+        // 변경된 태그들을 저장
+        tagsToSave.addAll(existingTags); // 수정된 기존 태그도 포함
+        productDietTagRepository.saveAll(tagsToSave);
     }
+
 
     private Review createReview(CreateReviewRequest request) {
         String imageUrl = Optional.ofNullable(request.getImage())

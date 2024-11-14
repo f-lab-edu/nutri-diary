@@ -48,7 +48,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   sql:
     init:
-      mode: always
+      mode: never
       schema-locations: classpath:db/schema.sql
       data-locations: optional:classpath:db/data.sql
 
@@ -57,7 +57,7 @@ logging:
     org:
       springframework:
         jdbc:
-          core: debug
+          core: error
 
 ---
 spring:
