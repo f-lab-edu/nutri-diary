@@ -65,6 +65,7 @@ CREATE TABLE product_diet_tag (
     product_diet_tag_id BIGINT PRIMARY KEY AUTO_INCREMENT,
     product_id BIGINT,
     diet_tag_id BIGINT,
+    tag_count BIGINT,
     created_at DATETIME NOT NULL,
     updated_at DATETIME NOT NULL
 );
