@@ -22,6 +22,15 @@ spring:
     username: ${MYSQL_USERNAME}
     password: ${MYSQL_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10  # 커넥션 풀의 최대 크기 설정
+      max-lifetime: 55000  # 커넥션 최대 생존 시간 설정 (ms) 55초
+      connection-timeout: 30000  # pool 에서 커넥션을 받기위해 대기하는 시간 (ms)
+      data-source-properties:
+        socketTimeout: 30
+
+
+
   sql:
     init:
       mode: always
@@ -66,15 +75,15 @@ spring:
       on-profile: test
 
   datasource:
-    url: jdbc:h2:mem:nutridiary
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    url: jdbc:tc:mysql:8.0.36:///nutridiary?TC_DAEMON=true
+
+  main:
+    allow-bean-definition-overriding: true
+
   sql:
     init:
       mode: always
       schema-locations: classpath:db/schema.sql
-#      data-locations: optional:classpath:db/data.sql
 
 logging:
   level:
@@ -88,14 +97,6 @@ spring:
   config:
     activate:
       on-profile: common
-
-  datasource:
-    hikari:
-      maximum-pool-size: 10  # 커넥션 풀의 최대 크기 설정
-      max-lifetime: 55000  # 커넥션 최대 생존 시간 설정 (ms) 55초
-      connection-timeout: 30000  # pool 에서 커넥션을 받기위해 대기하는 시간 (ms)
-      data-source-properties:
-        socketTimeout: 30
 
 cloud:
   aws:
