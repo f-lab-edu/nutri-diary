@@ -83,7 +83,7 @@ class DiaryControllerTest {
     @Test
     void createDiary() throws Exception {
         // given
-        DiaryRegisterRequest diaryRegisterRequest = new DiaryRegisterRequest(savedProductIds.getFirst(), "BREAKFAST", valueOf(1), "gram", LocalDate.of(2024, 8, 10));
+        DiaryRegisterRequest diaryRegisterRequest = new DiaryRegisterRequest(savedProductIds.get(0), "BREAKFAST", valueOf(1), "gram", LocalDate.of(2024, 8, 10));
 
         // when then
         mockMvc.perform(
@@ -103,7 +103,7 @@ class DiaryControllerTest {
         // given
         Diary diary = new Diary(LocalDate.of(2024, 8, 10),
                 DiaryRecord.builder()
-                        .productId(savedProductIds.getFirst())
+                        .productId(savedProductIds.get(0))
                         .mealType(MealType.BREAKFAST)
                         .quantity(valueOf(1))
                         .clientChoiceServingUnitDescription("컵")
@@ -111,7 +111,7 @@ class DiaryControllerTest {
                         .build());
         Long diaryId = diaryRepository.save(diary).getId();
 
-        AddDiaryRecordRequest addDiaryRecordRequest = new AddDiaryRecordRequest(savedProductIds.getFirst(), "BREAKFAST", BigDecimal.valueOf(10), "gram");
+        AddDiaryRecordRequest addDiaryRecordRequest = new AddDiaryRecordRequest(savedProductIds.get(0), "BREAKFAST", BigDecimal.valueOf(10), "gram");
 
         // when then
         mockMvc.perform(
@@ -129,7 +129,7 @@ class DiaryControllerTest {
     @Test
     void addDiaryRecordWithInvalidServingUnit() throws Exception {
         // given
-        DiaryRegisterRequest diaryRegisterRequest = new DiaryRegisterRequest(savedProductIds.getFirst(), "BREAKFAST", valueOf(1), "InvalidServingUnit", LocalDate.of(2024, 8, 10));
+        DiaryRegisterRequest diaryRegisterRequest = new DiaryRegisterRequest(savedProductIds.get(0), "BREAKFAST", valueOf(1), "InvalidServingUnit", LocalDate.of(2024, 8, 10));
 
         // when then
         mockMvc.perform(
@@ -147,7 +147,7 @@ class DiaryControllerTest {
     @Test
     void mealType() throws Exception {
         // given
-        DiaryRegisterRequest diaryRegisterRequest = new DiaryRegisterRequest(savedProductIds.getFirst(), "WRONG", valueOf(1), "gram", LocalDate.of(2024, 8, 10));
+        DiaryRegisterRequest diaryRegisterRequest = new DiaryRegisterRequest(savedProductIds.get(0), "WRONG", valueOf(1), "gram", LocalDate.of(2024, 8, 10));
 
         // when then
         mockMvc.perform(
