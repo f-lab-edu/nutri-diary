@@ -1,6 +1,6 @@
 # Nutri-Diary(개인 프로젝트)
 
-## Stack: Spring Boot, Spring Data JDBC, JdbcTemplate, MySQL, NCP(Naver Cloud Platform), Jenkins
+> 기술 스택: Spring Boot, Spring Data JDBC, JdbcTemplate, MySQL, NCP(Naver Cloud Platform), Jenkins
 
 ## 2024.07 ~ 진행중
 현재 개인적으로 진행 중이며, 백엔드 부분을 전담하고 있습니다. 2025년 1월부터는 팀원들과 함께 기획, 디자인, 클라이언트 부분을 재구성해 나갈 예정입니다.
