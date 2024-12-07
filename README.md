@@ -33,6 +33,14 @@ CI/CD와 무중단 배포 인프라 구성. Jenkins 서버를 별도로 구축�
 
 TestContainers를 활용한 서버 환경과 동일한 테스트 환경 구축. H2와 MySQL의 DB 엔진 차이 때문에 여러 이슈가 발생했습니다. 특히 MySQL의 전문 검색 기능을 활용한 테스트 코드는 H2에서 실행할 수 없어, TestContainers를 도입했습니다.
 
+## Issues
+* 조회 쿼리의 전체 수행 시간 30배 향상
+  > [자세히 보기: https://github.com/koo995/resume/blob/main/src/nutri-diary/query/README.md]
+* Spring Data JDBC(또는 JPA)에서 DB 엔진에 따른 데이터 타입의 변환 차이
+  > [자세히 보기: https://github.com/koo995/resume/blob/main/src/nutri-diary/converter/README.md]
+* 단순한 비즈니스 로직의 과도한 복잡성을 개선하여 간결한 구조로 리팩터링
+  > [자세히 보기: https://github.com/f-lab-edu/nutri-diary/wiki/영양성분-계산-로직-리팩터링]
+
 ## NCP를 이용한 인프라 구성 과정
   * [Auto Scaling구성과 LoadBalance연결](https://medium.com/@gunhong951/ncp-naver-cloud-platform-%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%9D%B8%ED%94%84%EB%9D%BC-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0-1%ED%8E%B8-auto-scaling%EA%B3%BC-load-balancer-%EA%B5%AC%EC%84%B1-117de2df73c2)
   * [Jenkins와 SourceDeploy을 이용한 CI/CD와 무중단 배포](https://medium.com/@gunhong951/ncp-naver-cloud-platform-%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%9D%B8%ED%94%84%EB%9D%BC-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0-2%ED%8E%B8-jenkins%EC%99%80-sourcedeploy%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-ci-cd-%EB%AC%B4%EC%A4%91%EB%8B%A8-%EB%B0%B0%ED%8F%AC-%EA%B5%AC%EC%84%B1-ca1926e56c34)
