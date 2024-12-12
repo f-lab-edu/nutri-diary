@@ -4,8 +4,8 @@ import flab.nutridiary.commom.exception.BusinessException;
 import flab.nutridiary.file.FileStore;
 import flab.nutridiary.productDietTag.ProductDietTag;
 import flab.nutridiary.productDietTag.ProductDietTagRepository;
-import flab.nutridiary.productStore.domain.ProductStore;
-import flab.nutridiary.productStore.repository.JdbcProductStoreRepository;
+import flab.nutridiary.productStore.domain.StoreProduct;
+import flab.nutridiary.productStore.repository.StoreProductCrudRepository;
 import flab.nutridiary.review.domain.Review;
 import flab.nutridiary.review.dto.request.CreateReviewRequest;
 import flab.nutridiary.review.dto.response.CreateReviewResponse;
@@ -27,7 +27,7 @@ import static flab.nutridiary.commom.exception.StatusConst.DUPLICATED_PRODUCT_RE
 @RequiredArgsConstructor
 @Service
 public class ReviewResisterService {
-    private final JdbcProductStoreRepository productStoreRepository;
+    private final StoreProductCrudRepository productStoreRepository;
     private final ProductDietTagRepository productDietTagRepository;
     private final ReviewRepository reviewRepository;
     private final FileStore fileStore;
@@ -46,7 +46,7 @@ public class ReviewResisterService {
     }
 
     private void saveProductStore(CreateReviewRequest request) {
-        productStoreRepository.save(ProductStore.builder()
+        productStoreRepository.save(StoreProduct.builder()
                 .productId(request.getProductId())
                 .storeId(request.getStoreId())
                 .build());

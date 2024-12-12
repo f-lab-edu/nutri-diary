@@ -12,10 +12,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StoreRepositoryImpl implements StoreRepository {
 
-    private final JdbcStoreRepository jdbcStoreRepository;
+    private final StoreCrudRepository storeCrudRepository;
 
     @Override
     public List<Store> findAll() {
-        return jdbcStoreRepository.findAll();
+        return storeCrudRepository.findAll();
     }
 }

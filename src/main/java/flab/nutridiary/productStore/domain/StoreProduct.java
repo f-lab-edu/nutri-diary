@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @ToString
 @Getter
 @NoArgsConstructor
-public class ProductStore {
+public class StoreProduct {
     @Id @Column("product_store_id")
     private Long id;
 
@@ -29,8 +29,16 @@ public class ProductStore {
     private LocalDateTime updatedAt;
 
     @Builder
-    public ProductStore(Long storeId, Long productId) {
+    public StoreProduct(Long storeId, Long productId) {
         this.storeId = AggregateReference.to(storeId);
         this.productId = AggregateReference.to(productId);
+    }
+
+    public Long getStoreId() {
+        return storeId.getId();
+    }
+
+    public Long getProductId() {
+        return productId.getId();
     }
 }

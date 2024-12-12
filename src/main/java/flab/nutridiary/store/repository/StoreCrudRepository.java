@@ -5,6 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface JdbcStoreRepository extends CrudRepository<Store, Long> {
+public interface StoreCrudRepository extends CrudRepository<Store, Long> {
     List<Store> findAll();
 }
