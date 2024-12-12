@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -23,6 +24,11 @@ public class ProductRepositoryImpl implements ProductRepository, ProductValidato
     @Override
     public Optional<Product> findById(Long id) {
         return productCrudRepository.findById(id);
+    }
+
+    @Override
+    public List<Product> findByIds(List<Long> ids) {
+        return productCrudRepository.findByIds(ids);
     }
 
     @Override
