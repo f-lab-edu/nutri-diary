@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS review;
 DROP TABLE IF EXISTS diet_tag;
 DROP TABLE IF EXISTS product_diet_tag;
 DROP TABLE IF EXISTS store;
-DROP TABLE IF EXISTS product_store;
+DROP TABLE IF EXISTS store_product;
 
 CREATE TABLE product (
     product_id BIGINT PRIMARY KEY AUTO_INCREMENT,
@@ -78,13 +78,13 @@ CREATE TABLE store (
     updated_at DATETIME NOT NULL
 );
 
-CREATE TABLE product_store (
-    product_store_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE store_product (
+    store_product_id BIGINT PRIMARY KEY AUTO_INCREMENT,
     product_id BIGINT,
     store_id BIGINT,
     status VARCHAR(255),
     created_at DATETIME NOT NULL,
     updated_at DATETIME NOT NULL
 );
-CREATE INDEX idx_product_id ON product_store (product_id);
-CREATE INDEX idx_store_id ON product_store (store_id);
+CREATE INDEX idx_product_id ON store_product (product_id);
+CREATE INDEX idx_store_id ON store_product (store_id);
