@@ -1,4 +1,4 @@
-package flab.nutridiary.productStore;
+package flab.nutridiary.productStore.domain;
 
 import flab.nutridiary.product.domain.Product;
 import flab.nutridiary.store.domain.Store;
