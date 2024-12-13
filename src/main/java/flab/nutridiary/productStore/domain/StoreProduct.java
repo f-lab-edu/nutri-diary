@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 public class StoreProduct {
-    @Id @Column("product_store_id")
+    @Id @Column("store_product_id")
     private Long id;
 
     private AggregateReference<Store, Long> storeId;
