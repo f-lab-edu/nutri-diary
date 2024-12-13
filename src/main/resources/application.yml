@@ -104,3 +104,9 @@ cloud:
       endpoint: ${S3_END_POINT}
       bucketName: ${S3_BUCKET_NAME}
       regionName: ${AWS_REGION_NAME}
+
+management:
+    endpoints:
+        web:
+          exposure:
+            include: "*"
