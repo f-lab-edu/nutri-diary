@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @ToString
 @Getter
 public class CreateReviewRequest {
@@ -18,7 +20,7 @@ public class CreateReviewRequest {
     private String content;
 
     @NotNull(message = "식단 태그 ID를 입력해주세요.")
-    private Long dietTagId;
+    private List<Long> dietTagId;
 
     @NotNull(message = "매장 ID를 입력해주세요.")
     private Long storeId;
@@ -31,7 +33,7 @@ public class CreateReviewRequest {
     private short rating;
 
     @Builder
-    public CreateReviewRequest(Long productId, String content, Long dietTagId, Long storeId, MultipartFile image, short rating) {
+    public CreateReviewRequest(Long productId, String content, List<Long> dietTagId, Long storeId, MultipartFile image, short rating) {
         this.productId = productId;
         this.content = content;
         this.dietTagId = dietTagId;

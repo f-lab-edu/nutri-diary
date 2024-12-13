@@ -3,8 +3,8 @@ package flab.nutridiary.product.service;
 import flab.nutridiary.commom.generic.Nutrition;
 import flab.nutridiary.product.domain.ServingUnit;
 import flab.nutridiary.product.domain.Product;
-import flab.nutridiary.product.dto.NewProductRequest;
-import flab.nutridiary.product.dto.NewProductResponse;
+import flab.nutridiary.product.dto.request.NewProductRequest;
+import flab.nutridiary.product.dto.response.NewProductResponse;
 import flab.nutridiary.product.repository.ProductRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.math.BigDecimal.TWO;
 import static java.math.BigDecimal.valueOf;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -40,7 +39,7 @@ class ProductRegisterServiceTest {
         NewProductRequest newProductRequest = NewProductRequest.builder()
                 .productName("상품명")
                 .corpName("업체명")
-                .productDefaultServingSize(TWO)
+                .productDefaultServingSize(BigDecimal.valueOf(2))
                 .productDefaultServingUnit("컵")
                 .productTotalWeightGram(valueOf(90))
                 .calories(valueOf(120))
@@ -67,7 +66,7 @@ class ProductRegisterServiceTest {
         NewProductRequest newProductRequest = NewProductRequest.builder()
                 .productName("상품명")
                 .corpName("업체명")
-                .productDefaultServingSize(TWO)
+                .productDefaultServingSize(BigDecimal.valueOf(2))
                 .productDefaultServingUnit("컵")
                 .productTotalWeightGram(valueOf(90))
                 .calories(valueOf(120))
@@ -84,6 +83,6 @@ class ProductRegisterServiceTest {
         assertThat(savedProduct.getNutritionFacts().getAllowedProductServingUnits())
                 .isEqualTo(new ArrayList<>(
                         List.of(ServingUnit.asOneServingUnit("컵"),
-                                ServingUnit.ofGram(TWO, BigDecimal.valueOf(90)))));
+                                ServingUnit.ofGram(BigDecimal.valueOf(2), BigDecimal.valueOf(90)))));
     }
 }

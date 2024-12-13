@@ -11,8 +11,8 @@ import org.springframework.data.relational.core.mapping.Column;
 
 import java.time.LocalDateTime;
 
-@ToString
 @Getter
+@ToString
 @NoArgsConstructor
 public class ProductDietTag {
     @Id @Column("product_diet_tag_id")
@@ -22,6 +22,9 @@ public class ProductDietTag {
 
     private AggregateReference<Product, Long> productId;
 
+    @Getter
+    private Long tagCount;
+
     @CreatedDate
     private LocalDateTime createdAt;
 
@@ -29,8 +32,17 @@ public class ProductDietTag {
     private LocalDateTime updatedAt;
 
     @Builder
-    public ProductDietTag(Long dietTagId, Long productId) {
+    public ProductDietTag(Long dietTagId, Long productId, Long tagCount) {
         this.dietTagId = AggregateReference.to(dietTagId);
         this.productId = AggregateReference.to(productId);
+        this.tagCount = tagCount;
+    }
+
+    public void increaseTagCount() {
+        this.tagCount++;
+    }
+
+    public Long getDietTagId() {
+        return dietTagId.getId();
     }
 }

@@ -1,6 +1,6 @@
 package flab.nutridiary.product.domain;
 
-import flab.nutridiary.product.dto.NewProductRequest;
+import flab.nutridiary.product.dto.request.NewProductRequest;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;

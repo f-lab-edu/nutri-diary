@@ -1,4 +1,4 @@
-package flab.nutridiary.productStore;
+package flab.nutridiary.productStore.domain;
 
 import flab.nutridiary.product.domain.Product;
 import flab.nutridiary.store.domain.Store;
@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 @ToString
 @Getter
 @NoArgsConstructor
-public class ProductStore {
-    @Id @Column("product_store_id")
+public class StoreProduct {
+    @Id @Column("store_product_id")
     private Long id;
 
     private AggregateReference<Store, Long> storeId;
@@ -29,8 +29,16 @@ public class ProductStore {
     private LocalDateTime updatedAt;
 
     @Builder
-    public ProductStore(Long storeId, Long productId) {
+    public StoreProduct(Long storeId, Long productId) {
         this.storeId = AggregateReference.to(storeId);
         this.productId = AggregateReference.to(productId);
+    }
+
+    public Long getStoreId() {
+        return storeId.getId();
+    }
+
+    public Long getProductId() {
+        return productId.getId();
     }
 }

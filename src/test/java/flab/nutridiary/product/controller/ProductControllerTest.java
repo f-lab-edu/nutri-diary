@@ -2,7 +2,7 @@ package flab.nutridiary.product.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import flab.nutridiary.product.domain.Product;
-import flab.nutridiary.product.dto.NewProductRequest;
+import flab.nutridiary.product.dto.request.NewProductRequest;
 import flab.nutridiary.product.repository.ProductRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -42,7 +42,7 @@ class ProductControllerTest {
         NewProductRequest newProductRequest = NewProductRequest.builder()
                 .productName("상품명")
                 .corpName("업체명")
-                .productDefaultServingSize(BigDecimal.TWO)
+                .productDefaultServingSize(BigDecimal.valueOf(2))
                 .productDefaultServingUnit("컵")
                 .productTotalWeightGram(BigDecimal.valueOf(90))
                 .calories(BigDecimal.valueOf(120))
@@ -104,7 +104,7 @@ class ProductControllerTest {
         NewProductRequest newProductRequest = NewProductRequest.builder()
                 .productName("상품명")
                 .corpName("업체명")
-                .productDefaultServingSize(BigDecimal.TWO)
+                .productDefaultServingSize(BigDecimal.valueOf(2))
                 .productTotalWeightGram(BigDecimal.valueOf(-1))
                 .calories(BigDecimal.valueOf(120))
                 .carbohydrate(BigDecimal.valueOf(15.5))
