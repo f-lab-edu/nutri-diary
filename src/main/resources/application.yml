@@ -106,7 +106,17 @@ cloud:
       regionName: ${AWS_REGION_NAME}
 
 management:
-    endpoints:
-        web:
-          exposure:
-            include: "*"
+  info:
+    java:
+      enabled: true
+    os:
+      enabled: true
+
+  endpoint:
+    health:
+      show-details: always
+
+  endpoints:
+    web:
+      exposure:
+        include: "*"
