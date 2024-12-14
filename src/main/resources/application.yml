@@ -104,3 +104,24 @@ cloud:
       endpoint: ${S3_END_POINT}
       bucketName: ${S3_BUCKET_NAME}
       regionName: ${AWS_REGION_NAME}
+
+management:
+  info:
+    java:
+      enabled: true
+    os:
+      enabled: true
+
+  endpoint:
+    health:
+      show-details: always
+
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+server:
+  tomcat:
+    mbeanregistry:
+      enabled: true
