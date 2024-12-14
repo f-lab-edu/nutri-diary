@@ -120,3 +120,8 @@ management:
     web:
       exposure:
         include: "*"
+
+server:
+  tomcat:
+    mbeanregistry:
+      enabled: true
