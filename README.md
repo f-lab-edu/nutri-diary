@@ -59,10 +59,14 @@
     
 - Spring Data JDBC(또는 JPA)에서 DB 엔진에 따른 데이터 타입의 변환 차이 이슈
   >[자세히 보기: [https://github.com/koo995/portfolio/blob/main/src/nutri-diary/converter/README.md](https://github.com/koo995/portfolio/blob/main/src/nutri-diary/converter/README.md)]
-    
-  테스트 코드 실행 시 JSON 타입 컬럼값을 객체로 변환하지 못하는 문제가 발생. 상황을 구체적으로 파악하기 위해 여러 케이스를 테스트하는 도중 JPA에서도 유사한 문제가 발생.
+
+  테스트 코드 실행 시 JSON 타입 컬럼값을 객체로 변환하지 못하는 문제가 발생. 상황을 구체적으로 파악하기 위해 Data JPA, Data JDBC, MySQL, H2를 각각 테스트한 결과, JPA에서도 유사한 문제가 발생.
+
+  원인을 파악하기 위해 디버깅을 진행하며 추적한 결과, 이는 H2가 JSON 타입의 컬럼을 MySQL과 다르게 처리해서 발생하는 문제로 발견. 문제의 근본 원인을 해결하기 위해 시도해 보았으나 실패.
   
-  문제의 원인을 파악하기 위해 디버깅을 진행하며 추적한 결과, 이는 H2가 JSON 타입의 컬럼을 MySQL과 다르게 처리해서 발생하는 문제로 확인. 여러 방안을 검토하며 테스트용 컨버터를 만들거나 JSON 타입 대신 TEXT 타입을 사용하는 방법을 고려했고, 최종적으로 TestContainers를 도입하여 해결.
+  임시로 해결을 위한 여러 방안을 검토하며 테스트용 컨버터를 만들거나 JSON 타입 대신 TEXT 타입을 사용하는 방법을 고려했고, 최종적으로 TestContainers를 도입하여 해결.
+
+  JPA를 사용하는 경우 hypersistence-utils 라이브러리가 문제를 해결. 
     
 - 단순한 비즈니스 로직의 과도한 복잡성을 개선하여 간결한 구조로 리팩터링
   > [자세히 보기: [https://github.com/f-lab-edu/nutri-diary/wiki/영양성분-계산-로직-리팩터링](https://github.com/f-lab-edu/nutri-diary/wiki/%EC%98%81%EC%96%91%EC%84%B1%EB%B6%84-%EA%B3%84%EC%82%B0-%EB%A1%9C%EC%A7%81-%EB%A6%AC%ED%8C%A9%ED%84%B0%EB%A7%81)]
