@@ -1,17 +1,15 @@
 package flab.nutridiary.commom.config;
 
-import org.opensearch.client.RestHighLevelClient;
-import org.opensearch.data.client.orhlc.AbstractOpenSearchConfiguration;
-import org.opensearch.data.client.orhlc.ClientConfiguration;
-import org.opensearch.data.client.orhlc.RestClients;
+
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.elasticsearch.client.ClientConfiguration;
+import org.springframework.data.elasticsearch.client.elc.ElasticsearchConfiguration;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 
 @EnableElasticsearchRepositories(basePackages = "flab.nutridiary.search")
 @Configuration
-public class RestClientConfig extends AbstractOpenSearchConfiguration {
+public class RestClientConfig extends ElasticsearchConfiguration {
 
     @Value("${spring.elasticsearch.url}")
     private String url;
@@ -26,14 +24,11 @@ public class RestClientConfig extends AbstractOpenSearchConfiguration {
     private String password;
 
     @Override
-    @Bean
-    public RestHighLevelClient opensearchClient() {
-
-        final ClientConfiguration clientConfiguration = ClientConfiguration.builder()
+    public ClientConfiguration clientConfiguration() {
+        return ClientConfiguration.builder()
                 .connectedTo(url + ":" + port)
+                .usingSsl()
                 .withBasicAuth(username, password)
                 .build();
-
-        return RestClients.create(clientConfiguration).rest();
     }
 }

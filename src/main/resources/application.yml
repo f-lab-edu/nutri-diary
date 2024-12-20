@@ -66,7 +66,8 @@ logging:
     org:
       springframework:
         jdbc:
-          core: error
+          core: debug
+      elasticsearch: trace
 
 ---
 spring:
@@ -99,12 +100,11 @@ spring:
       on-profile: common
 
   elasticsearch:
-    url: 101.79.11.230
-    port: 9200
-    username: koo995
-    password: koo995**
-    connection-timeout: 5s
-    socket-timeout: 3s
+    url: ${ES_URL}
+    port: 443
+    username: ${ES_USERNAME}
+    password: ${ES_PASSWORD}
+
 
 cloud:
   aws:

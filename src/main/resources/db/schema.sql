@@ -15,8 +15,7 @@ CREATE TABLE product (
     nutrition_facts VARCHAR(255),
     member_id BIGINT NOT NULL,
     created_at DATETIME NOT NULL,
-    updated_at DATETIME NOT NULL,
-    FULLTEXT (product_name, product_corp) WITH PARSER ngram
+    updated_at DATETIME NOT NULL
 );
 CREATE INDEX idx_member_id ON product (member_id);
 
