@@ -27,14 +27,11 @@ public class RestClientConfig extends AbstractOpenSearchConfiguration {
 
     @Override
     @Bean
-    public RestHighLevelClient
-    opensearchClient() {
+    public RestHighLevelClient opensearchClient() {
 
         final ClientConfiguration clientConfiguration = ClientConfiguration.builder()
-                .connectedTo(url)
-                .usingSsl()
+                .connectedTo(url + ":" + port)
                 .withBasicAuth(username, password)
-                .withClientConfigurer(clientConfigurer -> clientConfigurer)
                 .build();
 
         return RestClients.create(clientConfiguration).rest();

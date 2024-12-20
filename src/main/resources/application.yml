@@ -99,7 +99,7 @@ spring:
       on-profile: common
 
   elasticsearch:
-    url: 101.79.11.230:9200
+    url: 101.79.11.230
     port: 9200
     username: koo995
     password: koo995**
