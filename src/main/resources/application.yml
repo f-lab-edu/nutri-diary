@@ -98,6 +98,14 @@ spring:
     activate:
       on-profile: common
 
+  elasticsearch:
+    url: 101.79.11.230:9200
+    port: 9200
+    username: koo995
+    password: koo995**
+    connection-timeout: 5s
+    socket-timeout: 3s
+
 cloud:
   aws:
     s3:
