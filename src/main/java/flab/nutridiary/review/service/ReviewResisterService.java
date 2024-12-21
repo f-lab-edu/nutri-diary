@@ -3,7 +3,7 @@ package flab.nutridiary.review.service;
 import flab.nutridiary.commom.exception.BusinessException;
 import flab.nutridiary.file.FileStore;
 import flab.nutridiary.productDietTag.ProductDietTag;
-import flab.nutridiary.productDietTag.ProductDietTagRepository;
+import flab.nutridiary.productDietTag.repository.ProductDietTagRepository;
 import flab.nutridiary.productStore.domain.StoreProduct;
 import flab.nutridiary.productStore.repository.StoreProductCrudRepository;
 import flab.nutridiary.review.domain.Review;
