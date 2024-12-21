@@ -66,7 +66,8 @@ logging:
     org:
       springframework:
         jdbc:
-          core: error
+          core: debug
+      elasticsearch: trace
 
 ---
 spring:
@@ -97,6 +98,13 @@ spring:
   config:
     activate:
       on-profile: common
+
+  elasticsearch:
+    url: ${ES_URL}
+    port: 443
+    username: ${ES_USERNAME}
+    password: ${ES_PASSWORD}
+
 
 cloud:
   aws:

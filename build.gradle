@@ -33,6 +33,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'io.micrometer:micrometer-registry-prometheus'
 
+	// elasticsearch
+	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
+
 	// thymeleaf
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	// aws s3
