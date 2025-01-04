@@ -15,7 +15,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 public class ProductDocument {
 
     @Id
-    private Long id;
+    private String id;
 
     @Field(type = FieldType.Long)
     private Long productId;

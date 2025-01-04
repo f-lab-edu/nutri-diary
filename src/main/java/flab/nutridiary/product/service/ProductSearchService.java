@@ -37,7 +37,7 @@ public class ProductSearchService {
         }
 
         List<Long> productIds = productDocuments.stream()
-                .map(ProductDocument::getId)
+                .map(ProductDocument::getProductId)
                 .toList();
 
         List<ProductReviewCount> productReviewCounts = reviewRepository.countReviewsByProductIds(productIds);
