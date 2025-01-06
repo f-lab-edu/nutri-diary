@@ -1,6 +1,7 @@
 package flab.nutridiary.product.domain;
 
 import flab.nutridiary.product.dto.request.NewProductRequest;
+import flab.nutridiary.search.ProductDocument;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -18,6 +19,10 @@ public class ProductMapper {
                 .productCorp(productRequest.getCorpName())
                 .nutritionFacts(getNutritionFacts(productRequest))
                 .build();
+    }
+
+    public ProductDocument toDocument(Long productId, Product product) {
+        return new ProductDocument(productId, product.getProductName(), product.getProductCorp());
     }
 
     private static NutritionFacts getNutritionFacts(NewProductRequest productRequest) {
