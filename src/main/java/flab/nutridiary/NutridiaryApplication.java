@@ -6,7 +6,9 @@ import org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchDa
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
+import org.springframework.scheduling.annotation.EnableAsync;
 
+@EnableAsync
 @EnableJdbcRepositories(excludeFilters = @ComponentScan.Filter(type = FilterType.REGEX, pattern = "flab.nutridiary.search.*"))
 @SpringBootApplication(exclude = {ElasticsearchDataAutoConfiguration.class})
 public class NutridiaryApplication {
