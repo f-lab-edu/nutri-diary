@@ -1,10 +1,10 @@
 package flab.nutridiary.productStore.repository;
 
 import flab.nutridiary.productStore.domain.StoreProduct;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
-
 public interface StoreProductCrudRepository extends CrudRepository<StoreProduct, Long> {
-    List<StoreProduct> findByStoreId(Long storeId);
+    Page<StoreProduct> findByStoreId(Long storeId, Pageable pageable);
 }

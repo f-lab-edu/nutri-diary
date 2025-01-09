@@ -23,7 +23,7 @@ spring:
     password: ${MYSQL_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
-      maximum-pool-size: 10  # 커넥션 풀의 최대 크기 설정
+      maximum-pool-size: 40  # 커넥션 풀의 최대 크기 설정
       max-lifetime: 55000  # 커넥션 최대 생존 시간 설정 (ms) 55초
       connection-timeout: 30000  # pool 에서 커넥션을 받기위해 대기하는 시간 (ms)
       data-source-properties:
@@ -31,30 +31,6 @@ spring:
 
 
 
-  sql:
-    init:
-      mode: always
-      schema-locations: classpath:db/schema.sql
-      data-locations: optional:classpath:db/data.sql
-
-logging:
-  level:
-    org:
-      springframework:
-        jdbc:
-          core: debug
-
----
-spring:
-  config:
-    activate:
-      on-profile: dev
-
-  datasource:
-    url: jdbc:mysql://localhost:3306/nutridiary
-    username: root
-    password: 1234
-    driver-class-name: com.mysql.cj.jdbc.Driver
   sql:
     init:
       mode: never
@@ -67,6 +43,31 @@ logging:
       springframework:
         jdbc:
           core: error
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  datasource:
+    url: ${MYSQL_URL}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  sql:
+    init:
+      mode: never
+      schema-locations: classpath:db/schema.sql
+      data-locations: optional:classpath:db/data.sql
+
+logging:
+  level:
+    org:
+      springframework:
+        jdbc:
+          core: debug
+      elasticsearch: trace
 
 ---
 spring:
@@ -98,9 +99,39 @@ spring:
     activate:
       on-profile: common
 
+  elasticsearch:
+    url: ${ES_URL}
+    port: 443
+    username: ${ES_USERNAME}
+    password: ${ES_PASSWORD}
+
+
 cloud:
   aws:
     s3:
       endpoint: ${S3_END_POINT}
       bucketName: ${S3_BUCKET_NAME}
       regionName: ${AWS_REGION_NAME}
+
+management:
+  info:
+    java:
+      enabled: true
+    os:
+      enabled: true
+
+  endpoint:
+    health:
+      show-details: always
+
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+server:
+  tomcat:
+    mbeanregistry:
+      enabled: true
+    threads:
+      max: 60
