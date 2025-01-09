@@ -23,7 +23,7 @@ spring:
     password: ${MYSQL_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
-      maximum-pool-size: 10  # 커넥션 풀의 최대 크기 설정
+      maximum-pool-size: 40  # 커넥션 풀의 최대 크기 설정
       max-lifetime: 55000  # 커넥션 최대 생존 시간 설정 (ms) 55초
       connection-timeout: 30000  # pool 에서 커넥션을 받기위해 대기하는 시간 (ms)
       data-source-properties:
@@ -133,3 +133,5 @@ server:
   tomcat:
     mbeanregistry:
       enabled: true
+    threads:
+      max: 60
