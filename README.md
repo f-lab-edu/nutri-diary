@@ -1,9 +1,7 @@
 # Nutri-Diary(개인 프로젝트)
 > 기술 스택: Spring Boot, Spring Data JDBC, JdbcTemplate, MySQL, Elasticsearch, NCP(Naver Cloud Platform), Jenkins, Grafana, Prometheus, nGrinder
-> 
-> GitHub: [https://github.com/f-lab-edu/nutri-diary](https://github.com/f-lab-edu/nutri-diary)
 
-## 2024.07 ~ 진행중
+## 2024.07 ~ 2024.12
 현재 개인적으로 진행 중이며, 백엔드 부분을 전담하고 있습니다. 2025년 1월부터는 팀원들과 함께 기획, 디자인, 클라이언트 부분을 재구성해 나갈 예정입니다.
 
 ## 프로젝트 소개
@@ -23,7 +21,7 @@
 ## Architecture
 <img src="https://github.com/user-attachments/assets/4f8a65e4-8c32-40e6-9735-8d8345152b6f" width="90%">
 
-## About
+## 개요
 * 프로젝트 구성 과정
 
   프로젝트 초기 단계에서 Figma를 활용해 화면 정의서를 작성하고 서비스를 구상했습니다. 이를 바탕으로 필요한 요구사항들을 정의해 나갔으며, 비즈니스 흐름에 따라 필요한 정보들을 저장할 DB 스키마를 정의하고 중복을 최소화하는 방향으로 설계를 진행했습니다.
@@ -54,7 +52,7 @@
 
   JaCoCo 기준으로 테스트 커버리지 80% 이상을 유지했으며, 테스트 코드 작성이 어려운 경우에는 기존 애플리케이션 코드 구조의 문제점을 파악하고 리팩터링을 진행했습니다.
 
-
+## 주요 딥다이브 이슈
 * MySQL의 전문 검색(FullText Search)을 사용하는 쿼리의 실행 계획을 분석하고 구조를 개선하여 쿼리의 전체 수행 시간 30배 단축
   > [자세히 보기: [https://github.com/koo995/portfolio/blob/main/nutri-diary/fulltext-search.md](https://github.com/koo995/portfolio/blob/main/nutri-diary/fulltext-search.md)]
   
@@ -64,25 +62,28 @@
 
   이후 쿼리를 최적화하여 쿼리의 수행 시간을 3~4초에서 0.08초로 40배 단축했습니다.
 
-* 최적화한 쿼리를 사용한 API의 문제점을 발견하고 리팩터링과 Elasticsearch 도입으로 평균 응답 시간을 1.67분에서 1초, TPS 1.9에서 185.6으로 100배 개선
-  > [자세히 보기: [https://github.com/koo995/portfolio/blob/main/nutri-diary/elasticsearch.md](https://github.com/koo995/portfolio/blob/main/nutri-diary/elasticsearch.md)]
+  * 최적화한 쿼리를 사용한 API의 문제점을 발견하고 리팩터링과 Elasticsearch 도입으로 평균 응답 시간을 1.67분에서 1초, TPS 1.9에서 185.6으로 100배 개선
+    > [자세히 보기: [https://github.com/koo995/portfolio/blob/main/nutri-diary/elasticsearch.md](https://github.com/koo995/portfolio/blob/main/nutri-diary/elasticsearch.md)]
 
-  쿼리를 최적화하였지만 비즈니스 로직이 쿼리안에 녹아있는 문제가 있었습니다. 이 문제는 추후 비즈니스 로직이 변경될 경우 데이터 접근 기술까지 변경 해야하는 문제가 있습니다.
+    쿼리를 최적화하였지만 비즈니스 로직이 쿼리안에 녹아있는 문제가 있었습니다. 이 문제는 추후 비즈니스 로직이 변경될 경우 데이터 접근 기술까지 변경 해야하는 문제가 있습니다.
 
-  이 문제를 해결하고자 리팩터링을 진행하여 비즈니스 로직과 데이터 접근 기술의 강결합을 분리하여 더욱 객체지향적인 코드로 작성했습니다. 또한, 이 과정에서 비즈니스 로직과 DB테이블 일부를 변경하여 예상되는 누적 데이터량을 3억건에서 1천만건으로 최적화했습니다.
+    이 문제를 해결하고자 리팩터링을 진행하여 비즈니스 로직과 데이터 접근 기술의 강결합을 분리하여 더욱 객체지향적인 코드로 작성했습니다. 또한, 이 과정에서 비즈니스 로직과 DB테이블 일부를 변경하여 예상되는 누적 데이터량을 3억건에서 1천만건으로 최적화했습니다.
 
-  하지만 리팩터링 후 쿼리의 수행 시간을 비교하려 했으나, 테이블 구조 변경과 새로운 데이터 삽입으로 인해 신뢰할 수 있는 비교가 어려웠습니다. 더 나은 기준으로 비교하기 위해 Grafana, Prometheus와 같은 모니터링 도구와 트래픽 생성을 위한 nGrinder를 도입했습니다.
+    하지만 리팩터링 후 쿼리의 수행 시간을 비교하려 했으나, 테이블 구조 변경과 새로운 데이터 삽입으로 인해 신뢰할 수 있는 비교가 어려웠습니다. 더 나은 기준으로 비교하기 위해 Grafana, Prometheus와 같은 모니터링 도구와 트래픽 생성을 위한 nGrinder를 도입했습니다.
 
-  이후 성능 테스트를 진행하는 과정에서 문제를 쿼리 개선에만 집중하여 API의 성능 저하가 여전히 존재함을 발견했습니다. 결국 기존에 도입을 미뤘던 Elasticsearch를 활용하여 평균 응답 시간을 1.67분에서 1초, TPS를 1.9에서 179.6으로 100배 개선했습니다.
+    이후 성능 테스트를 진행하는 과정에서 문제를 쿼리 개선에만 집중하여 API의 성능 저하가 여전히 존재함을 발견했습니다. 결국 기존에 도입을 미뤘던 Elasticsearch를 활용하여 평균 응답 시간을 1.67분에서 1초, TPS를 1.9에서 179.6으로 100배 개선했습니다.
 
-* Tomcat의 스레드풀 사이즈와 HikariCP의 커넥션 풀 사이즈를 조절하여 API의 평균 응답시간을 1초에서 200ms로 5배 개선
+    * Tomcat의 스레드풀 사이즈와 HikariCP의 커넥션 풀 사이즈를 조절하여 API의 평균 응답시간을 1초에서 200ms로 5배 개선
 
-  Elasticsearch를 도입했지만 1초라는 API의 평균 응답 시간이 체감상 빠르지 않다고 느껴졌습니다.
+      Elasticsearch를 도입했지만 1초라는 API의 평균 응답 시간이 체감상 빠르지 않다고 느껴졌습니다.
 
-  이를 개선하고자 모니터링 지표를 확인하니 TIMED-WAITING 상태의 스레드 비율이 너무 높은 것을 확인하고 스레드 덤프를 분석하여 HikariCP의 커넥션을 얻기 위해 대기하는 스레드가 매우 많음을 발견했습니다.
+      이를 개선하고자 모니터링 지표를 확인하니 TIMED-WAITING 상태의 스레드 비율이 너무 높은 것을 확인하고 스레드 덤프를 분석하여 HikariCP의 커넥션을 얻기 위해 대기하는 스레드가 매우 많음을 발견했습니다.
 
-  이후 여러번의 테스트에서 Tomcat의 스레드 풀 사이즈와 HikariCP의 커넥션 풀 사이즈를 조절하여 평균 응답 시간을 1초에서 200ms로 5배 단축했습니다.
-  
+      이후 여러번의 테스트에서 Tomcat의 스레드 풀 사이즈와 HikariCP의 커넥션 풀 사이즈를 조절하여 평균 응답 시간을 1초에서 200ms로 5배 단축했습니다.
+
+      > [자세히 보기: [https://github.com/koo995/portfolio/blob/main/nutri-diary/threadPool-hikariPool.md](https://github.com/koo995/portfolio/blob/main/nutri-diary/threadPool-hikariPool.md)]
+
+## 주요 이슈
 * Spring Data JDBC(또는 JPA)에서 DB 엔진에 따른 데이터 타입의 변환 차이 이슈
   >[자세히 보기: [https://github.com/koo995/portfolio/blob/main/nutri-diary/json-converter.md](https://github.com/koo995/portfolio/blob/main/nutri-diary/json-converter.md)]
     
